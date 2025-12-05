@@ -238,9 +238,12 @@ export default function InvestmentsPage() {
         return
       }
       
+      console.log('Token available for investments fetch:', token ? 'YES' : 'NO')
+      console.log('User ID for investments fetch:', user?.id)
+      
       // Fetch both investments and current currency rates
       const [investmentsResponse, currencyResponse, cryptoResponse] = await Promise.all([
-        fetch('/api/investments', {
+        fetch(`/api/investments?userId=${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

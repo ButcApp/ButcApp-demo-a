@@ -10,16 +10,16 @@ out/
 dist/
 build/
 
-# Environment variables (diğerleri ignore, sadece .env ve .env.local GitHub'a gidecek)
-.env.development.local
-.env.test.local
-.env.production.local
+# Environment variables (hepsi GitHub'a gidecek)
+# .env.development.local
+# .env.test.local
+# .env.production.local
 
-# Database
-*.db
-*.sqlite
-*.sqlite3
-db/
+# Database (hepsi GitHub'a gidecek)
+# *.db
+# *.sqlite
+# *.sqlite3
+# db/
 
 # Logs
 *.log
@@ -74,7 +74,7 @@ pids
 .eslintcache
 
 # Microservice files
-mini-services/
+# mini-services/
 
 # Temporary scripts
 create-admin.js

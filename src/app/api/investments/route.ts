@@ -14,12 +14,20 @@ async function authenticate(request: NextRequest) {
     return { error: 'Unauthorized', status: 401 }
   }
 
+  // First try to verify as admin
   const isAdmin = await verifyAdminToken(token)
-  if (!isAdmin) {
+  if (isAdmin) {
+    return { token, isAdmin: true }
+  }
+
+  // If not admin, try to verify as regular user
+  const { AuthService } = await import('@/lib/auth-service')
+  const user = await AuthService.verifyToken(token)
+  if (!user) {
     return { error: 'Forbidden', status: 403 }
   }
 
-  return { token }
+  return { token, user, isAdmin: false }
 }
 
 // GET /api/investments - Fetch user investments
@@ -36,6 +44,13 @@ export async function GET(request: NextRequest) {
 
     const where: any = {}
     if (userId) {
+      // Check if user can access this data
+      if (!auth.isAdmin && auth.user.id !== userId) {
+        return NextResponse.json({
+          success: false,
+          error: 'Forbidden'
+        }, { status: 403 })
+      }
       where.userId = userId
     }
     if (type) {
@@ -76,6 +91,14 @@ export async function POST(request: NextRequest) {
         success: false,
         error: 'Missing required fields: userId, type, symbol, amount, buyPrice'
       }, { status: 400 })
+    }
+
+    // Check if user can create this investment
+    if (!auth.isAdmin && auth.user.id !== body.userId) {
+      return NextResponse.json({
+        success: false,
+        error: 'Forbidden'
+      }, { status: 403 })
     }
 
     const investment = await prisma.investment.create({
