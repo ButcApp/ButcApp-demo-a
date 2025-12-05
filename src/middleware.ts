@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyAdminToken } from '@/lib/jwt-edge'
+import { verifyAdminToken } from '@/lib/jwt'
 
 // Admin route'larını koruyan middleware
 export async function middleware(request: NextRequest) {
