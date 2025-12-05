@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const resolvedParams = await params
     const slug = resolvedParams.slug
     
-    // Local SQLite database'den post verisini çek
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/local/blog/${slug}`, {
+    // Prisma database'den post verisini çek
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog/${slug}`, {
       cache: 'no-store'
     })
     
@@ -106,8 +106,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 // Fetch blog post data
 async function getBlogPost(slug: string) {
   try {
-    // Local SQLite database'den post verisini çek
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/local/blog/${slug}`, {
+    // Prisma database'den post verisini çek
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog/${slug}`, {
       cache: 'no-store'
     })
     
@@ -131,8 +131,8 @@ async function getBlogPost(slug: string) {
 // Fetch related posts
 async function getRelatedPosts(currentPostId: string, category: string) {
   try {
-    // Local SQLite database'den ilgili post'ları çek
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/local/blog?category=${category}&limit=3`, {
+    // Prisma database'den ilgili post'ları çek
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog?category=${category}&limit=3`, {
       cache: 'no-store'
     })
     

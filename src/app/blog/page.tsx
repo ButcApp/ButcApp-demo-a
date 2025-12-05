@@ -34,8 +34,8 @@ export const metadata: Metadata = {
 // Fetch blog posts for SSR
 async function getBlogPosts() {
   try {
-    // Local SQLite database'den verileri çek
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/local/blog?limit=12`, {
+    // Prisma database'den verileri çek
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog?limit=12`, {
       cache: 'no-store'
     })
     
@@ -62,8 +62,8 @@ async function getBlogPosts() {
 // Fetch categories
 async function getCategories() {
   try {
-    // Local SQLite database'den kategorileri çek
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/local/blog/categories`, {
+    // Prisma database'den kategorileri çek
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog/categories`, {
       cache: 'no-store'
     })
     
