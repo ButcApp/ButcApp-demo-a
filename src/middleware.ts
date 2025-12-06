@@ -5,8 +5,13 @@ import { verifyAdminToken } from '@/lib/jwt'
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  console.log('=== MIDDLEWARE DEBUG ===');
+  console.log('Pathname:', pathname);
+  console.log('Method:', request.method);
+
   // API rotalarını middleware'den her zaman hariç tut
   if (pathname.includes('/api/')) {
+    console.log('API route, skipping middleware');
     return NextResponse.next()
   }
 
@@ -14,6 +19,8 @@ export async function middleware(request: NextRequest) {
   if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK')) {
     // Cookie'den token'ı al
     let token = request.cookies.get('auth-token')?.value
+    
+    console.log('Cookie token:', !!token);
     
     // Cookie'de yoksa authorization header'dan kontrol et
     if (!token) {
@@ -23,6 +30,8 @@ export async function middleware(request: NextRequest) {
       }
     }
     
+    console.log('Final token:', !!token);
+
     // GÜVENLİK: URL parametresi ile token alma KALDIRILDI
     // Token sadece Cookie (HttpOnly) veya Authorization Header içinde taşınmalıdır
     // Session Hijacking ve Token Leakage önlemek için
@@ -41,6 +50,7 @@ export async function middleware(request: NextRequest) {
     // Token'ı doğrula ve ADMIN rolünü kontrol et
     if (token && !pathname.includes('/login')) {
       try {
+        console.log('Verifying token...');
         const isAdmin = await verifyAdminToken(token)
         console.log('Middleware: Is admin:', isAdmin)
         
@@ -57,11 +67,14 @@ export async function middleware(request: NextRequest) {
         
         // Token'ı cookie'e set et (sonraki istekler için)
         const response = NextResponse.next()
-        response.cookies.set('auth-token', token, {
-          path: '/',
-          maxAge: 24 * 60 * 60,
-          sameSite: 'lax'
-        })
+        if (token) {
+          response.cookies.set('auth-token', token, {
+            path: '/',
+            maxAge: 24 * 60 * 60,
+            sameSite: 'lax',
+            httpOnly: false // Client-side erişim için
+          })
+        }
         return response
       } catch (error) {
         console.log('Middleware: Token verification failed:', error)
@@ -74,6 +87,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Admin route'u değilse veya login sayfası ise devam et
+  console.log('Not an admin route or login page, proceeding');
   return NextResponse.next()
 }
 

@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from 'next/server'
 export function corsMiddleware(request: NextRequest) {
   const origin = request.headers.get('origin')
   
+  console.log('CORS: Request origin:', origin)
+  
   // İzin verilen origin'ler
   const allowedOrigins = [
     'https://butcapp.com',
@@ -18,13 +20,14 @@ export function corsMiddleware(request: NextRequest) {
   const isAllowedOrigin = allowedOrigins.includes(origin) || !origin
   
   const headers = {
-    'Access-Control-Allow-Origin': isAllowedOrigin ? (origin || '*') : 'false',
+    'Access-Control-Allow-Origin': isAllowedOrigin ? (origin || '*') : '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With, Accept',
     'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Max-Age': '86400',
   }
   
+  console.log('CORS: Headers:', headers)
   return headers
 }
 

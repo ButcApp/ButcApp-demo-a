@@ -15,7 +15,7 @@ interface User {
 interface AuthContextType {
   user: User | null
   token: string | null
-  login: (username: string, password: string, captchaAnswer?: string) => Promise<{ success: boolean; error?: string }>
+  login: (username: string, password: string, captchaAnswer?: string) => Promise<{ success: boolean; error?: string; token?: string }>
   logout: () => void
   isLoading: boolean
   isAuthenticated: boolean
@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Token'ı cookie'e set etme fonksiyonu
   const setTokenCookie = (tokenValue: string) => {
-    document.cookie = `auth-token=${tokenValue}; path=/; max-age=${24 * 60 * 60}; samesite=lax`
+    document.cookie = `auth-token=${tokenValue}; path=/; max-age=${24 * 60 * 60}; samesite=lax;`
   }
 
   // Token'ı her iki yere de set etme fonksiyonu
@@ -112,19 +112,52 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (username: string, password: string, captchaAnswer?: string) => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-      const apiPath = '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth';
-      const url = apiUrl ? `${apiUrl}${apiPath}` : apiPath;
-      console.log('Attempting to fetch from URL:', url); // Debugging line
-      const response = await fetch(url, {
+      console.log('=== LOGIN DEBUG ===');
+      console.log('Username:', username);
+      console.log('Password provided:', !!password);
+      
+      // Önce test endpoint'ini dene
+      console.log('Testing fetch with /api/test...');
+      const testResponse = await fetch('/api/test', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ test: 'login-test' })
+      });
+      
+      console.log('Test response status:', testResponse.status);
+      console.log('Test response OK:', testResponse.ok);
+      
+      if (!testResponse.ok) {
+        throw new Error('Test endpoint failed');
+      }
+      
+      const testData = await testResponse.json();
+      console.log('Test response data:', testData);
+      
+      // Şimdi gerçek auth endpoint'ini dene
+      console.log('Now trying auth endpoint...');
+      const apiPath = '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth';
+      const response = await fetch(apiPath, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password, captchaAnswer: captchaAnswer?.trim() || null })
       });
 
+      console.log('Auth response status:', response.status);
+      console.log('Auth response OK:', response.ok);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('HTTP Error Response:', errorText);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
       const data = await response.json()
+      console.log('Response data:', data);
 
       if (data.success) {
         const { user: userData, token } = data.data
@@ -139,13 +172,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Cookie'ye token'ı kaydet (middleware için)
         setTokenCookie(token)
 
-        return { success: true }
+        console.log('Login successful, user data set:', userData);
+        console.log('Token set successfully');
+
+        return { success: true, token }
       } else {
         return { success: false, error: data.error }
       }
     } catch (error) {
-      console.error('Login error:', error)
-      return { success: false, error: 'Sunucu ile bağlantı kurulamadı' }
+      console.error('=== LOGIN ERROR ===');
+      console.error('Error type:', error.constructor.name);
+      console.error('Error message:', (error as Error).message);
+      console.error('Error stack:', (error as Error).stack);
+      return { success: false, error: 'Sunucu ile bağlantı kurulamadı: ' + (error as Error).message }
     }
   }
 

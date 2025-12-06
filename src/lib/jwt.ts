@@ -58,11 +58,14 @@ export const extractTokenFromHeader = (authHeader: string | null): string | null
 // Middleware için özel token doğrulama fonksiyonu
 export const verifyAdminToken = async (token: string): Promise<boolean> => {
   try {
+    console.log('JWT Verification - Token:', token.substring(0, 50) + '...');
+    
     const payload = await verifyToken(token)
     console.log('JWT Payload:', payload)
     
     // Check if user has admin role in database
-    if (payload.role === 'admin') {
+    if (payload.role === 'admin' || payload.role === 'superadmin') {
+      console.log('User has admin role:', payload.role);
       return true
     }
     
@@ -72,6 +75,7 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
       where: { userId: payload.id }
     })
     
+    console.log('Database admin check result:', !!adminUser);
     return !!adminUser
   } catch (error) {
     console.error('Token verification error:', error)

@@ -71,14 +71,18 @@ export async function POST(request: NextRequest) {
       }, { status: 401, headers: corsHeaders })
     }
 
-    const token = generateToken({
+    const tokenPayload = {
       id: user.id,
       userId: user.id,
       adminId: adminUser.id,
       username: user.email,
       email: user.email,
       role: adminUser.role || 'admin'
-    })
+    }
+
+    console.log('Generating token with payload:', tokenPayload)
+    const token = await generateToken(tokenPayload)
+    console.log('Generated token:', token)
 
     await Logger.logAdminAction(adminUser.id, 'admin_login', 'Admin successfully logged in', {
       username: user.email,
@@ -87,7 +91,7 @@ export async function POST(request: NextRequest) {
 
     await Logger.logApiRequest('/api/auth', 'POST', 200, Date.now() - startTime, undefined, adminUser.id)
 
-    return NextResponse.json({
+    const responseData = {
       success: true,
       data: {
         user: {
@@ -100,7 +104,11 @@ export async function POST(request: NextRequest) {
         token
       },
       message: 'Giriş başarılı'
-    }, { headers: corsHeaders })
+    }
+
+    console.log('Sending response:', responseData)
+
+    return NextResponse.json(responseData, { headers: corsHeaders })
 
   } catch (error: any) {
     console.error('Auth API Error:', error)

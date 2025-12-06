@@ -40,15 +40,21 @@ export default function AdminLoginPage() {
       console.log('Login result:', result);
 
       if (result.success) {
-        console.log('Login successful, setting token and redirecting...');
+        console.log('Login successful, checking cookie...');
         
-        // Token'ı cookie'e manuel olarak set et
-        document.cookie = `auth-token=${result.token || 'placeholder'}; path=/; max-age=${24 * 60 * 60}; samesite=lax`;
+        // Cookie'nin set olup olmadığını kontrol et
+        const cookies = document.cookie.split(';');
+        const authTokenCookie = cookies.find(cookie => cookie.trim().startsWith('auth-token='));
+        console.log('Cookie found:', !!authTokenCookie);
+        if (authTokenCookie) {
+          console.log('Cookie value:', authTokenCookie.split('=')[1]);
+        }
         
-        // Kısa bir bekleme sonra yönlendir
+        // State'in güncellenmesini bekle
         setTimeout(() => {
-          window.location.href = '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard';
-        }, 500);
+          console.log('Redirecting to dashboard...');
+          router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard');
+        }, 1000);
       } else {
         console.log('Login failed:', result.error);
         setError(result.error || 'Giriş başarısız oldu')
