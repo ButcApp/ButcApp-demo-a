@@ -45,7 +45,11 @@ export function CategoryManager() {
 
   const fetchCategories = async () => {
     try {
-      const token = localStorage.getItem('adminToken')
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
       
       if (!token) {
         setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')
@@ -95,7 +99,11 @@ export function CategoryManager() {
     setSuccess('')
 
     try {
-      const token = localStorage.getItem('adminToken')
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
       
       if (!token) {
         setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')
@@ -149,7 +157,11 @@ export function CategoryManager() {
     }
 
     try {
-      const token = localStorage.getItem('adminToken')
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
       
       if (!token) {
         setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')

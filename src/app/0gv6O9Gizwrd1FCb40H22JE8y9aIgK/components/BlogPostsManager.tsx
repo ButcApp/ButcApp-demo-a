@@ -39,8 +39,11 @@ export function BlogPostsManager() {
 
   const fetchPosts = async () => {
     try {
-      const token = localStorage.getItem('adminToken') || 
-                   document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1]
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
       
       if (!token) {
         setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')
@@ -79,8 +82,11 @@ export function BlogPostsManager() {
     }
 
     try {
-      const token = localStorage.getItem('adminToken') || 
-                   document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1]
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
       
       if (!token) {
         setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')

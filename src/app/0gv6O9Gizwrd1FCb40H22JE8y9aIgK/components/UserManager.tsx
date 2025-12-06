@@ -59,8 +59,11 @@ export function UserManager() {
         setLoading(true)
       }
 
-      // Get admin token from localStorage
-      const token = localStorage.getItem('adminToken')
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
       
       if (!token) {
         setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')
@@ -69,13 +72,24 @@ export function UserManager() {
         return
       }
 
+      console.log('Fetching users with token:', token.substring(0, 10) + '...')
+
       const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
       
+      console.log('Users API response status:', response.status)
+      
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('Users API error response:', errorText)
+        throw new Error(`HTTP ${response.status}: ${errorText}`)
+      }
+      
       const data = await response.json()
+      console.log('Users API response data:', data)
       
       if (data.success) {
         setUsers(data.users || [])
@@ -92,9 +106,9 @@ export function UserManager() {
           setError('Kullanıcılar yüklenemedi: ' + (data.error || 'Bilinmeyen hata'))
         }
       }
-                    } catch (error) {
+    } catch (error) {
       console.error('Users fetch error:', error)
-      setError('Kullanıcılar yüklenemedi')
+      setError('Kullanıcılar yüklenemedi: ' + (error as Error).message)
     } finally {
       setLoading(false)
       setRefreshing(false)
@@ -107,8 +121,11 @@ export function UserManager() {
 
   const handleToggleActive = async (userId: string) => {
     try {
-      // Get admin token from localStorage
-      const token = localStorage.getItem('adminToken')
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
       
       if (!token) {
         setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')
@@ -146,8 +163,11 @@ export function UserManager() {
       setDeleting(true)
       setError('')
       
-      // Get admin token from localStorage
-      const token = localStorage.getItem('adminToken')
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
       
       if (!token) {
         setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')

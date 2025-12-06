@@ -14,26 +14,11 @@ export function AuthGuard({ children, requiredRole }: AuthGuardProps) {
   const router = useRouter()
 
   useEffect(() => {
-    console.log('AuthGuard: Checking authentication...')
-    console.log('Is loading:', isLoading)
-    console.log('Is authenticated:', isAuthenticated)
-    console.log('User:', user)
-    
     if (!isLoading) {
       if (!isAuthenticated) {
-        console.log('AuthGuard: Not authenticated, checking for token in storages...')
-        const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
-        const storedUser = localStorage.getItem('adminUser')
-        
-        if (token && storedUser) {
-          console.log('AuthGuard: Found token in storage, redirecting with token param...')
-          window.location.href = `/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard?token=${token}`
-          return
-        } else {
-          console.log('AuthGuard: No token found, redirecting to login')
-          router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
-          return
-        }
+        console.log('AuthGuard: Not authenticated, redirecting to login')
+        router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
+        return
       }
 
       if (requiredRole && user?.role !== requiredRole) {

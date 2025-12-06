@@ -84,20 +84,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Router events ile token persist sağla
   useEffect(() => {
-    if (token) {
-      // Her route değişiminde token'ı yeniden set et
-      const handleRouteChange = () => {
-        setTokenCookie(token)
-        console.log('AdminAuthContext: Token reset on route change')
-      }
+    if (!token) return
+    
+    const handleRouteChange = () => {
+      setTokenCookie(token)
+      console.log('AdminAuthContext: Token reset on route change')
+    }
 
-      // Next.js 13+ için router events
-      if (typeof window !== 'undefined' && 'navigation' in window) {
-        window.navigation.addEventListener('navigate', handleRouteChange)
-        return () => {
-          window.navigation.removeEventListener('navigate', handleRouteChange)
-        }
-      }
+    // Next.js 13+ için router events
+    if (typeof window !== 'undefined' && 'navigation' in window) {
+      window.navigation.addEventListener('navigate', handleRouteChange)
       
       // Interval ile token'ı güncel tut
       const interval = setInterval(() => {
@@ -105,8 +101,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }, 5000) // 5 saniyede bir
       
       return () => {
+        window.navigation.removeEventListener('navigate', handleRouteChange)
         clearInterval(interval)
       }
+    }
+    
+    // Navigation API yoksa sadece interval kullan
+    const interval = setInterval(() => {
+      setTokenCookie(token)
+    }, 5000)
+    
+    return () => {
+      clearInterval(interval)
     }
   }, [token])
 
@@ -116,28 +122,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log('Username:', username);
       console.log('Password provided:', !!password);
       
-      // Önce test endpoint'ini dene
-      console.log('Testing fetch with /api/test...');
-      const testResponse = await fetch('/api/test', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ test: 'login-test' })
-      });
-      
-      console.log('Test response status:', testResponse.status);
-      console.log('Test response OK:', testResponse.ok);
-      
-      if (!testResponse.ok) {
-        throw new Error('Test endpoint failed');
-      }
-      
-      const testData = await testResponse.json();
-      console.log('Test response data:', testData);
-      
-      // Şimdi gerçek auth endpoint'ini dene
-      console.log('Now trying auth endpoint...');
+      // Gerçek auth endpoint'ini dene
+      console.log('Trying auth endpoint...');
       const apiPath = '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth';
       const response = await fetch(apiPath, {
         method: 'POST',
