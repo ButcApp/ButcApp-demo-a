@@ -28,31 +28,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
     const { searchParams } = new URL(request.url)
-    const userId = searchParams.get('userId')
     const limit = parseInt(searchParams.get('limit') || '50')
-
-    if (!userId) {
-      return NextResponse.json({
-        success: false,
-        error: 'userId parameter is required'
-      }, { status: 400 })
-    }
-
-    // Check if user can access this data (only their own data, unless admin)
-    if (auth.user.id !== userId) {
-      // Check if current user is admin
-      const adminUser = await db.adminUser.findUnique({
-        where: { userId: auth.user.id }
-      })
-      
-      if (!adminUser) {
-        return NextResponse.json({
-          success: false,
-          error: 'Forbidden'
-        }, { status: 403 })
-      }
-    }
 
     const where: any = { userId, type: { in: ['income', 'expense', 'transfer'] } }
 
@@ -86,31 +65,19 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
 
-    if (!body.userId || !body.type || !body.amount) {
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
+
+    if (!body.type || !body.amount) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required fields: userId, type, amount'
+        error: 'Missing required fields: type, amount'
       }, { status: 400 })
-    }
-
-    // Check if user can create this data (only their own data, unless admin)
-    if (auth.user.id !== body.userId) {
-      // Check if current user is admin
-      const adminUser = await db.adminUser.findUnique({
-        where: { userId: auth.user.id }
-      })
-      
-      if (!adminUser) {
-        return NextResponse.json({
-          success: false,
-          error: 'Forbidden'
-        }, { status: 403 })
-      }
     }
 
     const transaction = await db.userData.create({
       data: {
-        userId: body.userId,
+        userId,
         type: body.type,
         amount: parseFloat(body.amount),
         description: body.description || '',

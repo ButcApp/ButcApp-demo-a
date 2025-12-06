@@ -28,23 +28,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
-    const { searchParams } = new URL(request.url)
-    const userId = searchParams.get('userId')
-
-    if (!userId) {
-      return NextResponse.json({
-        success: false,
-        error: 'userId parameter is required'
-      }, { status: 400 })
-    }
-
-    // Check if user can access this data (only their own data)
-    if (auth.user.id !== userId) {
-      return NextResponse.json({
-        success: false,
-        error: 'Forbidden'
-      }, { status: 403 })
-    }
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
 
     // Get user profile with balance information
     const userProfile = await db.userProfile.findUnique({
@@ -94,30 +79,18 @@ export async function PUT(request: NextRequest) {
 
     const body = await request.json()
 
-    if (!body.userId) {
-      return NextResponse.json({
-        success: false,
-        error: 'userId is required'
-      }, { status: 400 })
-    }
-
-    // Check if user can update this data (only their own data)
-    if (auth.user.id !== body.userId) {
-      return NextResponse.json({
-        success: false,
-        error: 'Forbidden'
-      }, { status: 403 })
-    }
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
 
     const updatedProfile = await db.userProfile.upsert({
-      where: { userId: body.userId },
+      where: { userId },
       update: {
         cash: parseFloat(body.cash) || 0,
         bank: parseFloat(body.bank) || 0,
         savings: parseFloat(body.savings) || 0
       },
       create: {
-        userId: body.userId,
+        userId,
         email: body.email || '',
         fullName: body.fullName || '',
         cash: parseFloat(body.cash) || 0,

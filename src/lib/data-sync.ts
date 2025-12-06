@@ -20,8 +20,12 @@ export const dataSync = {
   async getBalances() {
     try {
       const userId = await this.getCurrentUserId()
-      if (!userId) return { cash: 0, bank: 0, savings: 0 }
+      if (!userId) {
+        console.log('No user ID found, returning default balances')
+        return { cash: 0, bank: 0, savings: 0 }
+      }
 
+      console.log('Fetching balances for userId:', userId)
       const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/balances`, {
         method: 'GET',
         headers: {
@@ -30,13 +34,19 @@ export const dataSync = {
       })
 
       if (!response.ok) {
-        console.error('Failed to fetch balances:', response.statusText)
+        console.error('Failed to fetch balances:', response.status, response.statusText)
         return { cash: 0, bank: 0, savings: 0 }
       }
 
       const data = await response.json()
       console.log('Balances retrieved from API:', data)
-      return data || { cash: 0, bank: 0, savings: 0 }
+      
+      if (data.success && data.data) {
+        return data.data
+      } else {
+        console.error('Balances API returned error:', data.error)
+        return { cash: 0, bank: 0, savings: 0 }
+      }
     } catch (error) {
       console.error('Error in getBalances:', error)
       return { cash: 0, bank: 0, savings: 0 }
@@ -64,12 +74,20 @@ export const dataSync = {
       })
 
       if (!response.ok) {
-        console.error('Failed to update balances:', response.statusText)
+        console.error('Failed to update balances:', response.status, response.statusText)
         return false
       }
 
-      console.log('Balances successfully updated via API')
-      return true
+      const data = await response.json()
+      console.log('Balances update response:', data)
+      
+      if (data.success) {
+        console.log('Balances successfully updated via API')
+        return true
+      } else {
+        console.error('Balances update failed:', data.error)
+        return false
+      }
     } catch (error) {
       console.error('Error in updateBalances:', error)
       return false
@@ -80,8 +98,12 @@ export const dataSync = {
   async getTransactions() {
     try {
       const userId = await this.getCurrentUserId()
-      if (!userId) return []
+      if (!userId) {
+        console.log('No user ID found, returning empty transactions')
+        return []
+      }
 
+      console.log('Fetching transactions for userId:', userId)
       const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/transactions`, {
         method: 'GET',
         headers: {
@@ -90,13 +112,19 @@ export const dataSync = {
       })
 
       if (!response.ok) {
-        console.error('Failed to fetch transactions:', response.statusText)
+        console.error('Failed to fetch transactions:', response.status, response.statusText)
         return []
       }
 
       const data = await response.json()
       console.log('Transactions retrieved from API:', data?.length || 0)
-      return data || []
+      
+      if (data.success && data.data) {
+        return data.data
+      } else {
+        console.error('Transactions API returned error:', data.error)
+        return []
+      }
     } catch (error) {
       console.error('Error in getTransactions:', error)
       return []
@@ -124,12 +152,20 @@ export const dataSync = {
       })
 
       if (!response.ok) {
-        console.error('Failed to add transaction:', response.statusText)
+        console.error('Failed to add transaction:', response.status, response.statusText)
         return false
       }
 
-      console.log('Transaction successfully added via API')
-      return true
+      const data = await response.json()
+      console.log('Transaction add response:', data)
+      
+      if (data.success) {
+        console.log('Transaction successfully added via API')
+        return true
+      } else {
+        console.error('Transaction add failed:', data.error)
+        return false
+      }
     } catch (error) {
       console.error('Error in addTransaction:', error)
       return false
@@ -140,8 +176,12 @@ export const dataSync = {
   async getRecurringTransactions() {
     try {
       const userId = await this.getCurrentUserId()
-      if (!userId) return []
+      if (!userId) {
+        console.log('No user ID found, returning empty recurring transactions')
+        return []
+      }
 
+      console.log('Fetching recurring transactions for userId:', userId)
       const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/recurring-transactions`, {
         method: 'GET',
         headers: {
@@ -150,13 +190,19 @@ export const dataSync = {
       })
 
       if (!response.ok) {
-        console.error('Failed to fetch recurring transactions:', response.statusText)
+        console.error('Failed to fetch recurring transactions:', response.status, response.statusText)
         return []
       }
 
       const data = await response.json()
       console.log('Recurring transactions retrieved from API:', data?.length || 0)
-      return data || []
+      
+      if (data.success && data.data) {
+        return data.data
+      } else {
+        console.error('Recurring transactions API returned error:', data.error)
+        return []
+      }
     } catch (error) {
       console.error('Error in getRecurringTransactions:', error)
       return []
@@ -233,8 +279,12 @@ export const dataSync = {
   async getNotes() {
     try {
       const userId = await this.getCurrentUserId()
-      if (!userId) return []
+      if (!userId) {
+        console.log('No user ID found, returning empty notes')
+        return []
+      }
 
+      console.log('Fetching notes for userId:', userId)
       const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/notes`, {
         method: 'GET',
         headers: {
@@ -243,13 +293,19 @@ export const dataSync = {
       })
 
       if (!response.ok) {
-        console.error('Failed to fetch notes:', response.statusText)
+        console.error('Failed to fetch notes:', response.status, response.statusText)
         return []
       }
 
       const data = await response.json()
       console.log('Notes retrieved from API:', data?.length || 0)
-      return data || []
+      
+      if (data.success && data.data) {
+        return data.data
+      } else {
+        console.error('Notes API returned error:', data.error)
+        return []
+      }
     } catch (error) {
       console.error('Error in getNotes:', error)
       return []

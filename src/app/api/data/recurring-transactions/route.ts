@@ -2,83 +2,111 @@ import { NextRequest, NextResponse } from 'next/server'
 import { AuthService } from '@/lib/auth-service'
 import { db } from '@/lib/db'
 
+// Authentication middleware
+async function authenticate(request: NextRequest) {
+  const token = request.cookies.get('auth-token')?.value || 
+                request.headers.get('authorization')?.replace('Bearer ', '') ||
+                request.nextUrl.searchParams.get('token')
+
+  if (!token) {
+    return { error: 'Unauthorized', status: 401 }
+  }
+
+  const user = await AuthService.verifyToken(token)
+  if (!user) {
+    return { error: 'Unauthorized', status: 401 }
+  }
+
+  return { user, token }
+}
+
 // GET - Fetch user's recurring transactions
 export async function GET(request: NextRequest) {
   try {
-    const authResult = await AuthService.verifyTokenForAPI(request)
-    if (!authResult.success || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    const auth = await authenticate(request)
+    if (auth.error) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
+
+    // Use authenticated user's ID
+    const userId = auth.user.id
 
     const recurringTransactions = await db.userData.findMany({
       where: { 
-        userId: authResult.user.id,
+        userId,
         type: 'recurring'
       },
       orderBy: { createdAt: 'desc' }
     })
 
-    return NextResponse.json(recurringTransactions)
+    return NextResponse.json({
+      success: true,
+      data: recurringTransactions
+    })
 
   } catch (error) {
     console.error('Error fetching recurring transactions:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error'
+    }, { status: 500 })
   }
 }
 
 // POST - Add new recurring transaction
 export async function POST(request: NextRequest) {
   try {
-    const authResult = await AuthService.verifyTokenForAPI(request)
-    if (!authResult.success || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    const auth = await authenticate(request)
+    if (auth.error) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
-    const recurringData = await request.json()
+    const body = await request.json()
+
+    // Use authenticated user's ID
+    const userId = auth.user.id
+
+    if (!body.type || !body.amount) {
+      return NextResponse.json({
+        success: false,
+        error: 'Missing required fields: type, amount'
+      }, { status: 400 })
+    }
 
     const recurringTransaction = await db.userData.create({
       data: {
-        userId: authResult.user.id,
+        userId,
         type: 'recurring',
-        amount: recurringData.amount,
-        description: recurringData.description,
-        category: recurringData.category,
-        frequency: recurringData.frequency,
-        startDate: new Date(recurringData.startDate),
-        endDate: recurringData.endDate ? new Date(recurringData.endDate) : null,
+        amount: parseFloat(body.amount),
+        description: body.description || '',
+        category: body.category || '',
+        frequency: body.frequency,
+        startDate: new Date(body.startDate),
+        endDate: body.endDate ? new Date(body.endDate) : null,
         // Add other recurring-specific fields
       }
     })
 
-    return NextResponse.json(recurringTransaction)
+    return NextResponse.json({
+      success: true,
+      data: recurringTransaction
+    })
 
   } catch (error) {
     console.error('Error adding recurring transaction:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error'
+    }, { status: 500 })
   }
 }
 
 // PUT - Update recurring transaction
 export async function PUT(request: NextRequest) {
   try {
-    const authResult = await AuthService.verifyTokenForAPI(request)
-    if (!authResult.success || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    const auth = await authenticate(request)
+    if (auth.error) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
     const updatedData = await request.json()
@@ -87,7 +115,7 @@ export async function PUT(request: NextRequest) {
     const updatedTransaction = await db.userData.update({
       where: { 
         id: id,
-        userId: authResult.user.id 
+        userId: auth.user.id 
       },
       data: {
         ...updateFields,
@@ -95,13 +123,16 @@ export async function PUT(request: NextRequest) {
       }
     })
 
-    return NextResponse.json(updatedTransaction)
+    return NextResponse.json({
+      success: true,
+      data: updatedTransaction
+    })
 
   } catch (error) {
     console.error('Error updating recurring transaction:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error'
+    }, { status: 500 })
   }
 }

@@ -28,24 +28,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
     const { searchParams } = new URL(request.url)
-    const userId = searchParams.get('userId')
     const limit = parseInt(searchParams.get('limit') || '50')
-
-    if (!userId) {
-      return NextResponse.json({
-        success: false,
-        error: 'userId parameter is required'
-      }, { status: 400 })
-    }
-
-    // Check if user can access this data (only their own data)
-    if (auth.user.id !== userId) {
-      return NextResponse.json({
-        success: false,
-        error: 'Forbidden'
-      }, { status: 403 })
-    }
 
     const where: any = { userId, type: 'note' }
 
@@ -79,24 +65,19 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
 
-    if (!body.userId || !body.title || !body.content) {
-      return NextResponse.json({
-        success: false,
-        error: 'Missing required fields: userId, title, content'
-      }, { status: 400 })
-    }
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
 
-    // Check if user can create this data (only their own data)
-    if (auth.user.id !== body.userId) {
+    if (!body.title || !body.content) {
       return NextResponse.json({
         success: false,
-        error: 'Forbidden'
-      }, { status: 403 })
+        error: 'Missing required fields: title, content'
+      }, { status: 400 })
     }
 
     const note = await db.userData.create({
       data: {
-        userId: body.userId,
+        userId,
         type: 'note',
         title: body.title,
         content: body.content,
