@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AuthService } from '@/lib/auth-service'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { db } from '@/lib/db'
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
@@ -44,7 +42,7 @@ export async function GET(request: NextRequest) {
     // Check if user can access this data (only their own data, unless admin)
     if (auth.user.id !== userId) {
       // Check if current user is admin
-      const adminUser = await prisma.adminUser.findUnique({
+      const adminUser = await db.adminUser.findUnique({
         where: { userId: auth.user.id }
       })
       
@@ -58,7 +56,7 @@ export async function GET(request: NextRequest) {
 
     const where: any = { userId, type: { in: ['income', 'expense', 'transfer'] } }
 
-    const transactions = await prisma.userData.findMany({
+    const transactions = await db.userData.findMany({
       where,
       orderBy: { date: 'desc' },
       take: limit
@@ -98,7 +96,7 @@ export async function POST(request: NextRequest) {
     // Check if user can create this data (only their own data, unless admin)
     if (auth.user.id !== body.userId) {
       // Check if current user is admin
-      const adminUser = await prisma.adminUser.findUnique({
+      const adminUser = await db.adminUser.findUnique({
         where: { userId: auth.user.id }
       })
       
@@ -110,7 +108,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const transaction = await prisma.userData.create({
+    const transaction = await db.userData.create({
       data: {
         userId: body.userId,
         type: body.type,

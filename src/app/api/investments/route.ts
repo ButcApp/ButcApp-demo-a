@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdminToken } from '@/lib/jwt'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { db } from '@/lib/db'
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
@@ -57,7 +55,7 @@ export async function GET(request: NextRequest) {
       where.type = type
     }
 
-    const investments = await prisma.investment.findMany({
+    const investments = await db.investment.findMany({
       where,
       orderBy: { buyDate: 'desc' }
     })
@@ -101,7 +99,7 @@ export async function POST(request: NextRequest) {
       }, { status: 403 })
     }
 
-    const investment = await prisma.investment.create({
+    const investment = await db.investment.create({
       data: {
         userId: body.userId,
         type: body.type,

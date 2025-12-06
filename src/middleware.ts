@@ -23,10 +23,9 @@ export async function middleware(request: NextRequest) {
       }
     }
     
-    // Header'da da yoksa URL query param'dan kontrol et
-    if (!token) {
-      token = request.nextUrl.searchParams.get('token')
-    }
+    // GÜVENLİK: URL parametresi ile token alma KALDIRILDI
+    // Token sadece Cookie (HttpOnly) veya Authorization Header içinde taşınmalıdır
+    // Session Hijacking ve Token Leakage önlemek için
     
     console.log('Middleware: Checking path:', pathname)
     console.log('Middleware: Token found:', !!token)

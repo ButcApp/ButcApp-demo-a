@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AuthService } from '@/lib/auth-service'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { db } from '@/lib/db'
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
@@ -49,13 +47,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user profile with balance information
-    const userProfile = await prisma.userProfile.findUnique({
+    const userProfile = await db.userProfile.findUnique({
       where: { userId }
     })
 
     if (!userProfile) {
       // Create default profile if not exists
-      const newProfile = await prisma.userProfile.create({
+      const newProfile = await db.userProfile.create({
         data: {
           userId,
           email: '',
@@ -111,7 +109,7 @@ export async function PUT(request: NextRequest) {
       }, { status: 403 })
     }
 
-    const updatedProfile = await prisma.userProfile.upsert({
+    const updatedProfile = await db.userProfile.upsert({
       where: { userId: body.userId },
       update: {
         cash: parseFloat(body.cash) || 0,

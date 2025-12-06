@@ -1,8 +1,10 @@
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import { SignJWT, jwtVerify } from 'jose'
 import { db } from '@/lib/db'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'butcapp-secret-key-change-in-production-2024'
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || 'butcapp-secret-key-change-in-production-2024'
+)
 
 export interface AuthUser {
   id: string
@@ -102,15 +104,15 @@ export class AuthService {
       })
 
       // Generate token - NO EMAIL VERIFICATION NEEDED
-      const token = jwt.sign(
-        { 
-          userId: user.id, 
-          email: user.email,
-          role: adminUser ? 'admin' : 'user'
-        },
-        JWT_SECRET,
-        { expiresIn: '30d' } // Longer token for better UX
-      )
+      const token = await new SignJWT({
+        userId: user.id,
+        email: user.email,
+        role: adminUser ? 'admin' : 'user'
+      })
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setExpirationTime('30d')
+        .sign(JWT_SECRET)
 
       console.log('AuthService: Signup successful for:', email)
 
@@ -156,15 +158,15 @@ export class AuthService {
       })
 
       // Generate token
-      const token = jwt.sign(
-        { 
-          userId: user.id, 
-          email: user.email,
-          role: adminUser ? 'admin' : 'user'
-        },
-        JWT_SECRET,
-        { expiresIn: '30d' }
-      )
+      const token = await new SignJWT({
+        userId: user.id,
+        email: user.email,
+        role: adminUser ? 'admin' : 'user'
+      })
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setExpirationTime('30d')
+        .sign(JWT_SECRET)
 
       console.log('AuthService: Signin successful for:', email)
 
@@ -187,7 +189,8 @@ export class AuthService {
     try {
       console.log('AuthService: Verifying token')
       
-      const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; email: string; role?: string; id?: string }
+      const { payload } = await jwtVerify(token, JWT_SECRET)
+      const decoded = payload as { userId: string; email: string; role?: string; id?: string }
       
       // Find user in database
       const user = await db.user.findUnique({

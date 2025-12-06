@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { db } from '@/lib/db'
 import { BlogCategoryResponse } from '@/types/blog'
-
-const prisma = new PrismaClient()
 
 // GET /api/blog/categories - Fetch all blog categories
 export async function GET() {
   try {
-    const categories = await prisma.blogCategory.findMany({
+    const categories = await db.blogCategory.findMany({
       orderBy: { name: 'asc' }
     })
 
@@ -47,7 +45,7 @@ export async function POST(request: NextRequest) {
       .replace(/\s+/g, '-')
       .trim()
 
-    const category = await prisma.blogCategory.create({
+    const category = await db.blogCategory.create({
       data: {
         name: body.name,
         slug: body.slug || slug,

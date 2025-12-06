@@ -22,6 +22,17 @@ export interface LogData {
 export class Logger {
   static async log(data: LogData): Promise<void> {
     try {
+      // Log seviyesi kontrolü - sadece error seviyesindeki logları kaydet
+      const logLevel = process.env.LOG_LEVEL || 'info'
+      const shouldLog = logLevel === 'debug' || 
+                      (logLevel === 'info' && data.level !== 'debug') ||
+                      (logLevel === 'warn' && ['warn', 'error', 'fatal'].includes(data.level || 'info')) ||
+                      (logLevel === 'error' && ['error', 'fatal'].includes(data.level || 'info'))
+
+      if (!shouldLog) {
+        return // Log seviyesi uygun değilse kaydetme
+      }
+
       const logEntry = {
         ...data,
         metadata: data.metadata ? JSON.stringify(data.metadata) : null,
@@ -31,8 +42,12 @@ export class Logger {
         data: logEntry
       })
 
-      // Update log statistics
-      await this.updateLogStats(data.type, data.level === 'error' ? 1 : 0, data.responseTime)
+      // Update log statistics (sadece error'lar için)
+      if (data.level === 'error') {
+        await this.updateLogStats(data.type, 1, data.responseTime)
+      } else if (data.responseTime) {
+        await this.updateLogStats(data.type, 0, data.responseTime)
+      }
     } catch (error) {
       console.error('Failed to log to database:', error)
       // Fallback to console logging

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AuthService } from '@/lib/auth-service'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { db } from '@/lib/db'
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
@@ -51,7 +49,7 @@ export async function GET(request: NextRequest) {
 
     const where: any = { userId, type: 'note' }
 
-    const notes = await prisma.userData.findMany({
+    const notes = await db.userData.findMany({
       where,
       orderBy: { date: 'desc' },
       take: limit
@@ -96,7 +94,7 @@ export async function POST(request: NextRequest) {
       }, { status: 403 })
     }
 
-    const note = await prisma.userData.create({
+    const note = await db.userData.create({
       data: {
         userId: body.userId,
         type: 'note',

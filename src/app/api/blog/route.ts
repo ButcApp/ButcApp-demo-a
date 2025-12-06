@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { db } from '@/lib/db'
 import { BlogPostResponse, BlogFilters, BlogPaginationOptions, CreateBlogPostRequest } from '@/types/blog'
-
-const prisma = new PrismaClient()
 
 // GET /api/blog - Fetch blog posts with filtering and pagination
 export async function GET(request: NextRequest) {
@@ -44,11 +42,11 @@ export async function GET(request: NextRequest) {
     }
 
     // Count query
-    const total = await prisma.blogPost.count({ where })
+    const total = await db.blogPost.count({ where })
 
     // Data query
     const offset = (page - 1) * limit
-    const posts = await prisma.blogPost.findMany({
+    const posts = await db.blogPost.findMany({
       where,
       orderBy: { [sortBy]: sortOrder },
       skip: offset,
@@ -127,7 +125,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if slug is unique
-    const existingPost = await prisma.blogPost.findUnique({
+    const existingPost = await db.blogPost.findUnique({
       where: { slug }
     })
 
@@ -162,7 +160,7 @@ export async function POST(request: NextRequest) {
       authorId: body.author_id || null
     }
 
-    const newPost = await prisma.blogPost.create({
+    const newPost = await db.blogPost.create({
       data: postData
     })
 

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { db } from '@/lib/db';
 import bcrypt from 'bcryptjs';
 
-const prisma = new PrismaClient();
 const SALT_ROUNDS = 10;
 
 export async function POST(request: NextRequest) {
@@ -22,7 +21,7 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await db.user.findUnique({
       where: { email },
     });
 
@@ -35,8 +34,8 @@ export async function POST(request: NextRequest) {
 
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
-    const newUser = await prisma.$transaction(async (prisma) => {
-      const user = await prisma.user.create({
+    const newUser = await db.$transaction(async (db) => {
+      const user = await db.user.create({
         data: {
           email,
           passwordHash,
@@ -44,7 +43,7 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      await prisma.adminUser.create({
+      await db.adminUser.create({
         data: {
           userId: user.id,
           role: 'superadmin',
