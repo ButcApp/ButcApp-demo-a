@@ -112,19 +112,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (username: string, password: string, captchaAnswer?: string) => {
     try {
-<<<<<<< HEAD
-      // Force absolute URL for client-side requests
-      const finalUrl = `${window.location.origin}/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth`;
-      console.log('Final URL:', finalUrl);
-      
-      const response = await fetch(finalUrl, {
-=======
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
       const apiPath = '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth';
       const url = apiUrl ? `${apiUrl}${apiPath}` : apiPath;
       console.log('Attempting to fetch from URL:', url); // Debugging line
       const response = await fetch(url, {
->>>>>>> 9fa9ca9c52f2e9774602fc60899a1b0bf060871b
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -133,17 +125,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       const data = await response.json()
-<<<<<<< HEAD
-      console.log('API Response data:', data);
 
       if (data.success) {
         const { user: userData, token } = data.data
-        console.log('Login successful, setting tokens and user data');
-=======
-
-      if (data.success) {
-        const { user: userData, token } = data.data
->>>>>>> 9fa9ca9c52f2e9774602fc60899a1b0bf060871b
         
         // Token ve user bilgisini state'e ve tüm storage'lara kaydet
         setToken(token)
@@ -154,20 +138,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         
         // Cookie'ye token'ı kaydet (middleware için)
         setTokenCookie(token)
-<<<<<<< HEAD
-        
-        console.log('Token set in cookie:', document.cookie.includes('auth-token'));
-        console.log('User data stored:', !!localStorage.getItem('adminUser'));
-        console.log('Token stored:', !!localStorage.getItem('adminToken'));
-
-        return { success: true, token: token }
-      } else {
-        console.log('Login failed:', data.error);
-=======
 
         return { success: true }
       } else {
->>>>>>> 9fa9ca9c52f2e9774602fc60899a1b0bf060871b
         return { success: false, error: data.error }
       }
     } catch (error) {

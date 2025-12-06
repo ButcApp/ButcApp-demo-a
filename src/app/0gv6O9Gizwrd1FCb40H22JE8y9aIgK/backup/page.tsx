@@ -148,79 +148,22 @@ export default function BackupPage() {
     }
   }
 
-  const handleDownloadBackup = async (backupId: string) => {
+  const handleDownloadBackup = (backupId: string) => {
     try {
-      console.log('🔥 İndirme başlatılıyor:', backupId)
-      console.log('🔥 Token:', token ? 'Mevcut' : 'Yok')
-      
-      // Önce popup ile dene
+      // Basit ve etkili indirme - tarayıcı yönetir
       const downloadUrl = `/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/backup/download?backupId=${backupId}&token=${token}`
       
-      const newWindow = window.open(downloadUrl, '_blank')
+      // Gizli bir link oluştur ve tıkla
+      const link = document.createElement('a')
+      link.href = downloadUrl
+      link.style.display = 'none'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
       
-      if (newWindow) {
-        setMessage({ type: 'success', text: 'Yedek dosyası indiriliyor...' })
-        setTimeout(() => {
-          newWindow.close()
-        }, 2000)
-      } else {
-        // Popup engellenirse, fetch ile devam et
-        console.log('🔥 Popup engellendi, fetch ile devam ediliyor')
-        await downloadWithFetch(backupId)
-      }
-      
+      setMessage({ type: 'success', text: 'Yedek dosyası indiriliyor...' })
     } catch (error) {
-      console.error('🔥 Download exception:', error)
-      setMessage({ type: 'error', text: 'İndirme sırasında hata oluştu' })
-    }
-  }
-
-  const downloadWithFetch = async (backupId: string) => {
-    try {
-      const response = await fetch(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/backup/download?backupId=${backupId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-
-      console.log('🔥 Response status:', response.status)
-      console.log('🔥 Response headers:', Object.fromEntries(response.headers.entries()))
-
-      if (response.ok) {
-        const blob = await response.blob()
-        console.log('🔥 Blob size:', blob.size)
-        console.log('🔥 Blob type:', blob.type)
-        
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        
-        // Get filename from response headers or create one
-        const contentDisposition = response.headers.get('content-disposition')
-        let filename = `backup_${backupId}.json`
-        if (contentDisposition) {
-          const filenameMatch = contentDisposition.match(/filename="(.+)"/)
-          if (filenameMatch) {
-            filename = filenameMatch[1]
-          }
-        }
-        
-        console.log('🔥 Filename:', filename)
-        
-        a.download = filename
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
-        
-        setMessage({ type: 'success', text: 'Yedek dosyası indirildi' })
-      } else {
-        const errorData = await response.json()
-        console.error('🔥 Download error:', errorData)
-        setMessage({ type: 'error', text: errorData.error || 'İndirme başarısız' })
-      }
-    } catch (error) {
-      console.error('🔥 Download fetch exception:', error)
+      console.error('Download error:', error)
       setMessage({ type: 'error', text: 'İndirme sırasında hata oluştu' })
     }
   }

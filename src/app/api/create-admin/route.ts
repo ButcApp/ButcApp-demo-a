@@ -7,6 +7,12 @@ const SALT_ROUNDS = 10;
 
 export async function POST(request: NextRequest) {
   try {
+    // Güvenlik kontrolü - sadece secret bilen kişi admin oluşturabilir
+    const secret = request.headers.get('x-admin-secret');
+    if (secret !== process.env.ADMIN_CREATION_SECRET) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { email, password, fullName } = await request.json();
 
     if (!email || !password || !fullName) {
