@@ -7,7 +7,11 @@ generator client {
 
 datasource db {
   provider = "sqlite"
+<<<<<<< HEAD
   url      = env("DATABASE_URL")
+=======
+  url      = "file:./db/custom.db"
+>>>>>>> e24e41a09e2ad6015452c7d5548a957a3c4fec4d
 }
 
 // Users table for authentication
