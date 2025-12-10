@@ -8,6 +8,7 @@ import PageTransition from "@/components/page-transition";
 
 // Meta bilgileri
 export const metadata: Metadata = {
+<<<<<<< HEAD
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   title: "ButcApp - Kişisel Muhasebe ve Finans Yönetimi",
   description: "ButcApp ile nakit, birikim ve banka hesaplarınızı tek yerden yönetin. Ücretsiz, güvenli ve modern kişisel finans uygulaması. Bütçe takibi, yatırım analizi ve daha fazlası.",
@@ -15,6 +16,14 @@ export const metadata: Metadata = {
   authors: [{ name: "ButcApp Team" }],
   creator: "ButcApp",
   publisher: "ButcApp",
+=======
+  title: "Butcap - Kişisel Muhasebe ve Finans Yönetimi",
+  description: "Butcap ile nakit, birikim ve banka hesaplarınızı tek yerden yönetin. Ücretsiz, güvenli ve modern kişisel finans uygulaması. Bütçe takibi, yatırım analizi ve daha fazlası.",
+  keywords: ["Butcap", "kişisel finans", "muhasebe", "bütçe", "finans yönetimi", "para takibi", "yatırım", "birikim", "banka hesabı", "nakit takibi"],
+  authors: [{ name: "Butcap Team" }],
+  creator: "Butcap",
+  publisher: "Butcap",
+>>>>>>> origin/master
   category: "finance",
   classification: "Personal Finance Management",
   referrer: "origin-when-cross-origin",
@@ -24,10 +33,17 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   openGraph: {
+<<<<<<< HEAD
     title: "ButcApp - Modern Kişisel Finans Yönetimi",
     description: "Ücretsiz kişisel finans uygulaması. Nakit, birikim ve banka hesaplarınızı tek yerden yönetin. Bütçe takibi, yatırım analizi ve daha fazlası.",
     url: "https://butcapp.com",
     siteName: "ButcApp",
+=======
+    title: "Butcap - Modern Kişisel Finans Yönetimi",
+    description: "Ücretsiz kişisel finans uygulaması. Nakit, birikim ve banka hesaplarınızı tek yerden yönetin. Bütçe takibi, yatırım analizi ve daha fazlası.",
+    url: "https://butcapp.com",
+    siteName: "Butcap",
+>>>>>>> origin/master
     type: "website",
     locale: "tr_TR",
     images: [
@@ -35,13 +51,21 @@ export const metadata: Metadata = {
         url: "https://butcapp.com/og-image.png",
         width: 1200,
         height: 630,
+<<<<<<< HEAD
         alt: "ButcApp - Kişisel Finans Yönetimi"
+=======
+        alt: "Butcap - Kişisel Finans Yönetimi"
+>>>>>>> origin/master
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
+<<<<<<< HEAD
     title: "ButcApp - Modern Kişisel Finans Yönetimi",
+=======
+    title: "Butcap - Modern Kişisel Finans Yönetimi",
+>>>>>>> origin/master
     description: "Ücretsiz kişisel finans uygulaması. Nakit, birikim ve banka hesaplarınızı tek yerden yönetin.",
     images: ["https://butcapp.com/og-image.png"],
     creator: "@butcap",

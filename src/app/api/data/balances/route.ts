@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AuthService } from '@/lib/auth-service'
+<<<<<<< HEAD
 import { createClient } from '@supabase/supabase-js'
 
 // Create Supabase client directly
 const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
 const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
+import { db } from '@/lib/db'
+>>>>>>> origin/master
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
@@ -37,6 +41,7 @@ export async function GET(request: NextRequest) {
     const userId = auth.user.id
 
     // Get user profile with balance information
+<<<<<<< HEAD
     const { data: userProfileData, error: profileError } = await supabase
       .from('user_profiles')
       .select('*')
@@ -80,6 +85,28 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         success: true,
         data: newProfileData
+=======
+    const userProfile = await db.userProfile.findUnique({
+      where: { userId }
+    })
+
+    if (!userProfile) {
+      // Create default profile if not exists
+      const newProfile = await db.userProfile.create({
+        data: {
+          userId,
+          email: '',
+          fullName: '',
+          cash: 0,
+          bank: 0,
+          savings: 0
+        }
+      })
+
+      return NextResponse.json({
+        success: true,
+        data: newProfile
+>>>>>>> origin/master
       })
     }
 
@@ -110,6 +137,7 @@ export async function PUT(request: NextRequest) {
     // Use authenticated user's ID instead of requiring userId parameter
     const userId = auth.user.id
 
+<<<<<<< HEAD
     const { data: existingProfile } = await supabase
       .from('user_profiles')
       .select('*')
@@ -150,6 +178,24 @@ export async function PUT(request: NextRequest) {
         .single()
       updatedProfile = data
     }
+=======
+    const updatedProfile = await db.userProfile.upsert({
+      where: { userId },
+      update: {
+        cash: parseFloat(body.cash) || 0,
+        bank: parseFloat(body.bank) || 0,
+        savings: parseFloat(body.savings) || 0
+      },
+      create: {
+        userId,
+        email: body.email || '',
+        fullName: body.fullName || '',
+        cash: parseFloat(body.cash) || 0,
+        bank: parseFloat(body.bank) || 0,
+        savings: parseFloat(body.savings) || 0
+      }
+    })
+>>>>>>> origin/master
 
     return NextResponse.json({
       success: true,

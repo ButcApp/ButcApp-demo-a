@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
@@ -58,11 +59,67 @@ export async function GET(request: NextRequest) {
         allCategories[existingIndex].postCount = category.postCount
       } else {
         allCategories.push(category)
+=======
+import { db } from '@/lib/db'
+import { BlogCategoryResponse } from '@/types/blog'
+
+// GET /api/blog/categories - Fetch all blog categories
+export async function GET() {
+  try {
+    const categories = await db.blogCategory.findMany({
+      orderBy: { name: 'asc' }
+    })
+
+    const response: BlogCategoryResponse = {
+      success: true,
+      data: categories || []
+    }
+
+    return NextResponse.json(response)
+
+  } catch (error) {
+    console.error('Blog categories API error:', error)
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error',
+      details: error.message
+    }, { status: 500 })
+  }
+}
+
+// POST /api/blog/categories - Create new blog category
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+
+    if (!body.name) {
+      return NextResponse.json({
+        success: false,
+        error: 'Category name is required'
+      }, { status: 400 })
+    }
+
+    // Generate slug from name
+    const slug = body.name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .trim()
+
+    const category = await db.blogCategory.create({
+      data: {
+        name: body.name,
+        slug: body.slug || slug,
+        description: body.description || '',
+        color: body.color || '#10b981',
+        icon: body.icon || 'BookOpen'
+>>>>>>> origin/master
       }
     })
 
     return NextResponse.json({
       success: true,
+<<<<<<< HEAD
       data: allCategories
     })
 
@@ -84,4 +141,17 @@ function getCategoryColor(categoryName: string): string {
   
   const index = categoryName.length % colors.length
   return colors[index]
+=======
+      data: category
+    })
+
+  } catch (error) {
+    console.error('Blog categories POST error:', error)
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error',
+      details: error.message
+    }, { status: 500 })
+  }
+>>>>>>> origin/master
 }

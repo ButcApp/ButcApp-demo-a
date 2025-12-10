@@ -26,7 +26,13 @@ import { useMobile } from '@/hooks/useMobile'
 import { MobileCarousel } from '@/components/ui/mobile-carousel'
 import { MobileModal } from '@/components/ui/mobile-modal'
 import { MobileSheet } from '@/components/ui/mobile-sheet'
+<<<<<<< HEAD
 import { MobileNavigation } from '@/components/ui/mobile-navigation'
+=======
+import { MobileSearch } from '@/components/ui/mobile-search'
+import { MobileNavigation } from '@/components/ui/mobile-navigation'
+import { MobileFloatingButton } from '@/components/ui/mobile-floating-button'
+>>>>>>> origin/master
 
 interface Transaction {
   id: string
@@ -52,8 +58,11 @@ interface RecurringTransaction {
   frequency: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom'
   customFrequency?: string
   dayOfWeek?: number  // Haftalık için (1-7, 1=Pazartesi)
+<<<<<<< HEAD
   dayOfMonth?: number // Aylık için (1-31)
   monthOfYear?: number // Yıllık için (1-12)
+=======
+>>>>>>> origin/master
   startDate: string
   endDate?: string
   isActive: boolean
@@ -227,6 +236,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
   // {t('app.monthlyAutoTransactions')}
   useEffect(() => {
     checkAndApplyRecurringTransactions()
+<<<<<<< HEAD
   }, [recurringTransactions, user])
 
   const checkAndApplyRecurringTransactions = () => {
@@ -237,6 +247,17 @@ const [balanceHidden, setBalanceHidden] = useState(false)
 
     const today = new Date()
     today.setHours(0, 0, 0, 0) // Bugünün başlangıcı
+=======
+  }, [recurringTransactions])
+
+  const checkAndApplyRecurringTransactions = () => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0) // Bugünün başlangıcı
+    const currentMonth = today.getMonth()
+    const currentYear = today.getFullYear()
+    const currentDay = today.getDate()
+    const currentWeekDay = today.getDay() // 0 = Pazar, 1 = Pazartesi
+>>>>>>> origin/master
     const todayStr = today.toISOString().split('T')[0]
 
     recurringTransactions.forEach(recurring => {
@@ -248,6 +269,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
       // Eğer başlangıç tarihi gelecekteyse, henüz uygula
       if (startDate > today) return
 
+<<<<<<< HEAD
       // Geçmiş tarihler için tüm uygulanması gereken tarihleri hesapla
       const datesToApply = getRecurringDates(recurring, startDate, today)
       
@@ -258,6 +280,48 @@ const [balanceHidden, setBalanceHidden] = useState(false)
         const alreadyApplied = transactions.some(t => 
           t.recurringId === recurring.id && 
           t.date.startsWith(dateStr)
+=======
+      let shouldApply = false
+
+      switch (recurring.frequency) {
+        case 'daily':
+          // Günlük: Başlangıç tarihinden bugüne kadar her gün
+          shouldApply = true
+          break
+          
+        case 'weekly':
+          // Haftalık: Seçilen gün ve başlangıç tarihinden sonra
+          if (recurring.dayOfWeek) {
+            const jsDayOfWeek = recurring.dayOfWeek === 7 ? 0 : recurring.dayOfWeek
+            shouldApply = currentWeekDay === jsDayOfWeek
+          }
+          break
+          
+        case 'monthly':
+          // Aylık: Başlangıç günü ve başlangıç tarihinden sonra
+          const startDay = startDate.getDate()
+          shouldApply = currentDay === startDay
+          break
+          
+        case 'yearly':
+          // Yıllık: Başlangıç gün/ay ve başlangıç tarihinden sonra
+          const startMonth = startDate.getMonth()
+          const startDayOfYear = startDate.getDate()
+          shouldApply = currentMonth === startMonth && currentDay === startDayOfYear
+          break
+          
+        case 'custom':
+          // Özel periyot: 30 günlük aralıklarla
+          const daysSinceStart = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24))
+          shouldApply = daysSinceStart > 0 && daysSinceStart % 30 === 0
+          break
+      }
+
+      if (shouldApply) {
+        const alreadyApplied = transactions.some(t => 
+          t.recurringId === recurring.id && 
+          t.date.startsWith(todayStr)
+>>>>>>> origin/master
         )
 
         if (!alreadyApplied) {
@@ -267,11 +331,16 @@ const [balanceHidden, setBalanceHidden] = useState(false)
             category: recurring.category,
             description: `${recurring.description} (Otomatik)`,
             account: recurring.account,
+<<<<<<< HEAD
             date: date.toISOString(),
+=======
+            date: today.toISOString(),
+>>>>>>> origin/master
             isRecurring: true,
             recurringId: recurring.id
           })
         }
+<<<<<<< HEAD
       })
     })
   }
@@ -357,6 +426,12 @@ const [balanceHidden, setBalanceHidden] = useState(false)
     return dates
   }
 
+=======
+      }
+    })
+  }
+
+>>>>>>> origin/master
   const handleInitialSetup = async (newBalances: AccountBalances) => {
     setBalances(newBalances)
     setIsFirstTime(false)
@@ -379,6 +454,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
   }
 
   const addTransaction = async (transaction: Omit<Transaction, 'id'>) => {
+<<<<<<< HEAD
     // Kullanıcı giriş yapmış mı kontrol et
     if (!user) {
       alert('İşlem eklemek için lütfen giriş yapın.')
@@ -388,6 +464,11 @@ const [balanceHidden, setBalanceHidden] = useState(false)
     const newTransaction: Transaction = {
       ...transaction,
       id: `trans_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+=======
+    const newTransaction: Transaction = {
+      ...transaction,
+      id: Date.now().toString()
+>>>>>>> origin/master
     }
     
     console.log('🔄 addTransaction başlatılıyor:', newTransaction)
@@ -578,6 +659,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
   }
 
   const addRecurringTransaction = async (recurring: Omit<RecurringTransaction, 'id'>) => {
+<<<<<<< HEAD
     // Kullanıcı giriş yapmış mı kontrol et
     if (!user) {
       alert('Tekrarlayan işlem eklemek için lütfen giriş yapın.')
@@ -587,6 +669,11 @@ const [balanceHidden, setBalanceHidden] = useState(false)
     const newRecurring: RecurringTransaction = {
       ...recurring,
       id: `recurring_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+=======
+    const newRecurring: RecurringTransaction = {
+      ...recurring,
+      id: Date.now().toString()
+>>>>>>> origin/master
     }
     
     // Önce state'i güncelle
@@ -786,7 +873,11 @@ const [balanceHidden, setBalanceHidden] = useState(false)
     }
 
     const newNote: Note = {
+<<<<<<< HEAD
       id: `note_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+=======
+      id: Date.now().toString(),
+>>>>>>> origin/master
       content: noteContent.trim(),
       date: new Date().toISOString().split('T')[0],
       createdAt: new Date().toISOString(),
@@ -1236,6 +1327,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
         <div className="flex flex-wrap gap-4 mb-8">
           <Dialog open={showAddTransaction} onOpenChange={setShowAddTransaction}>
             <DialogTrigger asChild>
+<<<<<<< HEAD
               <Button 
                 className="bg-green-600 hover:bg-green-700 shadow-sm"
                 disabled={!user}
@@ -1246,6 +1338,9 @@ const [balanceHidden, setBalanceHidden] = useState(false)
                   }
                 }}
               >
+=======
+              <Button className="bg-green-600 hover:bg-green-700 shadow-sm">
+>>>>>>> origin/master
                 <Plus className="h-4 w-4 mr-2" />
                 {t('app.addNewTransaction')}
               </Button>
@@ -1282,6 +1377,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
 
           <Dialog open={showRecurringDialog} onOpenChange={setShowRecurringDialog}>
             <DialogTrigger asChild>
+<<<<<<< HEAD
               <Button 
                 variant="outline" 
                 className="bg-white dark:bg-gray-800 border"
@@ -1293,6 +1389,9 @@ const [balanceHidden, setBalanceHidden] = useState(false)
                   }
                 }}
               >
+=======
+              <Button variant="outline" className="bg-white dark:bg-gray-800 border">
+>>>>>>> origin/master
                 <Repeat className="h-4 w-4 mr-2" />
                 {t('app.addRecurring')}
               </Button>
@@ -1648,7 +1747,11 @@ const [balanceHidden, setBalanceHidden] = useState(false)
                   {t('app.cancel')}
                 </Button>
                 <Button
+<<<<<<< HEAD
                   onClick={() => addNote()}
+=======
+                  onClick={addNote}
+>>>>>>> origin/master
                   className="bg-blue-600 hover:bg-blue-700 text-white"
                 >
                   <CheckCircle className="w-4 h-4 mr-2" />
@@ -1667,7 +1770,11 @@ const [balanceHidden, setBalanceHidden] = useState(false)
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+<<<<<<< HEAD
                   {t('app.allNotesWithCount')} ({getFilteredNotes().length})
+=======
+                  {t('app.allNotesWithCount', { count: getFilteredNotes().length })}
+>>>>>>> origin/master
                 </h2>
                 <Button
                   variant="ghost"
@@ -2729,9 +2836,13 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
   onEditRecurring: (recurring: RecurringTransaction) => void
 }) {
   const { t } = useLanguage()
+<<<<<<< HEAD
   
   const toggleRecurring = async (id: string) => {
     // State'i güncelle
+=======
+  const toggleRecurring = (id: string) => {
+>>>>>>> origin/master
     setRecurringTransactions(prev => 
       prev.map(r => 
         r.id === id ? { ...r, isActive: !r.isActive } : r
@@ -2739,6 +2850,7 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
     )
   }
 
+<<<<<<< HEAD
   const deleteRecurring = async (id: string) => {
     if (confirm('Bu tekrarlayan işlemi silmek istediğinizden emin misiniz?')) {
       // State'den kaldır
@@ -2757,6 +2869,8 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
     return labels[recurring.frequency] || recurring.frequency
   }
 
+=======
+>>>>>>> origin/master
   return (
     <Card className="bg-white dark:bg-gray-800 shadow-sm border">
       <CardHeader>
@@ -2796,6 +2910,7 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
                       </p>
                     )}
                     <p className="text-xs text-gray-500 mt-1">
+<<<<<<< HEAD
                       {formatFrequency(recurring)} • 
                       {recurring.account === 'cash' ? ' Nakit' : 
                        recurring.account === 'bank' ? ' Banka' : ' Birikim'}
@@ -2805,6 +2920,15 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
                         Başlangıç: {new Date(recurring.startDate).toLocaleDateString('tr-TR')}
                       </p>
                     )}
+=======
+                      {recurring.frequency === 'monthly' 
+                        ? `Her ayın ${recurring.dayOfMonth}. günü` 
+                        : `Her yıl ${recurring.monthOfYear}. ayın ${recurring.dayOfMonth}. günü`
+                      } • 
+                      {recurring.account === 'cash' ? ' Nakit' : 
+                       recurring.account === 'bank' ? ' Banka' : ' Birikim'}
+                    </p>
+>>>>>>> origin/master
                   </div>
                   <div className="flex flex-col items-end gap-2">
                     <div className={`text-lg font-bold ${
@@ -2827,6 +2951,7 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
                       >
                         Düzenle
                       </Button>
+<<<<<<< HEAD
                       <Button
                         variant="outline"
                         size="sm"
@@ -2834,6 +2959,8 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
                       >
                         Sil
                       </Button>
+=======
+>>>>>>> origin/master
                     </div>
                   </div>
                 </div>

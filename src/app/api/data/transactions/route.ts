@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AuthService } from '@/lib/auth-service'
+<<<<<<< HEAD
 import { createClient } from '@supabase/supabase-js'
 import { Logger } from '@/lib/logger'
 
@@ -7,6 +8,9 @@ import { Logger } from '@/lib/logger'
 const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
 const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
+import { db } from '@/lib/db'
+>>>>>>> origin/master
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
@@ -34,6 +38,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
+<<<<<<< HEAD
     const userId = auth.user.id
     const { searchParams } = new URL(request.url)
     
@@ -94,6 +99,24 @@ export async function GET(request: NextRequest) {
         offset,
         hasMore: transactions && transactions.length === limit
       }
+=======
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
+    const { searchParams } = new URL(request.url)
+    const limit = parseInt(searchParams.get('limit') || '50')
+
+    const where: any = { userId, type: { in: ['income', 'expense', 'transfer'] } }
+
+    const transactions = await db.userData.findMany({
+      where,
+      orderBy: { date: 'desc' },
+      take: limit
+    })
+
+    return NextResponse.json({
+      success: true,
+      data: transactions
+>>>>>>> origin/master
     })
 
   } catch (error) {
@@ -113,6 +136,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
+<<<<<<< HEAD
     const userId = auth.user.id
     const body = await request.json()
 
@@ -170,6 +194,30 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('Transaction created successfully:', transaction.id)
+=======
+    const body = await request.json()
+
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
+
+    if (!body.type || !body.amount) {
+      return NextResponse.json({
+        success: false,
+        error: 'Missing required fields: type, amount'
+      }, { status: 400 })
+    }
+
+    const transaction = await db.userData.create({
+      data: {
+        userId,
+        type: body.type,
+        amount: parseFloat(body.amount),
+        description: body.description || '',
+        category: body.category || '',
+        date: new Date(body.date) || new Date()
+      }
+    })
+>>>>>>> origin/master
 
     return NextResponse.json({
       success: true,
@@ -183,6 +231,7 @@ export async function POST(request: NextRequest) {
       error: 'Internal server error'
     }, { status: 500 })
   }
+<<<<<<< HEAD
 }
 
 // PUT /api/data/transactions - Update transaction
@@ -346,4 +395,6 @@ export async function DELETE(request: NextRequest) {
       error: 'Internal server error'
     }, { status: 500 })
   }
+=======
+>>>>>>> origin/master
 }

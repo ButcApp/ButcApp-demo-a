@@ -18,9 +18,13 @@ import {
   Activity,
   RefreshCw,
   Trash2,
+<<<<<<< HEAD
   UserX,
   Shield,
   Crown
+=======
+  UserX
+>>>>>>> origin/master
 } from 'lucide-react'
 
 interface User {
@@ -46,7 +50,10 @@ export function UserManager() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [userToDelete, setUserToDelete] = useState<User | null>(null)
   const [deleting, setDeleting] = useState(false)
+<<<<<<< HEAD
   const [makingAdmin, setMakingAdmin] = useState<string | null>(null)
+=======
+>>>>>>> origin/master
 
   useEffect(() => {
     fetchUsers()
@@ -207,6 +214,7 @@ export function UserManager() {
     }
   }
 
+<<<<<<< HEAD
   const handleMakeAdmin = async (user: User) => {
     if (!confirm(`"${user.fullName || user.email}" kullanıcısını admin yapmak istediğinizden emin misiniz?`)) {
       return
@@ -257,6 +265,8 @@ export function UserManager() {
     }
   }
 
+=======
+>>>>>>> origin/master
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('tr-TR', {
       year: 'numeric',
@@ -418,6 +428,7 @@ export function UserManager() {
                         <Button
                           variant="outline"
                           size="sm"
+<<<<<<< HEAD
                           onClick={() => handleMakeAdmin(user)}
                           disabled={makingAdmin === user.id}
                           className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
@@ -432,6 +443,8 @@ export function UserManager() {
                         <Button
                           variant="outline"
                           size="sm"
+=======
+>>>>>>> origin/master
                           onClick={() => handleToggleActive(user.id)}
                           className={user.isActive ? "text-orange-600 hover:text-orange-700 hover:bg-orange-50" : "text-green-600 hover:text-green-700 hover:bg-green-50"}
                         >

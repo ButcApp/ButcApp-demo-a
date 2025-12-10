@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
+<<<<<<< HEAD
 import { Activity, Cpu, HardDrive, MemoryStick, CheckCircle, AlertTriangle, XCircle, Zap, Database, Globe, Clock, Users, FileText, TrendingUp, RefreshCw } from 'lucide-react'
 import { useAuth } from '@/contexts/AdminAuthContext'
 
@@ -51,18 +52,31 @@ interface SystemInfo {
       lastCheck: string
     }
   }
+=======
+import { Cpu, HardDrive, MemoryStick, Activity } from 'lucide-react'
+
+interface SystemInfo {
+  cpu: { usage: number }
+  memory: { total: number; used: number; free: number; active: number }
+  disk: { size: number; used: number; available: number; percentage: number }
+  timestamp: string
+>>>>>>> origin/master
 }
 
 export default function ServerStatusPage() {
   const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+<<<<<<< HEAD
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null)
   const { isAuthenticated, user, token } = useAuth()
+=======
+>>>>>>> origin/master
   const router = useRouter()
 
   const fetchSystemInfo = async () => {
     try {
+<<<<<<< HEAD
       setLoading(true)
       setError(null)
       
@@ -79,6 +93,24 @@ export default function ServerStatusPage() {
       console.log('📡 Server Status: Token:', token.substring(0, 20) + '...')
       
       const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/system-status', {
+=======
+      console.log('🔍 Server Status: Fetch başlıyor...')
+      
+      // Token'ı localStorage'dan al
+      const token = localStorage.getItem('adminToken')
+      console.log('🔑 Server Status: Token durumu:', token ? 'mevcut' : 'yok')
+      
+      if (!token) {
+        console.log('❌ Server Status: Token yok, login sayfasına yönlendiriliyor...')
+        router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
+        return
+      }
+
+      console.log('📡 Server Status: API isteği gönderiliyor...')
+      console.log('📡 Server Status: Token:', token.substring(0, 20) + '...')
+      
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/system-status`, {
+>>>>>>> origin/master
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -86,10 +118,17 @@ export default function ServerStatusPage() {
         },
         cache: 'no-store'
       })
+<<<<<<< HEAD
       
       console.log('📡 Server Status: API yanıtı status:', response.status)
       console.log('📡 Server Status: API yanıtı headers:', response.headers)
       
+=======
+
+      console.log('📡 Server Status: API yanıtı status:', response.status)
+      console.log('📡 Server Status: API yanıtı headers:', response.headers)
+
+>>>>>>> origin/master
       if (!response.ok) {
         const errorText = await response.text()
         console.log('❌ Server Status: API hata yanıtı:', errorText)
@@ -97,12 +136,17 @@ export default function ServerStatusPage() {
         if (response.status === 401) {
           console.log('🔄 Server Status: 401 hatası, token siliniyor...')
           localStorage.removeItem('adminToken')
+<<<<<<< HEAD
+=======
+          localStorage.removeItem('adminUser')
+>>>>>>> origin/master
           router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
           return
         }
         
         throw new Error(`API Hatası: ${response.status} - ${errorText}`)
       }
+<<<<<<< HEAD
       
       const data = await response.json()
       console.log('✅ Server Status: API verisi alındı:', data)
@@ -115,11 +159,23 @@ export default function ServerStatusPage() {
       console.error('❌ Server Status: Fetch hatası:', err)
       setError(err instanceof Error ? err.message : 'Bir hata oluştu')
     } finally {
+=======
+
+      const data = await response.json()
+      console.log('✅ Server Status: API verisi alındı:', data)
+      setSystemInfo(data)
+      setError(null)
+      setLoading(false)
+    } catch (err) {
+      console.error('❌ Server Status: Fetch hatası:', err)
+      setError(err instanceof Error ? err.message : 'Bir hata oluştu')
+>>>>>>> origin/master
       setLoading(false)
     }
   }
 
   useEffect(() => {
+<<<<<<< HEAD
     console.log('Server Status Page Debug:', {
       isAuthenticated,
       hasUser: !!user,
@@ -133,16 +189,23 @@ export default function ServerStatusPage() {
       return
     }
     
+=======
+>>>>>>> origin/master
     console.log('🚀 Server Status: Component mount edildi')
     fetchSystemInfo()
     
     const interval = setInterval(fetchSystemInfo, 5000)
     console.log('⏰ Server Status: Interval ayarlandı (5 saniye)')
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> origin/master
     return () => {
       console.log('🛑 Server Status: Component unmount edildi, interval temizleniyor')
       clearInterval(interval)
     }
+<<<<<<< HEAD
   }, [router, isAuthenticated])
 
   const getStatusColor = (status: string) => {
@@ -194,6 +257,18 @@ export default function ServerStatusPage() {
         <div className="text-center">
           <RefreshCw className="h-8 w-8 animate-spin" />
           <p className="mt-4 text-muted-foreground">Yükleniyor...</p>
+=======
+  }, [router])
+
+  if (loading) {
+    return (
+      <div className="container mx-auto p-6">
+        <div className="flex items-center justify-center min-h-64">
+          <div className="flex items-center space-x-2">
+            <Activity className="h-6 w-6 animate-pulse" />
+            <span>Yükleniyor...</span>
+          </div>
+>>>>>>> origin/master
         </div>
       </div>
     )
@@ -201,6 +276,7 @@ export default function ServerStatusPage() {
 
   if (error) {
     return (
+<<<<<<< HEAD
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <XCircle className="h-8 w-8 text-red-500" />
@@ -210,12 +286,23 @@ export default function ServerStatusPage() {
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             Tekrar Dene
+=======
+      <div className="container mx-auto p-6">
+        <div className="bg-destructive/10 border border-destructive rounded-lg p-4">
+          <p className="text-destructive">Hata: {error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            Sayfayı Yenile
+>>>>>>> origin/master
           </button>
         </div>
       </div>
     )
   }
 
+<<<<<<< HEAD
   return (
     <div className="container mx-auto p-6">
       <div className="mb-8">
@@ -312,6 +399,31 @@ export default function ServerStatusPage() {
 
       {/* Performance Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+=======
+  if (!systemInfo) {
+    return (
+      <div className="container mx-auto p-6">
+        <div className="text-center text-muted-foreground">
+          Sistem bilgileri mevcut değil
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="container mx-auto p-6 space-y-6">
+      <div className="flex items-center space-x-3 mb-6">
+        <Activity className="h-8 w-8 text-primary" />
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Sunucu Durumu</h1>
+          <p className="text-muted-foreground">
+            Son güncelleme: {new Date(systemInfo.timestamp).toLocaleString('tr-TR')}
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+>>>>>>> origin/master
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">CPU Kullanımı</CardTitle>
@@ -319,11 +431,17 @@ export default function ServerStatusPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
+<<<<<<< HEAD
               <div className="text-2xl font-bold">{systemInfo?.cpu?.usage || 0}%</div>
               <Progress value={systemInfo?.cpu?.usage || 0} className="w-full" />
               <p className="text-xs text-muted-foreground">
                 İşlemci yükü
               </p>
+=======
+              <div className="text-2xl font-bold">{systemInfo.cpu.usage}%</div>
+              <Progress value={systemInfo.cpu.usage} className="w-full" />
+              <p className="text-xs text-muted-foreground">İşlemci yükü</p>
+>>>>>>> origin/master
             </div>
           </CardContent>
         </Card>
@@ -335,6 +453,7 @@ export default function ServerStatusPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
+<<<<<<< HEAD
               <div className="text-2xl font-bold">{systemInfo?.memory?.active || 0}%</div>
               <Progress value={systemInfo?.memory?.active || 0} className="w-full" />
               <div className="text-xs text-muted-foreground space-y-1">
@@ -342,6 +461,14 @@ export default function ServerStatusPage() {
                 <p>Kullanılan: {systemInfo?.memory?.used || 0} GB</p>
                 <p>Boşta: {systemInfo?.memory?.free || 0} GB</p>
                 <p>Heap: {systemInfo?.memory?.heapUsed || 0} MB / {systemInfo?.memory?.heapTotal || 0} MB</p>
+=======
+              <div className="text-2xl font-bold">{systemInfo.memory.active}%</div>
+              <Progress value={systemInfo.memory.active} className="w-full" />
+              <div className="text-xs text-muted-foreground space-y-1">
+                <p>Toplam: {systemInfo.memory.total} GB</p>
+                <p>Kullanılan: {systemInfo.memory.used} GB</p>
+                <p>Boş: {systemInfo.memory.free} GB</p>
+>>>>>>> origin/master
               </div>
             </div>
           </CardContent>
@@ -354,16 +481,27 @@ export default function ServerStatusPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
+<<<<<<< HEAD
               <div className="text-2xl font-bold">85%</div>
               <Progress value={85} className="w-full" />
               <p className="text-xs text-muted-foreground">
                 Toplam: 256 GB
               </p>
+=======
+              <div className="text-2xl font-bold">{systemInfo.disk.percentage}%</div>
+              <Progress value={systemInfo.disk.percentage} className="w-full" />
+              <div className="text-xs text-muted-foreground space-y-1">
+                <p>Toplam: {systemInfo.disk.size} GB</p>
+                <p>Kullanılan: {systemInfo.disk.used} GB</p>
+                <p>Boş: {systemInfo.disk.available} GB</p>
+              </div>
+>>>>>>> origin/master
             </div>
           </CardContent>
         </Card>
       </div>
 
+<<<<<<< HEAD
       {/* Database Status */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <Card>
@@ -504,6 +642,54 @@ export default function ServerStatusPage() {
             <div>
               <span className="text-muted-foreground">Saat Dil:</span>
               <span className="font-medium ml-2">UTC</span>
+=======
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Sistem Detayları</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="space-y-2">
+              <h4 className="font-medium text-primary">CPU Performansı</h4>
+              <div className="space-y-1">
+                <p className="text-muted-foreground">
+                  Mevcut Yük: <span className="font-mono">{systemInfo.cpu.usage}%</span>
+                </p>
+                <p className="text-muted-foreground">
+                  Durum: <span className={systemInfo.cpu.usage > 80 ? 'text-destructive' : 'text-green-600'}>
+                    {systemInfo.cpu.usage > 80 ? 'Yüksek' : 'Normal'}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-medium text-primary">Bellek Durumu</h4>
+              <div className="space-y-1">
+                <p className="text-muted-foreground">
+                  Kullanım: <span className="font-mono">{systemInfo.memory.used}/{systemInfo.memory.total} GB</span>
+                </p>
+                <p className="text-muted-foreground">
+                  Durum: <span className={systemInfo.memory.active > 80 ? 'text-destructive' : 'text-green-600'}>
+                    {systemInfo.memory.active > 80 ? 'Kritik' : 'Normal'}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-medium text-primary">Disk Durumu</h4>
+              <div className="space-y-1">
+                <p className="text-muted-foreground">
+                  Kullanım: <span className="font-mono">{systemInfo.disk.used}/{systemInfo.disk.size} GB</span>
+                </p>
+                <p className="text-muted-foreground">
+                  Durum: <span className={systemInfo.disk.percentage > 80 ? 'text-destructive' : 'text-green-600'}>
+                    {systemInfo.disk.percentage > 80 ? 'Düşük Alan' : 'Normal'}
+                  </span>
+                </p>
+              </div>
+>>>>>>> origin/master
             </div>
           </div>
         </CardContent>

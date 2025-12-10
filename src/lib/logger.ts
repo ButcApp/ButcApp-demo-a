@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { supabase } from '@/lib/db'
+=======
+import { db } from '@/lib/db'
+>>>>>>> origin/master
 import { headers } from 'next/headers'
 
 export interface LogData {
@@ -38,6 +42,7 @@ export class Logger {
         metadata: data.metadata ? JSON.stringify(data.metadata) : null,
       }
 
+<<<<<<< HEAD
       // Try to log to database, but don't fail if database is not available
       try {
         await supabase
@@ -68,6 +73,20 @@ export class Logger {
       }
     } catch (error) {
       console.error('Failed to log:', error)
+=======
+      await db.systemLog.create({
+        data: logEntry
+      })
+
+      // Update log statistics (sadece error'lar için)
+      if (data.level === 'error') {
+        await this.updateLogStats(data.type, 1, data.responseTime)
+      } else if (data.responseTime) {
+        await this.updateLogStats(data.type, 0, data.responseTime)
+      }
+    } catch (error) {
+      console.error('Failed to log to database:', error)
+>>>>>>> origin/master
       // Fallback to console logging
       console.log(`[${data.type.toUpperCase()}] ${data.action}: ${data.description || ''}`, data)
     }
@@ -160,4 +179,123 @@ export class Logger {
       metadata: { metric, unit, ...metadata }
     })
   }
+<<<<<<< HEAD
+=======
+
+  private static async updateLogStats(logType: string, errorCount: number = 0, responseTime?: number): Promise<void> {
+    try {
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+
+      const existingStats = await db.logStats.findUnique({
+        where: {
+          date_logType: {
+            date: today,
+            logType
+          }
+        }
+      })
+
+      if (existingStats) {
+        await db.logStats.update({
+          where: {
+            date_logType: {
+              date: today,
+              logType
+            }
+          },
+          data: {
+            totalCount: existingStats.totalCount + 1,
+            errorCount: existingStats.errorCount + errorCount,
+            avgResponseTime: responseTime ? 
+              (existingStats.avgResponseTime ? 
+                (existingStats.avgResponseTime + responseTime) / 2 : 
+                responseTime
+              ) : existingStats.avgResponseTime
+          }
+        })
+      } else {
+        await db.logStats.create({
+          data: {
+            date: today,
+            logType,
+            totalCount: 1,
+            errorCount,
+            avgResponseTime: responseTime
+          }
+        })
+      }
+    } catch (error) {
+      console.error('Failed to update log stats:', error)
+    }
+  }
+
+  static async getLogs(filters: {
+    type?: string
+    level?: string
+    userId?: string
+    adminId?: string
+    startDate?: Date
+    endDate?: Date
+    limit?: number
+    offset?: number
+  } = {}) {
+    try {
+      const where: any = {}
+
+      if (filters.type) where.type = filters.type
+      if (filters.level) where.level = filters.level
+      if (filters.userId) where.userId = filters.userId
+      if (filters.adminId) where.adminId = filters.adminId
+      if (filters.startDate || filters.endDate) {
+        where.createdAt = {}
+        if (filters.startDate) where.createdAt.gte = filters.startDate
+        if (filters.endDate) where.createdAt.lte = filters.endDate
+      }
+
+      const logs = await db.systemLog.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        take: filters.limit || 100,
+        skip: filters.offset || 0
+      })
+
+      return logs.map(log => ({
+        ...log,
+        metadata: log.metadata ? JSON.parse(log.metadata) : null
+      }))
+    } catch (error) {
+      console.error('Failed to get logs:', error)
+      throw error
+    }
+  }
+
+  static async getLogStats(period: 'day' | 'week' | 'month' = 'day') {
+    const startDate = new Date()
+    
+    switch (period) {
+      case 'day':
+        startDate.setDate(startDate.getDate() - 7)
+        break
+      case 'week':
+        startDate.setDate(startDate.getDate() - 30)
+        break
+      case 'month':
+        startDate.setDate(startDate.getDate() - 365)
+        break
+    }
+
+    return await db.logStats.findMany({
+      where: {
+        date: {
+          gte: startDate
+        }
+      },
+      orderBy: [
+        { date: 'desc' },
+        { logType: 'asc' }
+      ]
+    })
+  }
+>>>>>>> origin/master
 }

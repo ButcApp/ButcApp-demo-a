@@ -60,6 +60,7 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
   try {
     console.log('JWT Verification - Token:', token.substring(0, 50) + '...');
     
+<<<<<<< HEAD
     // Geliştirme modunda basit token kontrolü
     if (process.env.NODE_ENV === 'development') {
       console.log('Development mode: All tokens accepted as admin');
@@ -70,11 +71,18 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
     console.log('JWT Payload:', payload)
     
     // Check if user has admin role
+=======
+    const payload = await verifyToken(token)
+    console.log('JWT Payload:', payload)
+    
+    // Check if user has admin role in database
+>>>>>>> origin/master
     if (payload.role === 'admin' || payload.role === 'superadmin') {
       console.log('User has admin role:', payload.role);
       return true
     }
     
+<<<<<<< HEAD
     // For now, allow demo admin access
     if (payload.email === 'admin@butcapp.com' || payload.email === 'demo@butcapp.com') {
       console.log('Demo admin access granted');
@@ -91,6 +99,18 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
       console.log('Development mode: All tokens accepted despite verification error');
       return true
     }
+=======
+    // Double check in database for safety
+    const { db } = await import('./db')
+    const adminUser = await db.adminUser.findUnique({
+      where: { userId: payload.id }
+    })
+    
+    console.log('Database admin check result:', !!adminUser);
+    return !!adminUser
+  } catch (error) {
+    console.error('Token verification error:', error)
+>>>>>>> origin/master
     return false
   }
 }

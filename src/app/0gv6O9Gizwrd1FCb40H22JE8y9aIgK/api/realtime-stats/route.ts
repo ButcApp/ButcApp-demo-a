@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdminToken } from '@/lib/jwt'
+<<<<<<< HEAD
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
 const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+>>>>>>> origin/master
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,6 +28,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
+<<<<<<< HEAD
     console.log('Admin Real-time Stats API: Fetching real data from Supabase')
 
     // Fetch real data from Supabase
@@ -82,16 +89,57 @@ export async function GET(request: NextRequest) {
       userTrend,
       blogTrend,
       systemStats,
+=======
+    // Mock data for now
+    const mockData = {
+      totalUsers: 150,
+      activeUsers: 89,
+      todayRegistrations: 5,
+      weeklyGrowth: 23,
+      totalPosts: 45,
+      todayPosts: 2,
+      monthlyPosts: 12,
+      totalViews: 1250,
+      weeklyViews: 89,
+      userTrend: [
+        { date: '2024-12-01', count: 120 },
+        { date: '2024-12-02', count: 125 },
+        { date: '2024-12-03', count: 130 },
+        { date: '2024-12-04', count: 135 },
+        { date: '2024-12-05', count: 140 },
+        { date: '2024-12-06', count: 145 },
+        { date: '2024-12-07', count: 150 }
+      ],
+      blogTrend: [
+        { date: '2024-12-01', count: 40, views: 1000 },
+        { date: '2024-12-02', count: 41, views: 1050 },
+        { date: '2024-12-03', count: 42, views: 1100 },
+        { date: '2024-12-04', count: 43, views: 1150 },
+        { date: '2024-12-05', count: 44, views: 1200 },
+        { date: '2024-12-06', count: 45, views: 1250 }
+      ],
+      systemStats: [
+        { type: 'API Requests', count: 1234, avgResponseTime: 45 },
+        { type: 'Page Views', count: 5678, avgResponseTime: 23 },
+        { type: 'Database Queries', count: 890, avgResponseTime: 67 }
+      ],
+>>>>>>> origin/master
       userGrowthRate: '12.5',
       avgPostViews: '27.8',
       lastUpdated: new Date().toISOString()
     }
 
+<<<<<<< HEAD
     console.log('Real-time stats calculated:', realData)
 
     return NextResponse.json({
       success: true,
       data: realData
+=======
+    return NextResponse.json({
+      success: true,
+      data: mockData
+>>>>>>> origin/master
     })
 
   } catch (error) {

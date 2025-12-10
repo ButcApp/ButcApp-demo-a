@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { verifyAdminToken } from '@/lib/jwt'
 import { Logger } from '@/lib/logger'
 import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
@@ -7,6 +8,14 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
 const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
+import { PrismaClient } from '@prisma/client'
+import { verifyAdminToken } from '@/lib/jwt'
+import { Logger } from '@/lib/logger'
+import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
+
+const prisma = new PrismaClient()
+>>>>>>> origin/master
 
 export async function GET(request: NextRequest) {
   const optionsResponse = handleOptions(request)
@@ -39,6 +48,7 @@ export async function GET(request: NextRequest) {
       }, { status: 403, headers: corsHeaders })
     }
 
+<<<<<<< HEAD
     // Kullanıcıları Supabase'den getir
     const { data: users, error } = await supabase
       .from('users')
@@ -66,6 +76,69 @@ export async function GET(request: NextRequest) {
         lastLogin: user.last_login || user.createdat,
         totalTransactions: 0, // Bu bilgiyi ayrı tablodan alabiliriz
         totalBalance: 0 // Bu bilgiyi ayrı tablodan alabiliriz
+=======
+    // Kullanıcıları getir
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        avatarUrl: true,
+        createdAt: true,
+        updatedAt: true,
+        profile: {
+          select: {
+            cash: true,
+            bank: true,
+            savings: true
+          }
+        },
+        userData: {
+          where: {
+            type: {
+              in: ['income', 'expense']
+            }
+          },
+          select: {
+            amount: true
+          }
+        },
+        systemLogs: {
+          where: {
+            type: 'user_login'
+          },
+          orderBy: {
+            createdAt: 'desc'
+          },
+          take: 1,
+          select: {
+            createdAt: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    })
+
+    // Kullanıcı verilerini formatla
+    const formattedUsers = users.map(user => {
+      const totalTransactions = user.userData.length
+      const totalBalance = (user.profile?.cash || 0) + (user.profile?.bank || 0) + (user.profile?.savings || 0)
+      const lastLogin = user.systemLogs[0]?.createdAt || user.createdAt
+
+      return {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+        avatarUrl: user.avatarUrl,
+        createdAt: user.createdAt.toISOString(),
+        updatedAt: user.updatedAt.toISOString(),
+        isActive: true, // Varsayılan olarak aktif
+        lastLogin: lastLogin.toISOString(),
+        totalTransactions,
+        totalBalance
+>>>>>>> origin/master
       }
     })
 

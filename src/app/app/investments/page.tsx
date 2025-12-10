@@ -73,6 +73,7 @@ interface Investment {
   current_value?: number
   profit?: number
   profit_percent?: number
+<<<<<<< HEAD
   status?: string
   sellDate?: string
   sellPrice?: number
@@ -80,6 +81,8 @@ interface Investment {
   currency_name?: string
   buy_price?: number
   buy_date?: string
+=======
+>>>>>>> origin/master
 }
 
 interface InvestmentFormData {
@@ -232,6 +235,7 @@ export default function InvestmentsPage() {
   }, [])
 
   // Fetch investments from SQLite
+<<<<<<< HEAD
   const fetchInvestments = async (userId?: string) => {
     setIsLoadingInvestments(true)
     try {
@@ -315,6 +319,38 @@ export default function InvestmentsPage() {
         console.warn('⚠️ Crypto API error:', cryptoError)
         cryptoResult = { success: false, data: [] }
       }
+=======
+  const fetchInvestments = async (userId: string) => {
+    setIsLoadingInvestments(true)
+    try {
+      console.log('Fetching investments for userId:', userId)
+      
+      // Get token for authorization
+      const token = ClientAuthService.getToken()
+      if (!token) {
+        console.error('No token available for fetching investments')
+        setInvestments([])
+        return
+      }
+      
+      console.log('Token available for investments fetch:', token ? 'YES' : 'NO')
+      console.log('User ID for investments fetch:', user?.id)
+      
+      // Fetch both investments and current currency rates
+      const [investmentsResponse, currencyResponse, cryptoResponse] = await Promise.all([
+        fetch(`/api/investments?userId=${userId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }),
+        fetch('/api/currency'),
+        fetch('/api/crypto')
+      ])
+      
+      const investmentsResult = await investmentsResponse.json()
+      const currencyResult = await currencyResponse.json()
+      const cryptoResult = await cryptoResponse.json()
+>>>>>>> origin/master
       
       console.log('Investments API response:', investmentsResult)
       console.log('Currency API response:', currencyResult)
@@ -405,16 +441,23 @@ export default function InvestmentsPage() {
         setInvestments(investmentsData)
       } else {
         console.error('Failed to fetch investments:', investmentsResult.error)
+<<<<<<< HEAD
         setInvestments([]) // Set empty array on error
       }
     } catch (error) {
       console.error('Investments fetch error:', error)
       setInvestments([]) // Set empty array on error
+=======
+      }
+    } catch (error) {
+      console.error('Investments fetch error:', error)
+>>>>>>> origin/master
     } finally {
       setIsLoadingInvestments(false)
     }
   }
 
+<<<<<<< HEAD
   // Delete investment function with enhanced error handling
   const deleteInvestment = async (id: string) => {
     if (!id) {
@@ -479,6 +522,28 @@ export default function InvestmentsPage() {
       console.log('Delete URL:', deleteUrl)
       
       const response = await fetch(deleteUrl, {
+=======
+  // Delete investment function
+  const deleteInvestment = async (id: string) => {
+    setIsDeleting(true)
+    try {
+      console.log('Starting delete for investment:', id)
+      
+      // Get current session token
+      const token = ClientAuthService.getToken()
+
+      console.log('Token data:', { 
+        hasToken: !!token,
+        userId: user?.id 
+      })
+
+      if (!token) {
+        console.error('No auth token available')
+        return
+      }
+
+      const response = await fetch(`/api/investments/delete?id=${id}`, {
+>>>>>>> origin/master
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -486,6 +551,7 @@ export default function InvestmentsPage() {
         }
       })
       
+<<<<<<< HEAD
       console.log('Delete response status:', response.status)
       
       if (!response.ok) {
@@ -515,6 +581,22 @@ export default function InvestmentsPage() {
           status: response.status
         })
         alert(errorMessage)
+=======
+      const result = await response.json()
+      console.log('Delete API response:', { status: response.status, result })
+      
+      if (result.success) {
+        console.log('Investment deleted successfully:', result)
+        // Refresh investments list
+        if (user) {
+          await fetchInvestments(user.id)
+        }
+        // Close delete confirmation dialog
+        setDeleteConfirmOpen(false)
+        setInvestmentToDelete(null)
+      } else {
+        console.error('Failed to delete investment:', result.error)
+>>>>>>> origin/master
       }
     } catch (error) {
       console.error('Delete investment error:', error)
@@ -613,6 +695,7 @@ export default function InvestmentsPage() {
   }
 
   // Load historical price for investment
+<<<<<<< HEAD
   const fetchHistoricalPrice = async (date: string, currencyCode: string, type?: 'currency' | 'crypto' | 'commodity') => {
     setIsLoadingHistorical(true)
     try {
@@ -622,11 +705,28 @@ export default function InvestmentsPage() {
       const investmentType = type || getInvestmentCategory(currencyCode)
       
       const response = await fetch(`/api/historical?date=${date}&type=${investmentType}&symbol=${currencyCode}`)
+=======
+  const fetchHistoricalPrice = async (date: string, currencyCode: string, type: 'currency' | 'crypto') => {
+    setIsLoadingHistorical(true)
+    try {
+      console.log(`🔍 Fetching historical price for ${currencyCode} on ${date} (type: ${type})`)
+      
+      let response
+      
+      if (type === 'crypto') {
+        // Use unified historical API for crypto
+        response = await fetch(`/api/historical?date=${date}&cryptoId=${currencyCode.toLowerCase()}&type=crypto`)
+      } else {
+        // Use unified historical API for currency
+        response = await fetch(`/api/historical?date=${date}&type=currency`)
+      }
+>>>>>>> origin/master
       
       const result = await response.json()
       
       console.log(`📊 Historical API response:`, {
         success: result.success,
+<<<<<<< HEAD
         hasData: !!result.data,
         currencyCode,
         type: investmentType,
@@ -642,6 +742,49 @@ export default function InvestmentsPage() {
           console.log(`✅ Historical price found for ${currencyCode}: ₺${historicalItem.price}`)
         } else {
           console.warn(`❌ No historical price found for ${currencyCode}`)
+=======
+        dataLength: result.data?.length,
+        currencyCode,
+        type,
+        date,
+        sampleData: result.data?.slice(0, 2)
+      })
+      
+      if (result.success && result.data && result.data.length > 0) {
+        // Find the specific item in the data
+        let historicalItem
+        if (type === 'crypto') {
+          historicalItem = result.data.find((c: any) => c.symbol.toLowerCase() === currencyCode.toLowerCase())
+        } else {
+          // For currency, try exact match first, then try alternative formats
+          historicalItem = result.data.find((c: any) => c.symbol === currencyCode)
+          
+          if (!historicalItem) {
+            // Try with common variations
+            const variations = [
+              currencyCode,
+              `${currencyCode}/TRY`,
+              currencyCode.replace('/TRY', ''),
+              currencyCode.replace('TRY/', '')
+            ]
+            
+            for (const variation of variations) {
+              historicalItem = result.data.find((c: any) => c.symbol === variation)
+              if (historicalItem) {
+                console.log(`✅ Found currency using variation: ${variation}`)
+                break
+              }
+            }
+          }
+        }
+        
+        if (historicalItem) {
+          setHistoricalPrice(historicalItem.price)
+          console.log(`✅ Historical price found for ${currencyCode}: ${type === 'crypto' ? '$' : '₺'}${historicalItem.price}`)
+        } else {
+          console.warn(`❌ No historical price found for ${currencyCode} in ${result.data.length} items`)
+          console.log(`Available symbols:`, result.data.map((c: any) => c.symbol))
+>>>>>>> origin/master
           setHistoricalPrice(null)
         }
       } else {
@@ -830,9 +973,13 @@ export default function InvestmentsPage() {
     // Fetch historical price for the selected date
     if (investmentForm.date !== new Date().toISOString().split('T')[0]) {
       const currencyType = getInvestmentCategory(currency.symbol)
+<<<<<<< HEAD
       // Extract currency code from symbol (USD from USD/TRY, EUR from EUR/TRY, etc.)
       const currencyCode = currency.symbol.split('/')[0]
       fetchHistoricalPrice(investmentForm.date, currencyCode, currencyType)
+=======
+      fetchHistoricalPrice(investmentForm.date, currency.symbol, currencyType)
+>>>>>>> origin/master
     } else {
       setHistoricalPrice(null)
     }
@@ -1426,9 +1573,13 @@ export default function InvestmentsPage() {
                   } else {
                     // Fetch historical price for new date
                     if (selectedCurrency && newDate !== new Date().toISOString().split('T')[0]) {
+<<<<<<< HEAD
                       // Extract currency code from symbol (USD from USD/TRY, EUR from EUR/TRY, etc.)
                       const currencyCode = selectedCurrency.symbol.split('/')[0]
                       fetchHistoricalPrice(newDate, currencyCode)
+=======
+                      fetchHistoricalPrice(newDate, selectedCurrency.symbol)
+>>>>>>> origin/master
                     } else {
                       setHistoricalPrice(null)
                     }
@@ -1444,7 +1595,11 @@ export default function InvestmentsPage() {
               )}
               {isDateHoliday(investmentForm.date) && historicalPrice && (
                 <p className="text-sm text-blue-600 mt-1">
+<<<<<<< HEAD
                   ℹ️ {investmentForm.date} tarihinde veri bulunamadı. Önceki çalışma günü verileri kullanılıyor.
+=======
+                  ℹ️ {investmentForm.date} tarihinde veri bulunamadı. Önceki çalışma günü ({new Date(historicalPrice.timestamp).toLocaleDateString('tr-TR')}) verileri kullanılıyor.
+>>>>>>> origin/master
                 </p>
               )}
               {!isDateHoliday(investmentForm.date) && !historicalPrice && (
@@ -1472,7 +1627,11 @@ export default function InvestmentsPage() {
             </div>
 
             <div>
+<<<<<<< HEAD
               <Label htmlFor="investmentAmount">Yatırım Miktarı</Label>
+=======
+              <Label htmlFor="investmentAmount">Yatırım Miktarı (TRY)</Label>
+>>>>>>> origin/master
               <Input
                 id="investmentAmount"
                 type="number"
@@ -1508,9 +1667,15 @@ export default function InvestmentsPage() {
                     <div className="flex justify-between">
                       <span>Kar/Zarar:</span>
                       <span className={`font-medium ${
+<<<<<<< HEAD
                         ((selectedCurrency?.price || 0) - (historicalPrice || 0)) >= 0 ? 'text-green-600' : 'text-red-600'
                       }`}>
                         {(((selectedCurrency?.price || 0) - (historicalPrice || 0)) >= 0 ? '+' : '')}₺{formatPrice(((selectedCurrency?.price || 0) - (historicalPrice || 0)) * investmentForm.amount)}
+=======
+                        (selectedCurrency.price - (historicalPrice || 0)) >= 0 ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        {((selectedCurrency.price - (historicalPrice || 0)) >= 0 ? '+' : '')}₺{formatPrice((selectedCurrency.price - (historicalPrice || 0)) * investmentForm.amount)}
+>>>>>>> origin/master
                       </span>
                     </div>
                   )}
@@ -1758,7 +1923,11 @@ export default function InvestmentsPage() {
                 {getFilteredInvestments().length > 0 ? (
                   getFilteredInvestments().map((investment) => {
                   const profitDetails = formatProfitDetails(
+<<<<<<< HEAD
                     calculateInvestmentProfit(investment, (investment.current_value || 0) / investment.amount)
+=======
+                    calculateInvestmentProfit(investment, investment.current_value / investment.amount)
+>>>>>>> origin/master
                   )
                   
                   return (
@@ -1773,11 +1942,19 @@ export default function InvestmentsPage() {
                           </div>
                           <div className="text-sm text-muted-foreground">{investment.name}</div>
                           <div className="text-xs text-muted-foreground">
+<<<<<<< HEAD
                             Alış: {new Date(investment.buyDate).toLocaleDateString('tr-TR')} - ${investment.currency}{(investment.buyPrice || 0).toFixed(2)}
                           </div>
                           {investment.sellDate && (
                             <div className="text-xs text-muted-foreground">
                               Satış: {new Date(investment.sellDate).toLocaleDateString('tr-TR')} - ${investment.currency}{(investment.sellPrice || 0).toFixed(2)}
+=======
+                            Alış: {new Date(investment.buyDate).toLocaleDateString('tr-TR')} - ${investment.currency}{investment.buyPrice?.toFixed(2)}
+                          </div>
+                          {investment.sellDate && (
+                            <div className="text-xs text-muted-foreground">
+                              Satış: {new Date(investment.sellDate).toLocaleDateString('tr-TR')} - ${investment.currency}{investment.sellPrice?.toFixed(2)}
+>>>>>>> origin/master
                             </div>
                           )}
                           <div className="text-xs text-muted-foreground">
@@ -1787,6 +1964,7 @@ export default function InvestmentsPage() {
                         <div className="flex items-center gap-3">
                           <div className="text-right">
                             <div className="font-semibold">
+<<<<<<< HEAD
                               ${formatPrice(investment.current_value || 0)}
                             </div>
                             <div className={`text-sm font-medium ${(investment.profit || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
@@ -1797,6 +1975,22 @@ export default function InvestmentsPage() {
                             </div>
                             <div className="text-xs text-muted-foreground">
                               {(profitDetails as any).description}
+=======
+                              ${formatPrice(investment.current_value)}
+                            </div>
+                            <div className={`text-sm font-medium ${
+                              investment.profit >= 0 ? 'text-green-600' : 'text-red-600'
+                            }`}>
+                              {investment.profit >= 0 ? '+' : ''}${formatPrice(investment.profit)}
+                            </div>
+                            <div className={`text-xs ${
+                              investment.profit_percent >= 0 ? 'text-green-600' : 'text-red-600'
+                            }`}>
+                              ({investment.profit_percent >= 0 ? '+' : ''}{investment.profit_percent?.toFixed(2)}%)
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {profitDetails.status}
+>>>>>>> origin/master
                             </div>
                           </div>
                           <Button
@@ -1906,7 +2100,11 @@ export default function InvestmentsPage() {
             </div>
 
             {/* Summary Statistics */}
+<<<<<<< HEAD
             <SummaryStatistics investments={investments as any} />
+=======
+            <SummaryStatistics investments={investments} />
+>>>>>>> origin/master
           </div>
         </DialogContent>
       </Dialog>

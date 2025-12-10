@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AuthService } from '@/lib/auth-service'
+<<<<<<< HEAD
 import { createClient } from '@supabase/supabase-js'
 import { Logger } from '@/lib/logger'
 
@@ -7,6 +8,9 @@ import { Logger } from '@/lib/logger'
 const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
 const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
+import { db } from '@/lib/db'
+>>>>>>> origin/master
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
@@ -26,7 +30,11 @@ async function authenticate(request: NextRequest) {
   return { user, token }
 }
 
+<<<<<<< HEAD
 // GET /api/data/recurring-transactions - Fetch user recurring transactions
+=======
+// GET - Fetch user's recurring transactions
+>>>>>>> origin/master
 export async function GET(request: NextRequest) {
   try {
     const auth = await authenticate(request)
@@ -34,6 +42,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
+<<<<<<< HEAD
     const userId = auth.user.id
 
     console.log('Fetching recurring transactions for userId:', userId)
@@ -62,6 +71,26 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('Recurring Transactions GET error:', error)
+=======
+    // Use authenticated user's ID
+    const userId = auth.user.id
+
+    const recurringTransactions = await db.userData.findMany({
+      where: { 
+        userId,
+        type: 'recurring'
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+
+    return NextResponse.json({
+      success: true,
+      data: recurringTransactions
+    })
+
+  } catch (error) {
+    console.error('Error fetching recurring transactions:', error)
+>>>>>>> origin/master
     return NextResponse.json({
       success: false,
       error: 'Internal server error'
@@ -69,7 +98,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
+<<<<<<< HEAD
 // POST /api/data/recurring-transactions - Create new recurring transaction
+=======
+// POST - Add new recurring transaction
+>>>>>>> origin/master
 export async function POST(request: NextRequest) {
   try {
     const auth = await authenticate(request)
@@ -77,6 +110,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
+<<<<<<< HEAD
     const userId = auth.user.id
     const body = await request.json()
 
@@ -137,6 +171,33 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('Recurring transaction created successfully:', recurringTransaction.id)
+=======
+    const body = await request.json()
+
+    // Use authenticated user's ID
+    const userId = auth.user.id
+
+    if (!body.type || !body.amount) {
+      return NextResponse.json({
+        success: false,
+        error: 'Missing required fields: type, amount'
+      }, { status: 400 })
+    }
+
+    const recurringTransaction = await db.userData.create({
+      data: {
+        userId,
+        type: 'recurring',
+        amount: parseFloat(body.amount),
+        description: body.description || '',
+        category: body.category || '',
+        frequency: body.frequency,
+        startDate: new Date(body.startDate),
+        endDate: body.endDate ? new Date(body.endDate) : null,
+        // Add other recurring-specific fields
+      }
+    })
+>>>>>>> origin/master
 
     return NextResponse.json({
       success: true,
@@ -144,7 +205,11 @@ export async function POST(request: NextRequest) {
     })
 
   } catch (error) {
+<<<<<<< HEAD
     console.error('Recurring Transactions POST error:', error)
+=======
+    console.error('Error adding recurring transaction:', error)
+>>>>>>> origin/master
     return NextResponse.json({
       success: false,
       error: 'Internal server error'
@@ -152,7 +217,11 @@ export async function POST(request: NextRequest) {
   }
 }
 
+<<<<<<< HEAD
 // PUT /api/data/recurring-transactions - Update recurring transaction
+=======
+// PUT - Update recurring transaction
+>>>>>>> origin/master
 export async function PUT(request: NextRequest) {
   try {
     const auth = await authenticate(request)
@@ -160,6 +229,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
+<<<<<<< HEAD
     const userId = auth.user.id
     const body = await request.json()
     const { id, amount, description, category, frequency, startDate, endDate } = body
@@ -240,6 +310,21 @@ export async function PUT(request: NextRequest) {
     }
 
     console.log('Recurring transaction updated successfully:', id)
+=======
+    const updatedData = await request.json()
+    const { id, ...updateFields } = updatedData
+
+    const updatedTransaction = await db.userData.update({
+      where: { 
+        id: id,
+        userId: auth.user.id 
+      },
+      data: {
+        ...updateFields,
+        updatedAt: new Date()
+      }
+    })
+>>>>>>> origin/master
 
     return NextResponse.json({
       success: true,
@@ -247,6 +332,7 @@ export async function PUT(request: NextRequest) {
     })
 
   } catch (error) {
+<<<<<<< HEAD
     console.error('Recurring Transactions PUT error:', error)
     return NextResponse.json({
       success: false,
@@ -315,6 +401,9 @@ export async function DELETE(request: NextRequest) {
 
   } catch (error) {
     console.error('Recurring Transactions DELETE error:', error)
+=======
+    console.error('Error updating recurring transaction:', error)
+>>>>>>> origin/master
     return NextResponse.json({
       success: false,
       error: 'Internal server error'

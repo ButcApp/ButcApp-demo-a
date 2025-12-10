@@ -55,10 +55,14 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
     excerpt: '',
     tags: '',
     author_name: '',
+<<<<<<< HEAD
     author_avatar: '',
     author_bio: '',
     category: '',
     coverImage: '',
+=======
+    category: '',
+>>>>>>> origin/master
     published: false,
     featured: false
   })
@@ -94,7 +98,11 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
         return
       }
 
+<<<<<<< HEAD
       const response = await fetch('/api/blog/categories', {
+=======
+      const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/categories', {
+>>>>>>> origin/master
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -139,7 +147,11 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
         return
       }
 
+<<<<<<< HEAD
       const response = await fetch(`/api/blog/${postId}`, {
+=======
+      const response = await fetch(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts/${postId}`, {
+>>>>>>> origin/master
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -153,11 +165,16 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
           content: data.post.content || '',
           excerpt: data.post.excerpt || '',
           tags: data.post.tags ? data.post.tags.join(', ') : '',
+<<<<<<< HEAD
           author_name: data.post.author?.name || '',
           author_avatar: data.post.author?.avatar || '',
           author_bio: data.post.author?.bio || '',
           category: data.post.category || '',
           coverImage: data.post.coverImage || '',
+=======
+          author_name: data.post.author_name || '',
+          category: data.post.category || '',
+>>>>>>> origin/master
           published: data.post.published || false,
           featured: data.post.featured || false
         })
@@ -186,7 +203,11 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
     }))
   }
 
+<<<<<<< HEAD
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+=======
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+>>>>>>> origin/master
     const { name, value, type } = e.target
     setFormData(prev => ({
       ...prev,
@@ -245,10 +266,19 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
       document.execCommand('insertHTML', false, imgHtml)
       
       // Form verisini güncelle (content'i editor'den al)
+<<<<<<< HEAD
       setFormData(prev => ({
         ...prev,
         content: editorRef.current?.innerHTML || ''
       }))
+=======
+      if (editorRef.current) {
+        setFormData(prev => ({
+          ...prev,
+          content: editorRef.current.innerHTML
+        }))
+      }
+>>>>>>> origin/master
 
     } catch (error) {
       console.error('Upload error:', error)
@@ -273,13 +303,19 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
       }
 
       const url = postId 
+<<<<<<< HEAD
         ? `/api/blog/${postId}`
         : '/api/blog'
+=======
+        ? `/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts/${postId}`
+        : '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts'
+>>>>>>> origin/master
       
       const method = postId ? 'PUT' : 'POST'
       
       // Form verisini hazırla
       const payload = { 
+<<<<<<< HEAD
         title: formData.title,
         slug: formData.slug,
         excerpt: formData.excerpt,
@@ -295,6 +331,11 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
         tags: formData.tags,
         status: publish ? 'published' : 'draft',
         readingTime: Math.ceil(formData.content.length / 1000)
+=======
+        ...formData, 
+        published: publish,
+        status: publish ? 'published' : 'draft'
+>>>>>>> origin/master
       }
 
       console.log('Gönderilen veri:', payload)
@@ -308,6 +349,7 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
         body: JSON.stringify(payload)
       })
 
+<<<<<<< HEAD
       console.log('Response status:', response.status)
       console.log('Response headers:', response.headers)
 
@@ -320,6 +362,9 @@ export default function BlogPostForm({ postId }: BlogPostFormProps) {
         console.error('Response parse error:', parseError)
         throw new Error('Invalid response from server')
       }
+=======
+      const data = await response.json()
+>>>>>>> origin/master
 
       console.log('API yanıtı:', data)
 

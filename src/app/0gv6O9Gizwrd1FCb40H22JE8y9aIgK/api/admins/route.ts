@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
 import { verifyAdminToken } from '@/lib/jwt'
 import { Logger } from '@/lib/logger'
 import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
@@ -7,6 +8,14 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
 const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
+import { PrismaClient } from '@prisma/client'
+import { verifyAdminToken } from '@/lib/jwt'
+import { Logger } from '@/lib/logger'
+import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
+
+const prisma = new PrismaClient()
+>>>>>>> origin/master
 
 export async function GET(request: NextRequest) {
   const optionsResponse = handleOptions(request)
@@ -39,6 +48,7 @@ export async function GET(request: NextRequest) {
       }, { status: 403, headers: corsHeaders })
     }
 
+<<<<<<< HEAD
     // Adminleri Supabase'den getir - admin_users tablosundan
     const { data: admins, error } = await supabase
       .from('admin_users')
@@ -92,13 +102,46 @@ export async function GET(request: NextRequest) {
       }
       formattedAdmins.push(defaultAdmin)
     }
+=======
+    // Admin kullanıcılarını getir
+    const adminUsers = await prisma.adminUser.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            fullName: true,
+            createdAt: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    })
+
+    const formattedAdmins = adminUsers.map(admin => ({
+      id: admin.id,
+      username: admin.user.email,
+      email: admin.user.email,
+      name: admin.user.fullName,
+      role: admin.role,
+      createdAt: admin.createdAt.toISOString(),
+      lastLogin: null, // Bu bilgiyi systemLogs'dan alabiliriz
+      active: true // Varsayılan olarak aktif
+    }))
+>>>>>>> origin/master
 
     await Logger.logApiRequest('/api/admins', 'GET', 200, Date.now() - startTime, undefined, undefined)
 
     return NextResponse.json({
       success: true,
+<<<<<<< HEAD
       data: formattedAdmins,
       count: formattedAdmins.length
+=======
+      data: formattedAdmins
+>>>>>>> origin/master
     }, { headers: corsHeaders })
 
   } catch (error: any) {
@@ -143,11 +186,16 @@ export async function POST(request: NextRequest) {
       }, { status: 403, headers: corsHeaders })
     }
 
+<<<<<<< HEAD
     const { username, email, name, role, password, permissions } = await request.json()
+=======
+    const { username, email, name, role, password } = await request.json()
+>>>>>>> origin/master
 
     if (!username || !email || !password) {
       return NextResponse.json({
         success: false,
+<<<<<<< HEAD
         error: 'Kullanıcı adı, e-posta ve şifre gerekli'
       }, { status: 400, headers: corsHeaders })
     }
@@ -212,12 +260,26 @@ export async function POST(request: NextRequest) {
       email: email,
       username: username,
       createdAt: new Date().toISOString()
+=======
+        error: 'Kullanıcı adı, e-posta ve şifre zorunludur'
+      }, { status: 400, headers: corsHeaders })
+    }
+
+    // Bu örnekte sadece simüle edilmiş admin oluşturma
+    // Gerçek uygulamada burada kullanıcı ve adminUser oluşturulur
+
+    await Logger.logAdminAction('', 'admin_created', `Admin created: ${email}`, {
+      username,
+      email,
+      role
+>>>>>>> origin/master
     })
 
     await Logger.logApiRequest('/api/admins', 'POST', 200, Date.now() - startTime, undefined, undefined)
 
     return NextResponse.json({
       success: true,
+<<<<<<< HEAD
       message: 'Admin başarıyla oluşturuldu',
       data: {
         id: newAdmin.id,
@@ -229,6 +291,9 @@ export async function POST(request: NextRequest) {
         active: true,
         permissions: permissions || ['blog', 'users', 'settings', 'analytics']
       }
+=======
+      message: 'Admin başarıyla oluşturuldu'
+>>>>>>> origin/master
     }, { headers: corsHeaders })
 
   } catch (error: any) {

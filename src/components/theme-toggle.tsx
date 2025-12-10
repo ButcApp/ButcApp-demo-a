@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme()
+<<<<<<< HEAD
   const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
@@ -62,6 +63,21 @@ export function ThemeToggle() {
       <span className="sr-only">
         {theme === 'light' ? 'Koyu moda geç' : 'Açık moda geç'}
       </span>
+=======
+
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      className="theme-toggle relative overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-lg"
+    >
+      <div className="relative w-full h-full flex items-center justify-center">
+        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-700 ease-in-out dark:-rotate-180 dark:scale-0 absolute" />
+        <Moon className="h-[1.2rem] w-[1.2rem] rotate-180 scale-0 transition-all duration-700 ease-in-out dark:rotate-0 dark:scale-100 absolute" />
+      </div>
+      <span className="sr-only">Toggle theme</span>
+>>>>>>> origin/master
     </Button>
   )
 }

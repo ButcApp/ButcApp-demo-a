@@ -136,6 +136,7 @@ export const dataSync = {
     try {
       const userId = await this.getCurrentUserId()
       if (!userId) {
+<<<<<<< HEAD
         console.error('Kullanıcı ID bulunamadı')
         return false
       }
@@ -150,6 +151,13 @@ export const dataSync = {
       }
 
       console.log('API üzerinden işlem ekleniyor:', transactionData)
+=======
+        console.error('No user ID found for adding transaction')
+        return false
+      }
+
+      console.log('Adding transaction via API:', transaction)
+>>>>>>> origin/master
 
       const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/transactions`, {
         method: 'POST',
@@ -157,16 +165,25 @@ export const dataSync = {
           'Authorization': `Bearer ${ClientAuthService.getToken()}`,
           'Content-Type': 'application/json'
         },
+<<<<<<< HEAD
         body: JSON.stringify(transactionData)
       })
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
         console.error('İşlem eklenemedi:', response.status, response.statusText, errorData)
+=======
+        body: JSON.stringify(transaction)
+      })
+
+      if (!response.ok) {
+        console.error('Failed to add transaction:', response.status, response.statusText)
+>>>>>>> origin/master
         return false
       }
 
       const data = await response.json()
+<<<<<<< HEAD
       console.log('İşlem yanıtı:', data)
       
       if (data.success) {
@@ -174,6 +191,15 @@ export const dataSync = {
         return true
       } else {
         console.error('İşlem eklenirken hata:', data.error)
+=======
+      console.log('Transaction add response:', data)
+      
+      if (data.success) {
+        console.log('Transaction successfully added via API')
+        return true
+      } else {
+        console.error('Transaction add failed:', data.error)
+>>>>>>> origin/master
         return false
       }
     } catch (error) {
@@ -205,6 +231,7 @@ export const dataSync = {
       }
 
       const data = await response.json()
+<<<<<<< HEAD
       console.log('Recurring transactions retrieved from API:', data?.data?.length || 0)
       
       if (data.success && data.data) {
@@ -223,6 +250,12 @@ export const dataSync = {
           endDate: item.enddate || item.endDate,
           isActive: true // Varsayılan olarak aktif
         }))
+=======
+      console.log('Recurring transactions retrieved from API:', data?.length || 0)
+      
+      if (data.success && data.data) {
+        return data.data
+>>>>>>> origin/master
       } else {
         console.error('Recurring transactions API returned error:', data.error)
         return []
@@ -242,6 +275,7 @@ export const dataSync = {
         return false
       }
 
+<<<<<<< HEAD
       // API'nin beklediği formata dönüştür
       const recurringData = {
         amount: recurring.amount,
@@ -253,6 +287,9 @@ export const dataSync = {
       }
 
       console.log('Adding recurring transaction via API:', recurringData)
+=======
+      console.log('Adding recurring transaction via API:', recurring)
+>>>>>>> origin/master
 
       const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/recurring-transactions`, {
         method: 'POST',
@@ -260,6 +297,7 @@ export const dataSync = {
           'Authorization': `Bearer ${ClientAuthService.getToken()}`,
           'Content-Type': 'application/json'
         },
+<<<<<<< HEAD
         body: JSON.stringify(recurringData)
       })
 
@@ -279,6 +317,18 @@ export const dataSync = {
         console.error('Recurring transaction addition failed:', data.error)
         return false
       }
+=======
+        body: JSON.stringify(recurring)
+      })
+
+      if (!response.ok) {
+        console.error('Failed to add recurring transaction:', response.statusText)
+        return false
+      }
+
+      console.log('Recurring transaction successfully added via API')
+      return true
+>>>>>>> origin/master
     } catch (error) {
       console.error('Error in addRecurringTransaction:', error)
       return false
