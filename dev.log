@@ -969,3 +969,488 @@ Not an admin route or login page, proceeding
 Pathname: /favicon-16x16.png
 Method: GET
 Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 373ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/signin
+Method: POST
+API route, skipping middleware
+ ○ Compiling /api/auth/signin ...
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+AuthService: Starting signin for email: vtheophiluss@proton.me
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/498b757b95ddb190.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.498b757b95ddb190.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Signin successful for: vtheophiluss@proton.me
+Failed to log to database: TypeError: Cannot read properties of undefined (reading 'from')
+    at Logger.log (src/lib/logger.ts:43:15)
+    at Logger.logUserLogin (src/lib/logger.ts:77:16)
+    at POST (src/app/api/auth/signin/route.ts:57:18)
+  41 |       // Try to log to database, but don't fail if database is not available
+  42 |       try {
+> 43 |         await supabase
+     |               ^
+  44 |           .from('system_logs')
+  45 |           .insert({
+  46 |             id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+[USER_LOGIN] user_login_attempt: User logged in successfully {
+  type: 'user_login',
+  level: 'info',
+  userId: 'user_1765293907925_5nbi7qlvt',
+  action: 'user_login_attempt',
+  description: 'User logged in successfully',
+  ipAddress: '21.0.0.1',
+  userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+  metadata: { success: true }
+}
+Failed to log to database: TypeError: Cannot read properties of undefined (reading 'from')
+    at Logger.log (src/lib/logger.ts:43:15)
+    at Logger.logApiRequest (src/lib/logger.ts:111:16)
+    at async POST (src/app/api/auth/signin/route.ts:59:5)
+  41 |       // Try to log to database, but don't fail if database is not available
+  42 |       try {
+> 43 |         await supabase
+     |               ^
+  44 |           .from('system_logs')
+  45 |           .insert({
+  46 |             id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+[API_REQUEST] api_request: POST /api/auth/signin - 200 {
+  type: 'api_request',
+  level: 'info',
+  userId: 'user_1765293907925_5nbi7qlvt',
+  adminId: undefined,
+  action: 'api_request',
+  description: 'POST /api/auth/signin - 200',
+  endpoint: '/api/auth/signin',
+  method: 'POST',
+  statusCode: 200,
+  responseTime: 1334,
+  ipAddress: '21.0.0.1',
+  userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+}
+ POST /api/auth/signin 200 in 3635ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ GET /app 200 in 4920ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/44a4de042ae94fca.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.44a4de042ae94fca.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 785ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/0b08ec5aed0db75a.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 109ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.0b08ec5aed0db75a.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 100ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 115ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 112ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 97ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 96ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 106ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+=== ADMIN ACCESS API START ===
+🔍 Verifying token for admin access...
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async POST (src/app/api/admin-access/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+❌ Invalid token for admin access
+ POST /api/admin-access 401 in 700ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/55e2ed2628777f3d.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.55e2ed2628777f3d.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 463ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 131ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 159ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 82ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 85ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
