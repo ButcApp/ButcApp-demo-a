@@ -237,10 +237,6 @@ const [balanceHidden, setBalanceHidden] = useState(false)
 
     const today = new Date()
     today.setHours(0, 0, 0, 0) // Bugünün başlangıcı
-    const currentMonth = today.getMonth()
-    const currentYear = today.getFullYear()
-    const currentDay = today.getDate()
-    const currentWeekDay = today.getDay() // 0 = Pazar, 1 = Pazartesi
     const todayStr = today.toISOString().split('T')[0]
 
     recurringTransactions.forEach(recurring => {
@@ -252,46 +248,16 @@ const [balanceHidden, setBalanceHidden] = useState(false)
       // Eğer başlangıç tarihi gelecekteyse, henüz uygula
       if (startDate > today) return
 
-      let shouldApply = false
-
-      switch (recurring.frequency) {
-        case 'daily':
-          // Günlük: Başlangıç tarihinden bugüne kadar her gün
-          shouldApply = true
-          break
-          
-        case 'weekly':
-          // Haftalık: Seçilen gün ve başlangıç tarihinden sonra
-          if (recurring.dayOfWeek) {
-            const jsDayOfWeek = recurring.dayOfWeek === 7 ? 0 : recurring.dayOfWeek
-            shouldApply = currentWeekDay === jsDayOfWeek
-          }
-          break
-          
-        case 'monthly':
-          // Aylık: Başlangıç günü ve başlangıç tarihinden sonra
-          const startDay = startDate.getDate()
-          shouldApply = currentDay === startDay
-          break
-          
-        case 'yearly':
-          // Yıllık: Başlangıç gün/ay ve başlangıç tarihinden sonra
-          const startMonth = startDate.getMonth()
-          const startDayOfYear = startDate.getDate()
-          shouldApply = currentMonth === startMonth && currentDay === startDayOfYear
-          break
-          
-        case 'custom':
-          // Özel periyot: 30 günlük aralıklarla
-          const daysSinceStart = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24))
-          shouldApply = daysSinceStart > 0 && daysSinceStart % 30 === 0
-          break
-      }
-
-      if (shouldApply) {
+      // Geçmiş tarihler için tüm uygulanması gereken tarihleri hesapla
+      const datesToApply = getRecurringDates(recurring, startDate, today)
+      
+      datesToApply.forEach(date => {
+        const dateStr = date.toISOString().split('T')[0]
+        
+        // Bu tarih için zaten işlem uygulanmış mı kontrol et
         const alreadyApplied = transactions.some(t => 
           t.recurringId === recurring.id && 
-          t.date.startsWith(todayStr)
+          t.date.startsWith(dateStr)
         )
 
         if (!alreadyApplied) {
@@ -301,13 +267,94 @@ const [balanceHidden, setBalanceHidden] = useState(false)
             category: recurring.category,
             description: `${recurring.description} (Otomatik)`,
             account: recurring.account,
-            date: today.toISOString(),
+            date: date.toISOString(),
             isRecurring: true,
             recurringId: recurring.id
           })
         }
-      }
+      })
     })
+  }
+
+  // Tekrarlayan işlem için uygulanması gereken tarihleri hesapla
+  const getRecurringDates = (recurring: RecurringTransaction, startDate: Date, endDate: Date): Date[] => {
+    const dates: Date[] = []
+    let currentDate = new Date(startDate)
+
+    switch (recurring.frequency) {
+      case 'daily':
+        // Günlük: Başlangıç tarihinden bitiş tarihine kadar her gün
+        while (currentDate <= endDate) {
+          dates.push(new Date(currentDate))
+          currentDate.setDate(currentDate.getDate() + 1)
+        }
+        break
+        
+      case 'weekly':
+        // Haftalık: Başlangıç tarihinden bitiş tarihine kadar seçilen günler
+        if (recurring.dayOfWeek) {
+          const jsDayOfWeek = recurring.dayOfWeek === 7 ? 0 : recurring.dayOfWeek
+          
+          // İlk uygun tarihi bul
+          while (currentDate.getDay() !== jsDayOfWeek && currentDate <= endDate) {
+            currentDate.setDate(currentDate.getDate() + 1)
+          }
+          
+          // Sonraki haftaları ekle
+          while (currentDate <= endDate) {
+            dates.push(new Date(currentDate))
+            currentDate.setDate(currentDate.getDate() + 7)
+          }
+        }
+        break
+        
+      case 'monthly':
+        // Aylık: Başlangıç tarihinden bitiş tarihine kadar her ayın aynı günü
+        const startDay = startDate.getDate()
+        currentDate = new Date(startDate)
+        
+        while (currentDate <= endDate) {
+          // Ayın son gününü kontrol et (örn: 31 Şubat'ta yok)
+          const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate()
+          const dayToUse = Math.min(startDay, lastDayOfMonth)
+          
+          currentDate.setDate(dayToUse)
+          if (currentDate >= startDate && currentDate <= endDate) {
+            dates.push(new Date(currentDate))
+          }
+          
+          // Sonraki aya geç
+          currentDate.setMonth(currentDate.getMonth() + 1)
+          currentDate.setDate(1) // Ayın başına döndür
+        }
+        break
+        
+      case 'yearly':
+        // Yıllık: Başlangıç tarihinden bitiş tarihine kadar her yılın aynı günü
+        currentDate = new Date(startDate)
+        
+        while (currentDate <= endDate) {
+          if (currentDate >= startDate) {
+            dates.push(new Date(currentDate))
+          }
+          currentDate.setFullYear(currentDate.getFullYear() + 1)
+        }
+        break
+        
+      case 'custom':
+        // Özel periyot: 30 günlük aralıklarla
+        currentDate = new Date(startDate)
+        
+        while (currentDate <= endDate) {
+          if (currentDate >= startDate) {
+            dates.push(new Date(currentDate))
+          }
+          currentDate.setDate(currentDate.getDate() + 30)
+        }
+        break
+    }
+
+    return dates
   }
 
   const handleInitialSetup = async (newBalances: AccountBalances) => {
@@ -340,7 +387,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
 
     const newTransaction: Transaction = {
       ...transaction,
-      id: Date.now().toString()
+      id: `trans_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
     }
     
     console.log('🔄 addTransaction başlatılıyor:', newTransaction)
@@ -539,7 +586,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
 
     const newRecurring: RecurringTransaction = {
       ...recurring,
-      id: Date.now().toString()
+      id: `recurring_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
     }
     
     // Önce state'i güncelle
@@ -739,7 +786,7 @@ const [balanceHidden, setBalanceHidden] = useState(false)
     }
 
     const newNote: Note = {
-      id: Date.now().toString(),
+      id: `note_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       content: noteContent.trim(),
       date: new Date().toISOString().split('T')[0],
       createdAt: new Date().toISOString(),
@@ -2682,12 +2729,32 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
   onEditRecurring: (recurring: RecurringTransaction) => void
 }) {
   const { t } = useLanguage()
-  const toggleRecurring = (id: string) => {
+  
+  const toggleRecurring = async (id: string) => {
+    // State'i güncelle
     setRecurringTransactions(prev => 
       prev.map(r => 
         r.id === id ? { ...r, isActive: !r.isActive } : r
       )
     )
+  }
+
+  const deleteRecurring = async (id: string) => {
+    if (confirm('Bu tekrarlayan işlemi silmek istediğinizden emin misiniz?')) {
+      // State'den kaldır
+      setRecurringTransactions(prev => prev.filter(r => r.id !== id))
+    }
+  }
+
+  const formatFrequency = (recurring: RecurringTransaction) => {
+    const labels = {
+      daily: 'Günlük',
+      weekly: 'Haftalık',
+      monthly: 'Aylık',
+      yearly: 'Yıllık',
+      custom: recurring.customFrequency || 'Diğer'
+    }
+    return labels[recurring.frequency] || recurring.frequency
   }
 
   return (
@@ -2729,19 +2796,15 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
                       </p>
                     )}
                     <p className="text-xs text-gray-500 mt-1">
-                      {recurring.frequency === 'monthly' && recurring.dayOfMonth
-                        ? `Her ayın ${recurring.dayOfMonth}. günü` 
-                        : recurring.frequency === 'yearly' && recurring.dayOfMonth && recurring.monthOfYear
-                        ? `Her yıl ${recurring.monthOfYear}. ayın ${recurring.dayOfMonth}. günü`
-                        : recurring.frequency === 'weekly' && recurring.dayOfWeek
-                        ? `Her haftanın ${recurring.dayOfWeek}. günü`
-                        : recurring.frequency === 'daily'
-                        ? 'Her gün'
-                        : recurring.frequency
-                      } • 
+                      {formatFrequency(recurring)} • 
                       {recurring.account === 'cash' ? ' Nakit' : 
                        recurring.account === 'bank' ? ' Banka' : ' Birikim'}
                     </p>
+                    {recurring.startDate && (
+                      <p className="text-xs text-gray-500">
+                        Başlangıç: {new Date(recurring.startDate).toLocaleDateString('tr-TR')}
+                      </p>
+                    )}
                   </div>
                   <div className="flex flex-col items-end gap-2">
                     <div className={`text-lg font-bold ${
@@ -2763,6 +2826,13 @@ function RecurringTransactionsList({ recurringTransactions, setRecurringTransact
                         onClick={() => onEditRecurring(recurring)}
                       >
                         Düzenle
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => deleteRecurring(recurring.id)}
+                      >
+                        Sil
                       </Button>
                     </div>
                   </div>

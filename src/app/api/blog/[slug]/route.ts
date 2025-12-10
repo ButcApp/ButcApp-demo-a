@@ -6,9 +6,9 @@ const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXB
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // GET - Fetch single blog post by slug
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const { slug } = params
+    const { slug } = await params
 
     // Fetch blog post
     const { data: post, error } = await supabase
