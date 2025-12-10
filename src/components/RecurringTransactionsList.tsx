@@ -120,7 +120,7 @@ export default function RecurringTransactionsList({
       return
     }
 
-    const id = Date.now().toString()
+    const id = `recurring_local_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
     const newRecurring: RecurringTransaction = {
       ...newTransaction,
       id,

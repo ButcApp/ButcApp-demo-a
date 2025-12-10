@@ -205,10 +205,24 @@ export const dataSync = {
       }
 
       const data = await response.json()
-      console.log('Recurring transactions retrieved from API:', data?.length || 0)
+      console.log('Recurring transactions retrieved from API:', data?.data?.length || 0)
       
       if (data.success && data.data) {
-        return data.data
+        // API'den gelen veriyi frontend'in beklediği formata dönüştür
+        return data.data.map((item: any) => ({
+          id: item.id,
+          type: item.category === 'Maaş' || item.category === 'Ek Gelir' || item.category === 'Yatırım' || item.category === 'Hediye' || item.category === 'Kira Geliri' ? 'income' : 'expense',
+          amount: item.amount,
+          category: item.category,
+          description: item.description,
+          account: 'bank', // Varsayılan olarak banka hesabı
+          frequency: item.frequency,
+          customFrequency: item.customFrequency,
+          dayOfWeek: item.dayOfWeek,
+          startDate: item.startdate || item.startDate,
+          endDate: item.enddate || item.endDate,
+          isActive: true // Varsayılan olarak aktif
+        }))
       } else {
         console.error('Recurring transactions API returned error:', data.error)
         return []
@@ -228,7 +242,17 @@ export const dataSync = {
         return false
       }
 
-      console.log('Adding recurring transaction via API:', recurring)
+      // API'nin beklediği formata dönüştür
+      const recurringData = {
+        amount: recurring.amount,
+        description: recurring.description,
+        category: recurring.category,
+        frequency: recurring.frequency,
+        startDate: recurring.startDate,
+        endDate: recurring.endDate || null
+      }
+
+      console.log('Adding recurring transaction via API:', recurringData)
 
       const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/recurring-transactions`, {
         method: 'POST',
@@ -236,16 +260,25 @@ export const dataSync = {
           'Authorization': `Bearer ${ClientAuthService.getToken()}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(recurring)
+        body: JSON.stringify(recurringData)
       })
 
       if (!response.ok) {
-        console.error('Failed to add recurring transaction:', response.statusText)
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Failed to add recurring transaction:', response.status, response.statusText, errorData)
         return false
       }
 
-      console.log('Recurring transaction successfully added via API')
-      return true
+      const data = await response.json()
+      console.log('Recurring transaction response:', data)
+      
+      if (data.success) {
+        console.log('Recurring transaction successfully added via API')
+        return true
+      } else {
+        console.error('Recurring transaction addition failed:', data.error)
+        return false
+      }
     } catch (error) {
       console.error('Error in addRecurringTransaction:', error)
       return false
