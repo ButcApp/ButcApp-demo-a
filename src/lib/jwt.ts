@@ -60,6 +60,12 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
   try {
     console.log('JWT Verification - Token:', token.substring(0, 50) + '...');
     
+    // Geliştirme modunda basit token kontrolü
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Development mode: All tokens accepted as admin');
+      return true
+    }
+    
     const payload = await verifyToken(token)
     console.log('JWT Payload:', payload)
     
@@ -75,12 +81,16 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
       return true
     }
     
-    // For development, allow any valid token
-    console.log('Development mode: All valid tokens accepted as admin');
-    return true
+    console.log('Access denied: User is not admin');
+    return false
     
   } catch (error) {
     console.error('Token verification error:', error)
+    // Geliştirme modunda hata durumunda da izin ver
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Development mode: All tokens accepted despite verification error');
+      return true
+    }
     return false
   }
 }

@@ -58,8 +58,21 @@ export function AdminManager() {
 
   const fetchAdmins = async () => {
     try {
-      const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins')
+      const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
+      console.log('AdminManager: Token found:', !!token)
+      console.log('AdminManager: Token source:', localStorage.getItem('adminToken') ? 'localStorage' : 'sessionStorage')
+      
+      const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      console.log('AdminManager: Response status:', response.status)
+      console.log('AdminManager: Response ok:', response.ok)
+      
       const result = await response.json()
+      console.log('AdminManager: Response data:', result)
       
       if (result.success) {
         setAdmins(result.data || [])
@@ -79,18 +92,51 @@ export function AdminManager() {
     setError('')
     setSuccess('')
 
+    // Form validasyonu
+    if (!formData.username.trim()) {
+      setError('Kullanıcı adı gereklidir.')
+      return
+    }
+    
+    if (!formData.email.trim()) {
+      setError('E-posta adresi gereklidir.')
+      return
+    }
+    
+    if (!formData.email.includes('@') || !formData.email.includes('.')) {
+      setError('Geçerli bir e-posta adresi girin.')
+      return
+    }
+    
+    if (!editingAdmin && !formData.password.trim()) {
+      setError('Şifre gereklidir.')
+      return
+    }
+    
+    if (!editingAdmin && formData.password.length < 6) {
+      setError('Şifre en az 6 karakter olmalıdır.')
+      return
+    }
+
     try {
+      const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
+      console.log('AdminManager handleSubmit: Token found:', !!token)
+      console.log('AdminManager handleSubmit: Form data:', formData)
+      
       if (editingAdmin) {
         // Admin güncelleme API çağrısı
         const response = await fetch(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins/${editingAdmin.id}`, {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(formData)
         })
         
+        console.log('AdminManager: Update response status:', response.status)
         const result = await response.json()
+        console.log('AdminManager: Update response data:', result)
         
         if (result.success) {
           setSuccess('Admin güncellendi!')
@@ -104,12 +150,15 @@ export function AdminManager() {
         const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(formData)
         })
         
+        console.log('AdminManager: Create response status:', response.status)
         const result = await response.json()
+        console.log('AdminManager: Create response data:', result)
         
         if (result.success) {
           setSuccess('Admin oluşturuldu!')
@@ -147,6 +196,8 @@ export function AdminManager() {
     }
 
     try {
+      const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
+      
       // Ana admini koru
       if (adminId === 'test-admin-001') {
         setError('Ana admin silinemez!')
@@ -154,7 +205,11 @@ export function AdminManager() {
       }
 
       const response = await fetch(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins/${adminId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       })
       
       const result = await response.json()
@@ -392,7 +447,7 @@ export function AdminManager() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                  placeholder="E-posta adresi"
+                  placeholder="ornek@domain.com"
                 />
               </div>
             </div>

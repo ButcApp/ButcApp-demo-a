@@ -18,7 +18,9 @@ import {
   Activity,
   RefreshCw,
   Trash2,
-  UserX
+  UserX,
+  Shield,
+  Crown
 } from 'lucide-react'
 
 interface User {
@@ -44,6 +46,7 @@ export function UserManager() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [userToDelete, setUserToDelete] = useState<User | null>(null)
   const [deleting, setDeleting] = useState(false)
+  const [makingAdmin, setMakingAdmin] = useState<string | null>(null)
 
   useEffect(() => {
     fetchUsers()
@@ -201,6 +204,56 @@ export function UserManager() {
       setError('Kullanıcı silinemedi')
     } finally {
       setDeleting(false)
+    }
+  }
+
+  const handleMakeAdmin = async (user: User) => {
+    if (!confirm(`"${user.fullName || user.email}" kullanıcısını admin yapmak istediğinizden emin misiniz?`)) {
+      return
+    }
+
+    try {
+      setMakingAdmin(user.id)
+      setError('')
+      setSuccess('')
+      
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
+      
+      if (!token) {
+        setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')
+        return
+      }
+
+      const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/make-admin', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          email: user.email,
+          fullName: user.fullName || user.email
+        })
+      })
+      
+      const data = await response.json()
+      
+      if (data.success) {
+        fetchUsers() // Refresh the list
+        setSuccess(`"${user.fullName || user.email}" kullanıcısı başarıyla admin yapıldı!`)
+      } else {
+        setError('Admin yapılamadı: ' + (data.error || 'Bilinmeyen hata'))
+      }
+    } catch (error) {
+      console.error('Make admin error:', error)
+      setError('Admin yapılamadı')
+    } finally {
+      setMakingAdmin(null)
     }
   }
 
@@ -362,6 +415,20 @@ export function UserManager() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center justify-end space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleMakeAdmin(user)}
+                          disabled={makingAdmin === user.id}
+                          className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                        >
+                          {makingAdmin === user.id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <Crown className="h-4 w-4" />
+                          )}
+                          {makingAdmin === user.id ? '' : 'Admin Yap'}
+                        </Button>
                         <Button
                           variant="outline"
                           size="sm"
