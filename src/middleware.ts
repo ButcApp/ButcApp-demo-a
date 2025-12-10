@@ -15,6 +15,18 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+<<<<<<< HEAD
+  // Sadece login ve admin route'larını kontrol et
+  if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login') || 
+      pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/') ||
+      pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/')) {
+    console.log('Login or Admin route, skipping middleware');
+    return NextResponse.next()
+  }
+
+  console.log('Not an admin route or login page, proceeding');
+  return NextResponse.next()
+=======
   // Sadece admin route'larını kontrol et
   if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK')) {
     // Cookie'den token'ı al
@@ -104,4 +116,5 @@ export const config = {
      */
     '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
   ],
+>>>>>>> origin/master
 }

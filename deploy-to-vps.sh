@@ -1,10 +1,14 @@
 #!/bin/bash
 
 <<<<<<< HEAD
+# ButcApp.com VPS Deployment Script
+=======
+<<<<<<< HEAD
 # ButcApp.com VPS Deployment Script (pnpm version)
 =======
 # ButcApp.com VPS Deployment Script
 >>>>>>> e24e41a09e2ad6015452c7d5548a957a3c4fec4d
+>>>>>>> origin/master
 
 echo "🚀 ButcApp.com VPS deployment başlatılıyor..."
 
@@ -73,6 +77,8 @@ cd /var/www/butcapp
 echo "🔍 Node.js versiyonu:"
 node --version
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 
 # pnpm kur (yoksa)
 if ! command -v pnpm &> /dev/null; then
@@ -95,6 +101,7 @@ pnpm db:push
 echo "🔨 Proje build ediliyor..."
 pnpm build
 =======
+>>>>>>> origin/master
 npm --version
 
 # Dependencies kur
@@ -108,16 +115,23 @@ npm run db:push
 # Build et
 echo "🔨 Proje build ediliyor..."
 npm run build
+<<<<<<< HEAD
+=======
 >>>>>>> e24e41a09e2ad6015452c7d5548a957a3c4fec4d
+>>>>>>> origin/master
 
 # PM2 ile başlat
 echo "🚀 Uygulama başlatılıyor..."
 pm2 stop butcapp 2>/dev/null || true
 <<<<<<< HEAD
+pm2 start npm --name "butcapp" -- start
+=======
+<<<<<<< HEAD
 pm2 start pnpm --name "butcapp" -- start
 =======
 pm2 start npm --name "butcapp" -- start
 >>>>>>> e24e41a09e2ad6015452c7d5548a957a3c4fec4d
+>>>>>>> origin/master
 pm2 save
 
 echo "✅ Kurulum tamamlandı"

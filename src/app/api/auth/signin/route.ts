@@ -10,6 +10,10 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
+<<<<<<< HEAD
+    
+=======
+>>>>>>> origin/master
     const { email, password, captchaAnswer } = body
 
     // Basic validation
@@ -17,12 +21,30 @@ export async function POST(request: NextRequest) {
       await Logger.logSecurity('signin_validation_failed', 'Missing email or password', ipAddress, userAgent)
       return NextResponse.json({
         success: false,
+<<<<<<< HEAD
+        error: 'E-posta ve şifre gereklidir'
+      }, { status: 400 })
+    }
+
+    // CAPTCHA validation
+    if (!captchaAnswer || captchaAnswer.trim() === '') {
+      await Logger.logSecurity('signin_validation_failed', 'Missing CAPTCHA', ipAddress, userAgent)
+      return NextResponse.json({
+        success: false,
+        error: 'İnsan doğrulaması gereklidir'
+      }, { status: 400 })
+    }
+
+    // Basic CAPTCHA validation
+    if (!/^\d+$/.test(captchaAnswer.trim())) {
+=======
         error: 'Email ve şifre zorunludur'
       }, { status: 400 })
     }
 
     // CAPTCHA validation (optional for now)
     if (captchaAnswer && !/^\d+$/.test(captchaAnswer.trim())) {
+>>>>>>> origin/master
       await Logger.logSecurity('signin_validation_failed', 'Invalid CAPTCHA format', ipAddress, userAgent)
       return NextResponse.json({
         success: false,
@@ -40,7 +62,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: false,
         error: result.error
+<<<<<<< HEAD
+      }, { status: 400 })
+=======
       }, { status: 401 })
+>>>>>>> origin/master
     }
 
     // Log successful user signin
@@ -52,6 +78,26 @@ export async function POST(request: NextRequest) {
       success: true,
       user: result.user,
       token: result.token,
+<<<<<<< HEAD
+      message: 'Giriş başarılı!'
+    })
+
+  } catch (error) {
+    console.error('Signin API error:', error)
+    console.error('Error stack:', (error as Error).stack)
+    
+    try {
+      await Logger.logError(error as Error, 'POST /api/auth/signin', undefined, undefined)
+      await Logger.logApiRequest('/api/auth/signin', 'POST', 500, Date.now() - startTime, undefined, undefined)
+    } catch (logError) {
+      console.error('Logging failed:', logError)
+    }
+    
+    return NextResponse.json({
+      success: false,
+      error: 'Giriş sırasında bir hata oluştu. Lütfen tekrar deneyin.',
+      details: process.env.NODE_ENV === 'development' ? (error as Error).message : undefined
+=======
       message: 'Giriş başarılı! Hoş geldiniz.'
     })
 
@@ -62,6 +108,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: false,
       error: 'Giriş sırasında bir hata oluştu. Lütfen tekrar deneyin.'
+>>>>>>> origin/master
     }, { status: 500 })
   }
 }

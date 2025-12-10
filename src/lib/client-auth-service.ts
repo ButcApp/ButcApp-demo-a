@@ -2,11 +2,18 @@ import { AuthUser, AuthResponse } from './auth-types'
 
 // Client-side authentication service (uses API routes)
 export class ClientAuthService {
+<<<<<<< HEAD
+  static getBaseUrl(): string {
+    if (typeof window !== 'undefined') {
+      // Use the current window location for relative URLs
+      return window.location.origin
+=======
   private static getBaseUrl(): string {
     if (typeof window !== 'undefined') {
       // Return empty string to use relative URLs in the browser
       // This fixes networking issues in cloud development environments
       return ''
+>>>>>>> origin/master
     }
     // Server-side fallback
     return process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
@@ -14,7 +21,11 @@ export class ClientAuthService {
 
   private static async request<T>(endpoint: string, options: RequestInit): Promise<{ data?: T; error?: string }> {
     try {
+<<<<<<< HEAD
+      const response = await fetch(`${ClientAuthService.getBaseUrl()}${endpoint}`, options)
+=======
       const response = await fetch(`${this.getBaseUrl()}${endpoint}`, options)
+>>>>>>> origin/master
 
       // Check if response is OK first
       if (!response.ok) {

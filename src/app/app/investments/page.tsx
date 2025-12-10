@@ -73,6 +73,16 @@ interface Investment {
   current_value?: number
   profit?: number
   profit_percent?: number
+<<<<<<< HEAD
+  status?: string
+  sellDate?: string
+  sellPrice?: number
+  // Database fields
+  currency_name?: string
+  buy_price?: number
+  buy_date?: string
+=======
+>>>>>>> origin/master
 }
 
 interface InvestmentFormData {
@@ -225,6 +235,91 @@ export default function InvestmentsPage() {
   }, [])
 
   // Fetch investments from SQLite
+<<<<<<< HEAD
+  const fetchInvestments = async (userId?: string) => {
+    setIsLoadingInvestments(true)
+    try {
+      console.log('Fetching investments...')
+      
+      // Get token for authorization
+      const token = ClientAuthService.getToken()
+      console.log('Token available for investments fetch:', token ? 'YES' : 'NO')
+      
+      // Fetch investments and current currency rates separately for better error handling
+      let investmentsResult, currencyResult, cryptoResult
+      
+      try {
+        // First, fetch investments (with or without token)
+        console.log('📊 Fetching investments...')
+        const investmentsUrl = userId 
+          ? `/api/investments?userId=${userId}`
+          : '/api/investments'
+        
+        const investmentsResponse = await fetch(investmentsUrl, {
+          headers: token ? {
+            'Authorization': `Bearer ${token}`
+          } : {}
+        })
+        
+        // Check if investments response is OK and is JSON
+        if (!investmentsResponse.ok) {
+          console.error('❌ Investments API returned error status:', investmentsResponse.status)
+          setInvestments([])
+          return
+        }
+        
+        // Check content type to ensure it's JSON
+        const contentType = investmentsResponse.headers.get('content-type')
+        if (!contentType || !contentType.includes('application/json')) {
+          console.error('❌ Investments API returned non-JSON response:', contentType)
+          // Try to get the response text for debugging
+          try {
+            const responseText = await investmentsResponse.text()
+            console.error('Investments API response text:', responseText.substring(0, 500))
+          } catch (textError) {
+            console.error('Could not get response text:', textError)
+          }
+          setInvestments([])
+          return
+        }
+        
+        investmentsResult = await investmentsResponse.json()
+        console.log('✅ Investments fetched successfully')
+        
+      } catch (fetchError) {
+        console.error('❌ Failed to fetch investments:', fetchError)
+        investmentsResult = { success: true, data: [] }
+      }
+      
+      // Then fetch currency and crypto data (these are optional and don't require auth)
+      try {
+        const currencyResponse = await fetch('/api/currency')
+        if (currencyResponse.ok) {
+          currencyResult = await currencyResponse.json()
+          console.log('✅ Currency data fetched successfully')
+        } else {
+          console.warn('⚠️ Currency API failed, using empty data')
+          currencyResult = { success: false, data: [] }
+        }
+      } catch (currencyError) {
+        console.warn('⚠️ Currency API error:', currencyError)
+        currencyResult = { success: false, data: [] }
+      }
+      
+      try {
+        const cryptoResponse = await fetch('/api/crypto')
+        if (cryptoResponse.ok) {
+          cryptoResult = await cryptoResponse.json()
+          console.log('✅ Crypto data fetched successfully')
+        } else {
+          console.warn('⚠️ Crypto API failed, using empty data')
+          cryptoResult = { success: false, data: [] }
+        }
+      } catch (cryptoError) {
+        console.warn('⚠️ Crypto API error:', cryptoError)
+        cryptoResult = { success: false, data: [] }
+      }
+=======
   const fetchInvestments = async (userId: string) => {
     setIsLoadingInvestments(true)
     try {
@@ -255,6 +350,7 @@ export default function InvestmentsPage() {
       const investmentsResult = await investmentsResponse.json()
       const currencyResult = await currencyResponse.json()
       const cryptoResult = await cryptoResponse.json()
+>>>>>>> origin/master
       
       console.log('Investments API response:', investmentsResult)
       console.log('Currency API response:', currencyResult)
@@ -345,14 +441,88 @@ export default function InvestmentsPage() {
         setInvestments(investmentsData)
       } else {
         console.error('Failed to fetch investments:', investmentsResult.error)
+<<<<<<< HEAD
+        setInvestments([]) // Set empty array on error
       }
     } catch (error) {
       console.error('Investments fetch error:', error)
+      setInvestments([]) // Set empty array on error
+=======
+      }
+    } catch (error) {
+      console.error('Investments fetch error:', error)
+>>>>>>> origin/master
     } finally {
       setIsLoadingInvestments(false)
     }
   }
 
+<<<<<<< HEAD
+  // Delete investment function with enhanced error handling
+  const deleteInvestment = async (id: string) => {
+    if (!id) {
+      console.error('No investment ID provided for deletion')
+      return
+    }
+    
+    setIsDeleting(true)
+    try {
+      console.log('Starting delete for investment:', {
+        investmentId: id,
+        userId: user?.id,
+        timestamp: new Date().toISOString()
+      })
+      
+      const token = ClientAuthService.getToken()
+      if (!token) {
+        console.error('No auth token available')
+        alert('Oturum bilgileriniz doğrulanamadı. Lütfen tekrar giriş yapın.')
+        return
+      }
+
+      // Get the base URL from ClientAuthService
+      const baseUrl = ClientAuthService.getBaseUrl()
+      
+      // First, verify the investment exists and belongs to the user
+      console.log('Verifying investment before deletion...', { id, userId: user?.id })
+      
+      const verifyUrl = `/api/investments/verify?id=${encodeURIComponent(id)}`
+      console.log('Verify URL:', verifyUrl)
+      
+      const verifyResponse = await fetch(verifyUrl, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      console.log('Verify response status:', verifyResponse.status)
+      
+      if (!verifyResponse.ok) {
+        const errorText = await verifyResponse.text()
+        console.error('Verify API error:', verifyResponse.status, errorText)
+        alert(`Yatırım doğrulanamadı: ${verifyResponse.status}`)
+        return
+      }
+      
+      const verifyResult = await verifyResponse.json()
+      console.log('Verification result:', verifyResult)
+      
+      if (!verifyResult.exists) {
+        console.error('Investment not found or access denied:', { id, userId: user?.id })
+        alert('Yatırım bulunamadı veya silinmek üzere zaten kaldırılmış olabilir.')
+        if (user) {
+          await fetchInvestments(user.id)
+        }
+        return
+      }
+
+      console.log('Sending delete request...')
+      const deleteUrl = `/api/investments/delete?id=${encodeURIComponent(id)}`
+      console.log('Delete URL:', deleteUrl)
+      
+      const response = await fetch(deleteUrl, {
+=======
   // Delete investment function
   const deleteInvestment = async (id: string) => {
     setIsDeleting(true)
@@ -373,6 +543,7 @@ export default function InvestmentsPage() {
       }
 
       const response = await fetch(`/api/investments/delete?id=${id}`, {
+>>>>>>> origin/master
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -380,6 +551,37 @@ export default function InvestmentsPage() {
         }
       })
       
+<<<<<<< HEAD
+      console.log('Delete response status:', response.status)
+      
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('Delete API error:', response.status, errorText)
+        alert(`Yatırım silinemedi: ${response.status}`)
+        return
+      }
+      
+      const result = await response.json()
+      console.log('Delete API response:', result)
+      
+      if (response.ok && result.success) {
+        console.log('Investment deleted successfully')
+        alert('Yatırım başarıyla silindi')
+        if (user) {
+          await fetchInvestments(user.id)
+        }
+        setDeleteConfirmOpen(false)
+        setInvestmentToDelete(null)
+      } else {
+        const errorMessage = result.error || 'Yatırım silinirken bir hata oluştu'
+        console.error('Failed to delete investment. Details:', {
+          error: errorMessage,
+          investmentId: id,
+          userId: user?.id,
+          status: response.status
+        })
+        alert(errorMessage)
+=======
       const result = await response.json()
       console.log('Delete API response:', { status: response.status, result })
       
@@ -394,6 +596,7 @@ export default function InvestmentsPage() {
         setInvestmentToDelete(null)
       } else {
         console.error('Failed to delete investment:', result.error)
+>>>>>>> origin/master
       }
     } catch (error) {
       console.error('Delete investment error:', error)
@@ -492,6 +695,17 @@ export default function InvestmentsPage() {
   }
 
   // Load historical price for investment
+<<<<<<< HEAD
+  const fetchHistoricalPrice = async (date: string, currencyCode: string, type?: 'currency' | 'crypto' | 'commodity') => {
+    setIsLoadingHistorical(true)
+    try {
+      console.log(`🔍 Fetching historical price for ${currencyCode} on ${date}`)
+      
+      // Default to currency type if not specified
+      const investmentType = type || getInvestmentCategory(currencyCode)
+      
+      const response = await fetch(`/api/historical?date=${date}&type=${investmentType}&symbol=${currencyCode}`)
+=======
   const fetchHistoricalPrice = async (date: string, currencyCode: string, type: 'currency' | 'crypto') => {
     setIsLoadingHistorical(true)
     try {
@@ -506,11 +720,29 @@ export default function InvestmentsPage() {
         // Use unified historical API for currency
         response = await fetch(`/api/historical?date=${date}&type=currency`)
       }
+>>>>>>> origin/master
       
       const result = await response.json()
       
       console.log(`📊 Historical API response:`, {
         success: result.success,
+<<<<<<< HEAD
+        hasData: !!result.data,
+        currencyCode,
+        type: investmentType,
+        date,
+      })
+      
+      if (result.success && result.data) {
+        // For the new API structure, data is a single object, not an array
+        const historicalItem = result.data
+        
+        if (historicalItem && historicalItem.price) {
+          setHistoricalPrice(historicalItem.price)
+          console.log(`✅ Historical price found for ${currencyCode}: ₺${historicalItem.price}`)
+        } else {
+          console.warn(`❌ No historical price found for ${currencyCode}`)
+=======
         dataLength: result.data?.length,
         currencyCode,
         type,
@@ -552,6 +784,7 @@ export default function InvestmentsPage() {
         } else {
           console.warn(`❌ No historical price found for ${currencyCode} in ${result.data.length} items`)
           console.log(`Available symbols:`, result.data.map((c: any) => c.symbol))
+>>>>>>> origin/master
           setHistoricalPrice(null)
         }
       } else {
@@ -740,7 +973,13 @@ export default function InvestmentsPage() {
     // Fetch historical price for the selected date
     if (investmentForm.date !== new Date().toISOString().split('T')[0]) {
       const currencyType = getInvestmentCategory(currency.symbol)
+<<<<<<< HEAD
+      // Extract currency code from symbol (USD from USD/TRY, EUR from EUR/TRY, etc.)
+      const currencyCode = currency.symbol.split('/')[0]
+      fetchHistoricalPrice(investmentForm.date, currencyCode, currencyType)
+=======
       fetchHistoricalPrice(investmentForm.date, currency.symbol, currencyType)
+>>>>>>> origin/master
     } else {
       setHistoricalPrice(null)
     }
@@ -1334,7 +1573,13 @@ export default function InvestmentsPage() {
                   } else {
                     // Fetch historical price for new date
                     if (selectedCurrency && newDate !== new Date().toISOString().split('T')[0]) {
+<<<<<<< HEAD
+                      // Extract currency code from symbol (USD from USD/TRY, EUR from EUR/TRY, etc.)
+                      const currencyCode = selectedCurrency.symbol.split('/')[0]
+                      fetchHistoricalPrice(newDate, currencyCode)
+=======
                       fetchHistoricalPrice(newDate, selectedCurrency.symbol)
+>>>>>>> origin/master
                     } else {
                       setHistoricalPrice(null)
                     }
@@ -1350,7 +1595,11 @@ export default function InvestmentsPage() {
               )}
               {isDateHoliday(investmentForm.date) && historicalPrice && (
                 <p className="text-sm text-blue-600 mt-1">
+<<<<<<< HEAD
+                  ℹ️ {investmentForm.date} tarihinde veri bulunamadı. Önceki çalışma günü verileri kullanılıyor.
+=======
                   ℹ️ {investmentForm.date} tarihinde veri bulunamadı. Önceki çalışma günü ({new Date(historicalPrice.timestamp).toLocaleDateString('tr-TR')}) verileri kullanılıyor.
+>>>>>>> origin/master
                 </p>
               )}
               {!isDateHoliday(investmentForm.date) && !historicalPrice && (
@@ -1378,7 +1627,11 @@ export default function InvestmentsPage() {
             </div>
 
             <div>
+<<<<<<< HEAD
+              <Label htmlFor="investmentAmount">Yatırım Miktarı</Label>
+=======
               <Label htmlFor="investmentAmount">Yatırım Miktarı (TRY)</Label>
+>>>>>>> origin/master
               <Input
                 id="investmentAmount"
                 type="number"
@@ -1414,9 +1667,15 @@ export default function InvestmentsPage() {
                     <div className="flex justify-between">
                       <span>Kar/Zarar:</span>
                       <span className={`font-medium ${
+<<<<<<< HEAD
+                        ((selectedCurrency?.price || 0) - (historicalPrice || 0)) >= 0 ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        {(((selectedCurrency?.price || 0) - (historicalPrice || 0)) >= 0 ? '+' : '')}₺{formatPrice(((selectedCurrency?.price || 0) - (historicalPrice || 0)) * investmentForm.amount)}
+=======
                         (selectedCurrency.price - (historicalPrice || 0)) >= 0 ? 'text-green-600' : 'text-red-600'
                       }`}>
                         {((selectedCurrency.price - (historicalPrice || 0)) >= 0 ? '+' : '')}₺{formatPrice((selectedCurrency.price - (historicalPrice || 0)) * investmentForm.amount)}
+>>>>>>> origin/master
                       </span>
                     </div>
                   )}
@@ -1664,7 +1923,11 @@ export default function InvestmentsPage() {
                 {getFilteredInvestments().length > 0 ? (
                   getFilteredInvestments().map((investment) => {
                   const profitDetails = formatProfitDetails(
+<<<<<<< HEAD
+                    calculateInvestmentProfit(investment, (investment.current_value || 0) / investment.amount)
+=======
                     calculateInvestmentProfit(investment, investment.current_value / investment.amount)
+>>>>>>> origin/master
                   )
                   
                   return (
@@ -1679,11 +1942,19 @@ export default function InvestmentsPage() {
                           </div>
                           <div className="text-sm text-muted-foreground">{investment.name}</div>
                           <div className="text-xs text-muted-foreground">
+<<<<<<< HEAD
+                            Alış: {new Date(investment.buyDate).toLocaleDateString('tr-TR')} - ${investment.currency}{(investment.buyPrice || 0).toFixed(2)}
+                          </div>
+                          {investment.sellDate && (
+                            <div className="text-xs text-muted-foreground">
+                              Satış: {new Date(investment.sellDate).toLocaleDateString('tr-TR')} - ${investment.currency}{(investment.sellPrice || 0).toFixed(2)}
+=======
                             Alış: {new Date(investment.buyDate).toLocaleDateString('tr-TR')} - ${investment.currency}{investment.buyPrice?.toFixed(2)}
                           </div>
                           {investment.sellDate && (
                             <div className="text-xs text-muted-foreground">
                               Satış: {new Date(investment.sellDate).toLocaleDateString('tr-TR')} - ${investment.currency}{investment.sellPrice?.toFixed(2)}
+>>>>>>> origin/master
                             </div>
                           )}
                           <div className="text-xs text-muted-foreground">
@@ -1693,6 +1964,18 @@ export default function InvestmentsPage() {
                         <div className="flex items-center gap-3">
                           <div className="text-right">
                             <div className="font-semibold">
+<<<<<<< HEAD
+                              ${formatPrice(investment.current_value || 0)}
+                            </div>
+                            <div className={`text-sm font-medium ${(investment.profit || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              {(investment.profit || 0) >= 0 ? '+' : ''}${formatPrice(investment.profit || 0)}
+                            </div>
+                            <div className={`text-xs ${(investment.profit_percent || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                              ({(investment.profit_percent || 0) >= 0 ? '+' : ''}{(investment.profit_percent || 0).toFixed(2)}%)
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {(profitDetails as any).description}
+=======
                               ${formatPrice(investment.current_value)}
                             </div>
                             <div className={`text-sm font-medium ${
@@ -1707,6 +1990,7 @@ export default function InvestmentsPage() {
                             </div>
                             <div className="text-xs text-muted-foreground">
                               {profitDetails.status}
+>>>>>>> origin/master
                             </div>
                           </div>
                           <Button
@@ -1816,7 +2100,11 @@ export default function InvestmentsPage() {
             </div>
 
             {/* Summary Statistics */}
+<<<<<<< HEAD
+            <SummaryStatistics investments={investments as any} />
+=======
             <SummaryStatistics investments={investments} />
+>>>>>>> origin/master
           </div>
         </DialogContent>
       </Dialog>

@@ -1,6 +1,16 @@
 import bcrypt from 'bcryptjs'
 import { SignJWT, jwtVerify } from 'jose'
+<<<<<<< HEAD
+import { createClient } from '@supabase/supabase-js'
+
+// Hardcoded Supabase configuration
+const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
+const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
 import { db } from '@/lib/db'
+>>>>>>> origin/master
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'butcapp-secret-key-change-in-production-2024'
@@ -49,6 +59,10 @@ export class AuthService {
       errors
     }
   }
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
   static async signUp(email: string, password: string, fullName?: string): Promise<AuthResponse> {
     try {
       console.log('AuthService: Starting signup for email:', email)
@@ -66,11 +80,26 @@ export class AuthService {
       }
       
       // Check if user already exists
+<<<<<<< HEAD
+      const { data: existingUser, error: checkError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email.toLowerCase().trim())
+        .limit(1)
+
+      if (checkError) {
+        console.error('AuthService: Error checking existing user:', checkError)
+        return { error: 'Veritabanı hatası' }
+      }
+
+      if (existingUser && existingUser.length > 0) {
+=======
       const existingUser = await db.user.findUnique({
         where: { email: email.toLowerCase().trim() }
       })
 
       if (existingUser) {
+>>>>>>> origin/master
         console.log('AuthService: User already exists:', email)
         return { error: 'Bu e-posta adresi zaten kayıtlı. Lütfen farklı bir e-posta adresi kullanın veya giriş yapın.' }
       }
@@ -78,6 +107,62 @@ export class AuthService {
       // Hash password
       const passwordHash = await bcrypt.hash(password, 12)
 
+<<<<<<< HEAD
+      // Create user
+      console.log(`[${Date.now()}] AuthService: Starting user creation for email:`, email)
+      
+      const userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      const now = new Date()
+      
+      const { data: newUser, error: insertError } = await supabase
+        .from('users')
+        .insert({
+          id: userId,
+          email: email.toLowerCase().trim(),
+          passwordhash: passwordHash,
+          fullname: fullName?.trim() || null,
+          createdat: now.toISOString(),
+          updatedat: now.toISOString(),
+        })
+        .select()
+        .single()
+
+      if (insertError) {
+        console.error('AuthService: Error creating user:', insertError)
+        return { error: 'Kullanıcı oluşturulamadı' }
+      }
+      
+      console.log(`[${Date.now()}] AuthService: Completed user creation for userId:`, newUser.id)
+
+      // Create profile
+      const { error: profileError } = await supabase
+        .from('user_profiles')
+        .insert({
+          id: `profile_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          userid: newUser.id,
+          email: newUser.email,
+          fullname: newUser.fullname,
+          createdat: now.toISOString(),
+          updatedat: now.toISOString(),
+        })
+
+      if (profileError) {
+        console.error('AuthService: Error creating profile:', profileError)
+      }
+
+      // Check if user is admin
+      const { data: adminUser } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('userid', newUser.id)
+        .limit(1)
+
+      // Generate token
+      const token = await new SignJWT({
+        userId: newUser.id,
+        email: newUser.email,
+        role: adminUser && adminUser.length > 0 ? 'admin' : 'user'
+=======
       // Create user - TIMING LOG START
       console.log(`[${Date.now()}] AuthService: Starting db.user.create for email:`, email)
       const user = await db.user.create({
@@ -108,6 +193,7 @@ export class AuthService {
         userId: user.id,
         email: user.email,
         role: adminUser ? 'admin' : 'user'
+>>>>>>> origin/master
       })
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
@@ -118,10 +204,17 @@ export class AuthService {
 
       return {
         user: {
+<<<<<<< HEAD
+          id: newUser.id,
+          email: newUser.email,
+          fullName: newUser.fullname || undefined,
+          avatarUrl: newUser.avatarurl || undefined,
+=======
           id: user.id,
           email: user.email,
           fullName: user.fullName || undefined,
           avatarUrl: user.avatarUrl || undefined,
+>>>>>>> origin/master
         },
         token
       }
@@ -136,23 +229,58 @@ export class AuthService {
       console.log('AuthService: Starting signin for email:', email)
       
       // Find user
+<<<<<<< HEAD
+      const { data: user, error: findError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email.toLowerCase().trim())
+        .limit(1)
+
+      if (findError) {
+        console.error('AuthService: Error finding user:', findError)
+        return { error: 'Veritabanı hatası' }
+      }
+
+      if (!user || user.length === 0) {
+=======
       const user = await db.user.findUnique({
         where: { email: email.toLowerCase().trim() }
       })
 
       if (!user) {
+>>>>>>> origin/master
         console.log('AuthService: User not found:', email)
         return { error: 'E-posta veya şifre hatalı' }
       }
 
+<<<<<<< HEAD
+      const userData = user[0]
+
+      // Check password
+      const isValidPassword = await bcrypt.compare(password, userData.passwordhash)
+=======
       // Check password
       const isValidPassword = await bcrypt.compare(password, user.passwordHash)
+>>>>>>> origin/master
       if (!isValidPassword) {
         console.log('AuthService: Invalid password for:', email)
         return { error: 'E-posta veya şifre hatalı' }
       }
 
       // Check if user is admin
+<<<<<<< HEAD
+      const { data: adminUser } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('userid', userData.id)
+        .limit(1)
+
+      // Generate token
+      const token = await new SignJWT({
+        userId: userData.id,
+        email: userData.email,
+        role: adminUser && adminUser.length > 0 ? 'admin' : 'user'
+=======
       const adminUser = await db.adminUser.findUnique({
         where: { userId: user.id }
       })
@@ -162,6 +290,7 @@ export class AuthService {
         userId: user.id,
         email: user.email,
         role: adminUser ? 'admin' : 'user'
+>>>>>>> origin/master
       })
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
@@ -172,10 +301,17 @@ export class AuthService {
 
       return {
         user: {
+<<<<<<< HEAD
+          id: userData.id,
+          email: userData.email,
+          fullName: userData.fullname || undefined,
+          avatarUrl: userData.avatarurl || undefined,
+=======
           id: user.id,
           email: user.email,
           fullName: user.fullName || undefined,
           avatarUrl: user.avatarUrl || undefined,
+>>>>>>> origin/master
         },
         token
       }
@@ -193,6 +329,26 @@ export class AuthService {
       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
       
       // Find user in database
+<<<<<<< HEAD
+      const { data: user, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', decoded.userId || decoded.id)
+        .limit(1)
+
+      if (error) {
+        console.error('AuthService: Error finding user for token:', error)
+        return null
+      }
+
+      if (user && user.length > 0) {
+        console.log('AuthService: Token verification successful for:', user[0].email)
+        return {
+          id: user[0].id,
+          email: user[0].email,
+          fullName: user[0].fullname || undefined,
+          avatarUrl: user[0].avatarurl || undefined,
+=======
       const user = await db.user.findUnique({
         where: { id: decoded.userId || decoded.id },
         select: {
@@ -210,6 +366,7 @@ export class AuthService {
           email: user.email,
           fullName: user.fullName || undefined,
           avatarUrl: user.avatarUrl || undefined,
+>>>>>>> origin/master
         }
       }
 
@@ -247,11 +404,26 @@ export class AuthService {
 
   static async resetPassword(email: string): Promise<{ error?: string }> {
     try {
+<<<<<<< HEAD
+      const { data: user, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email.toLowerCase().trim())
+        .limit(1)
+
+      if (error) {
+        console.error('AuthService: Error finding user for password reset:', error)
+        return { error: 'Veritabanı hatası' }
+      }
+
+      if (!user || user.length === 0) {
+=======
       const user = await db.user.findUnique({
         where: { email: email.toLowerCase().trim() }
       })
 
       if (!user) {
+>>>>>>> origin/master
         return { error: 'Bu e-posta adresi kayıtlı değil' }
       }
 
@@ -267,6 +439,33 @@ export class AuthService {
 
   static async updateProfile(userId: string, data: { fullName?: string; avatarUrl?: string }): Promise<{ error?: string }> {
     try {
+<<<<<<< HEAD
+      const updateData: any = {
+        updatedat: new Date().toISOString(),
+      }
+
+      if (data.fullName) {
+        updateData.fullname = data.fullName.trim()
+      }
+      if (data.avatarUrl) {
+        updateData.avatarurl = data.avatarUrl.trim()
+      }
+
+      const { error: userError } = await supabase
+        .from('users')
+        .update(updateData)
+        .eq('id', userId)
+
+      const { error: profileError } = await supabase
+        .from('user_profiles')
+        .update(updateData)
+        .eq('userid', userId)
+
+      if (userError || profileError) {
+        console.error('AuthService: Error updating profile:', { userError, profileError })
+        return { error: 'Profil güncellenemedi' }
+      }
+=======
       await db.user.update({
         where: { id: userId },
         data: {
@@ -282,6 +481,7 @@ export class AuthService {
           ...(data.avatarUrl && { avatarUrl: data.avatarUrl.trim() }),
         }
       })
+>>>>>>> origin/master
 
       return {}
     } catch (error) {
@@ -295,13 +495,42 @@ export class AuthService {
     try {
       const authHeader = request.headers.get('authorization')
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
+<<<<<<< HEAD
+        console.log('AuthService: No auth header or invalid format')
+=======
+>>>>>>> origin/master
         return null
       }
 
       const token = authHeader.substring(7)
+<<<<<<< HEAD
+      if (!token) {
+        console.log('AuthService: No token provided')
+        return null
+      }
+
+      console.log('AuthService: Verifying token:', token.substring(0, 20) + '...')
+      const user = await this.verifyToken(token)
+      
+      if (user) {
+        console.log('AuthService: Token verification successful for user:', user.email)
+      } else {
+        console.log('AuthService: Token verification failed')
+      }
+      
+      return user
+    } catch (error) {
+      console.error('AuthService: Error getting user from request:', error)
+      console.error('AuthService: Error details:', {
+        message: (error as Error).message,
+        stack: (error as Error).stack,
+        authHeader: request.headers.get('authorization')
+      })
+=======
       return await this.verifyToken(token)
     } catch (error) {
       console.error('AuthService: Error getting user from request:', error)
+>>>>>>> origin/master
       return null
     }
   }

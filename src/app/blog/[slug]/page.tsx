@@ -38,14 +38,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     return {
       title: `${post.title} | ButcApp Blog`,
+<<<<<<< HEAD
+      description: post.excerpt || `${post.title} hakkında detaylı bilgi.`,
+      keywords: [
+=======
       description: post.meta_description || post.excerpt || `${post.title} hakkında detaylı bilgi.`,
       keywords: [
         ...(post.meta_keywords || []),
+>>>>>>> origin/master
         ...(post.tags || []),
         'ButcApp',
         'finansal blog',
         'kişisel finans'
       ].join(', '),
+<<<<<<< HEAD
+      authors: [post.author?.name || 'ButcApp Team'],
+      openGraph: {
+        title: post.title,
+        description: post.excerpt || `${post.title} hakkında detaylı bilgi.`,
+        type: 'article',
+        publishedTime: post.publishedAt,
+        modifiedTime: post.updatedAt,
+        images: post.coverImage ? [
+          {
+            url: post.coverImage,
+=======
       authors: [post.author_name],
       openGraph: {
         title: post.title,
@@ -57,6 +74,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         images: post.featured_image ? [
           {
             url: post.featured_image,
+>>>>>>> origin/master
             width: 1200,
             height: 630,
             alt: post.title
@@ -73,10 +91,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       twitter: {
         card: 'summary_large_image',
         title: post.title,
+<<<<<<< HEAD
+        description: post.excerpt || `${post.title} hakkında detaylı bilgi.`,
+        images: post.coverImage ? [
+          {
+            url: post.coverImage,
+=======
         description: post.meta_description || post.excerpt || `${post.title} hakkında detaylı bilgi.`,
         images: post.featured_image ? [
           {
             url: post.featured_image,
+>>>>>>> origin/master
             width: 1200,
             height: 630,
             alt: post.title

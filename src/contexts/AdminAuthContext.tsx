@@ -1,6 +1,10 @@
 'use client'
 
+<<<<<<< HEAD
+import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react'
+=======
 import { createContext, useContext, useEffect, useState } from 'react'
+>>>>>>> origin/master
 import { useRouter } from 'next/navigation'
 
 interface User {
@@ -74,7 +78,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('adminUser')
         localStorage.removeItem('adminToken')
         sessionStorage.removeItem('adminToken')
+<<<<<<< HEAD
+        document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan1970 00:00:00 GMT'
+=======
         document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+>>>>>>> origin/master
       }
     } else {
       console.log('AdminAuthContext: No authentication data found')
@@ -82,6 +90,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(false)
   }, [])
 
+<<<<<<< HEAD
+  // Router events ile token persist sağla - DEAKTİF EDİLDİ
+  // useEffect(() => {
+  //   if (!token) return
+    
+  //   const handleRouteChange = () => {
+  //     setTokenCookie(token)
+  //     console.log('AdminAuthContext: Token reset on route change')
+  //   }
+
+  //   // Next.js 13+ için router events
+  //   if (typeof window !== 'undefined' && 'navigation' in window) {
+  //     window.navigation.addEventListener('navigate', handleRouteChange)
+      
+  //     // Interval ile token'ı güncel tut
+  //     const interval = setInterval(() => {
+  //       setTokenCookie(token)
+  //     }, 5000) // 5 saniyede bir
+      
+  //     return () => {
+  //       window.navigation.removeEventListener('navigate', handleRouteChange)
+  //       clearInterval(interval)
+  //     }
+  //   }
+    
+  //   // Navigation API yoksa sadece interval kullan
+  //   const interval = setInterval(() => {
+  //     setTokenCookie(token)
+  //   }, 5000)
+    
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  // }, [token])
+
+  const login = useCallback(async (username: string, password: string, captchaAnswer?: string) => {
+=======
   // Router events ile token persist sağla
   useEffect(() => {
     if (!token) return
@@ -117,6 +162,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [token])
 
   const login = async (username: string, password: string, captchaAnswer?: string) => {
+>>>>>>> origin/master
     try {
       console.log('=== LOGIN DEBUG ===');
       console.log('Username:', username);
@@ -125,16 +171,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Gerçek auth endpoint'ini dene
       console.log('Trying auth endpoint...');
       const apiPath = '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth';
+<<<<<<< HEAD
+      
+=======
+>>>>>>> origin/master
       const response = await fetch(apiPath, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+<<<<<<< HEAD
+        body: JSON.stringify({ username, password, captchaAnswer: captchaAnswer?.trim() || null }),
+        cache: 'no-store'
+=======
         body: JSON.stringify({ username, password, captchaAnswer: captchaAnswer?.trim() || null })
+>>>>>>> origin/master
       });
 
       console.log('Auth response status:', response.status);
       console.log('Auth response OK:', response.ok);
+<<<<<<< HEAD
+      console.log('Auth response headers:', response.headers);
+
+      // Response text'ini önce al
+      const responseText = await response.text();
+      console.log('Raw response text:', responseText);
+
+      if (!response.ok) {
+        console.error('HTTP Error Response:', responseText);
+        throw new Error(`HTTP ${response.status}: ${responseText}`);
+      }
+
+      // JSON parse et
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('JSON Parse Error:', parseError);
+        throw new Error('Invalid JSON response from server');
+      }
+
+      console.log('Parsed response data:', data);
+=======
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -144,6 +222,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const data = await response.json()
       console.log('Response data:', data);
+>>>>>>> origin/master
 
       if (data.success) {
         const { user: userData, token } = data.data
@@ -172,9 +251,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error('Error stack:', (error as Error).stack);
       return { success: false, error: 'Sunucu ile bağlantı kurulamadı: ' + (error as Error).message }
     }
+<<<<<<< HEAD
+  }, [])
+
+  const logout = useCallback(() => {
+=======
   }
 
   const logout = () => {
+>>>>>>> origin/master
     setUser(null)
     setToken(null)
     localStorage.removeItem('adminUser')
@@ -182,6 +267,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     sessionStorage.removeItem('adminToken')
     
     // Cookie'den token'ı sil
+<<<<<<< HEAD
+    document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan1970 00:00:00 GMT'
+    
+    router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
+  }, [])
+
+  const isAuthenticated = !!user && !!token
+
+  const contextValue = useMemo(() => ({
+    user,
+    token,
+    login,
+    logout,
+    isLoading,
+    isAuthenticated
+  }), [user, token, login, logout, isLoading, isAuthenticated])
+
+  return (
+    <AuthContext.Provider value={contextValue}>
+=======
     document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
     
     router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
@@ -200,6 +305,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthenticated
       }}
     >
+>>>>>>> origin/master
       {children}
     </AuthContext.Provider>
   )

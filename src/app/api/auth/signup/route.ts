@@ -69,12 +69,29 @@ export async function POST(request: NextRequest) {
     })
 
   } catch (error) {
+<<<<<<< HEAD
+    console.error('Signup API error:', error)
+    console.error('Error stack:', (error as Error).stack)
+    
+    try {
+      await Logger.logError(error as Error, 'POST /api/auth/signup', undefined, undefined)
+      await Logger.logApiRequest('/api/auth/signup', 'POST', 500, Date.now() - startTime, undefined, undefined)
+    } catch (logError) {
+      console.error('Logging failed:', logError)
+    }
+    
+    return NextResponse.json({
+      success: false,
+      error: 'Kayıt sırasında bir hata oluştu. Lütfen tekrar deneyin.',
+      details: process.env.NODE_ENV === 'development' ? (error as Error).message : undefined
+=======
     await Logger.logError(error as Error, 'POST /api/auth/signup', undefined, undefined)
     await Logger.logApiRequest('/api/auth/signup', 'POST', 500, Date.now() - startTime, undefined, undefined)
     
     return NextResponse.json({
       success: false,
       error: 'Kayıt sırasında bir hata oluştu. Lütfen tekrar deneyin.'
+>>>>>>> origin/master
     }, { status: 500 })
   }
 }

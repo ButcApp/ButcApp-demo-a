@@ -1,10 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
+<<<<<<< HEAD
+import { verifyAdminToken } from '@/lib/jwt'
+import { Logger } from '@/lib/logger'
+import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
+const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
 import { PrismaClient } from '@prisma/client'
 import { verifyAdminToken } from '@/lib/jwt'
 import { Logger } from '@/lib/logger'
 import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
 
 const prisma = new PrismaClient()
+>>>>>>> origin/master
 
 export async function GET(request: NextRequest) {
   const optionsResponse = handleOptions(request)
@@ -37,6 +48,39 @@ export async function GET(request: NextRequest) {
       }, { status: 403, headers: corsHeaders })
     }
 
+<<<<<<< HEAD
+    // Kategorileri Supabase'den getir
+    const { data: categories, error } = await supabase
+      .from('blog_posts')
+      .select('category')
+      .eq('status', 'published')
+
+    if (error) {
+      console.error('Supabase categories fetch error:', error)
+      return NextResponse.json({
+        success: false,
+        error: 'Kategoriler yüklenemedi: ' + error.message
+      }, { status: 500, headers: corsHeaders })
+    }
+
+    // Benzersiz kategorileri al ve say
+    const categoryMap = new Map()
+    if (categories) {
+      categories.forEach(post => {
+        if (post.category) {
+          categoryMap.set(post.category, (categoryMap.get(post.category) || 0) + 1)
+        }
+      })
+    }
+
+    const categoriesWithCounts = Array.from(categoryMap.entries()).map(([name, count]) => ({
+      id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+      name: name,
+      slug: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+      description: `${name} ile ilgili yazılar`,
+      postCount: count
+    }))
+=======
     // Kategorileri getir
     const categories = await prisma.blogCategory.findMany({
       orderBy: {
@@ -62,6 +106,7 @@ export async function GET(request: NextRequest) {
         }
       })
     )
+>>>>>>> origin/master
 
     await Logger.logApiRequest('/api/categories', 'GET', 200, Date.now() - startTime, undefined, undefined)
 
@@ -121,6 +166,13 @@ export async function POST(request: NextRequest) {
       }, { status: 400, headers: corsHeaders })
     }
 
+<<<<<<< HEAD
+    // Kategori oluştur (Bu özellik şu anlık kullanılmıyor, sadece GET metodu aktif)
+    return NextResponse.json({
+      success: false,
+      error: 'Kategori oluşturma şu anlık devre dışı'
+    }, { status: 503, headers: corsHeaders })
+=======
     // Kategori oluştur
     const newCategory = await prisma.blogCategory.create({
       data: {
@@ -147,6 +199,7 @@ export async function POST(request: NextRequest) {
         description: newCategory.description
       }
     }, { headers: corsHeaders })
+>>>>>>> origin/master
 
   } catch (error: any) {
     console.error('Categories API Error:', error)

@@ -58,8 +58,26 @@ export function AdminManager() {
 
   const fetchAdmins = async () => {
     try {
+<<<<<<< HEAD
+      const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
+      console.log('AdminManager: Token found:', !!token)
+      console.log('AdminManager: Token source:', localStorage.getItem('adminToken') ? 'localStorage' : 'sessionStorage')
+      
+      const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      console.log('AdminManager: Response status:', response.status)
+      console.log('AdminManager: Response ok:', response.ok)
+      
+      const result = await response.json()
+      console.log('AdminManager: Response data:', result)
+=======
       const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins')
       const result = await response.json()
+>>>>>>> origin/master
       
       if (result.success) {
         setAdmins(result.data || [])
@@ -79,18 +97,63 @@ export function AdminManager() {
     setError('')
     setSuccess('')
 
+<<<<<<< HEAD
+    // Form validasyonu
+    if (!formData.username.trim()) {
+      setError('Kullanıcı adı gereklidir.')
+      return
+    }
+    
+    if (!formData.email.trim()) {
+      setError('E-posta adresi gereklidir.')
+      return
+    }
+    
+    if (!formData.email.includes('@') || !formData.email.includes('.')) {
+      setError('Geçerli bir e-posta adresi girin.')
+      return
+    }
+    
+    if (!editingAdmin && !formData.password.trim()) {
+      setError('Şifre gereklidir.')
+      return
+    }
+    
+    if (!editingAdmin && formData.password.length < 6) {
+      setError('Şifre en az 6 karakter olmalıdır.')
+      return
+    }
+
     try {
+      const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
+      console.log('AdminManager handleSubmit: Token found:', !!token)
+      console.log('AdminManager handleSubmit: Form data:', formData)
+      
+=======
+    try {
+>>>>>>> origin/master
       if (editingAdmin) {
         // Admin güncelleme API çağrısı
         const response = await fetch(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins/${editingAdmin.id}`, {
           method: 'PUT',
           headers: {
+<<<<<<< HEAD
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+=======
             'Content-Type': 'application/json'
+>>>>>>> origin/master
           },
           body: JSON.stringify(formData)
         })
         
+<<<<<<< HEAD
+        console.log('AdminManager: Update response status:', response.status)
         const result = await response.json()
+        console.log('AdminManager: Update response data:', result)
+=======
+        const result = await response.json()
+>>>>>>> origin/master
         
         if (result.success) {
           setSuccess('Admin güncellendi!')
@@ -104,12 +167,23 @@ export function AdminManager() {
         const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins', {
           method: 'POST',
           headers: {
+<<<<<<< HEAD
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+=======
             'Content-Type': 'application/json'
+>>>>>>> origin/master
           },
           body: JSON.stringify(formData)
         })
         
+<<<<<<< HEAD
+        console.log('AdminManager: Create response status:', response.status)
         const result = await response.json()
+        console.log('AdminManager: Create response data:', result)
+=======
+        const result = await response.json()
+>>>>>>> origin/master
         
         if (result.success) {
           setSuccess('Admin oluşturuldu!')
@@ -147,6 +221,11 @@ export function AdminManager() {
     }
 
     try {
+<<<<<<< HEAD
+      const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
+      
+=======
+>>>>>>> origin/master
       // Ana admini koru
       if (adminId === 'test-admin-001') {
         setError('Ana admin silinemez!')
@@ -154,7 +233,15 @@ export function AdminManager() {
       }
 
       const response = await fetch(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/admins/${adminId}`, {
+<<<<<<< HEAD
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+=======
         method: 'DELETE'
+>>>>>>> origin/master
       })
       
       const result = await response.json()
@@ -392,7 +479,11 @@ export function AdminManager() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+<<<<<<< HEAD
+                  placeholder="ornek@domain.com"
+=======
                   placeholder="E-posta adresi"
+>>>>>>> origin/master
                 />
               </div>
             </div>

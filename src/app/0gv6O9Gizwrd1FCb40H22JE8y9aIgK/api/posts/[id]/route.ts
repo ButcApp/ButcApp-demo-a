@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdminToken } from '@/lib/jwt'
+<<<<<<< HEAD
+//import { PrismaClient } from '@prisma/client'
+
+//const prisma = new PrismaClient()
+=======
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
+>>>>>>> origin/master
 
 export async function DELETE(
   request: NextRequest,

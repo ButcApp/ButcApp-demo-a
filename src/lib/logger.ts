@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import { supabase } from '@/lib/db'
+=======
 import { db } from '@/lib/db'
+>>>>>>> origin/master
 import { headers } from 'next/headers'
 
 export interface LogData {
@@ -38,6 +42,38 @@ export class Logger {
         metadata: data.metadata ? JSON.stringify(data.metadata) : null,
       }
 
+<<<<<<< HEAD
+      // Try to log to database, but don't fail if database is not available
+      try {
+        await supabase
+          .from('system_logs')
+          .insert({
+            id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            type: data.type,
+            level: data.level || 'info',
+            userid: data.userId,
+            adminid: data.adminId,
+            action: data.action,
+            description: data.description,
+            metadata: data.metadata ? JSON.stringify(data.metadata) : null,
+            ipaddress: data.ipAddress,
+            useragent: data.userAgent,
+            endpoint: data.endpoint,
+            method: data.method,
+            statuscode: data.statusCode,
+            responsetime: data.responseTime,
+            error: data.error,
+            stacktrace: data.stackTrace,
+            createdat: new Date().toISOString(),
+          })
+      } catch (dbError) {
+        console.error('Failed to log to database:', dbError)
+        // Fallback to console logging
+        console.log(`[${data.type.toUpperCase()}] ${data.action}: ${data.description || ''}`, data)
+      }
+    } catch (error) {
+      console.error('Failed to log:', error)
+=======
       await db.systemLog.create({
         data: logEntry
       })
@@ -50,6 +86,7 @@ export class Logger {
       }
     } catch (error) {
       console.error('Failed to log to database:', error)
+>>>>>>> origin/master
       // Fallback to console logging
       console.log(`[${data.type.toUpperCase()}] ${data.action}: ${data.description || ''}`, data)
     }
@@ -142,6 +179,8 @@ export class Logger {
       metadata: { metric, unit, ...metadata }
     })
   }
+<<<<<<< HEAD
+=======
 
   private static async updateLogStats(logType: string, errorCount: number = 0, responseTime?: number): Promise<void> {
     try {
@@ -258,4 +297,5 @@ export class Logger {
       ]
     })
   }
+>>>>>>> origin/master
 }

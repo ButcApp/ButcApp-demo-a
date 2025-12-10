@@ -1,10 +1,14 @@
 #!/bin/bash
 
 <<<<<<< HEAD
+# VPS Deployment Script for ButcApp
+=======
+<<<<<<< HEAD
 # VPS Deployment Script for ButcApp (pnpm version)
 =======
 # VPS Deployment Script for ButcApp
 >>>>>>> e24e41a09e2ad6015452c7d5548a957a3c4fec4d
+>>>>>>> origin/master
 
 echo "🚀 Starting VPS deployment..."
 
@@ -24,6 +28,8 @@ EOF
 echo "📦 Installing dependencies..."
 cd $PROJECT_DIR
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 pnpm install
 
 # Build the project
@@ -38,6 +44,7 @@ pnpm db:push
 echo "🚀 Starting the application..."
 pnpm start
 =======
+>>>>>>> origin/master
 npm install
 
 # Build the project
@@ -51,7 +58,10 @@ npm run db:push
 # Start the application
 echo "🚀 Starting the application..."
 npm start
+<<<<<<< HEAD
+=======
 >>>>>>> e24e41a09e2ad6015452c7d5548a957a3c4fec4d
+>>>>>>> origin/master
 
 echo "✅ Deployment completed!"
 echo "🌐 Your app is available at: https://$VPS_DOMAIN"

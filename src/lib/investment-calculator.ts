@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import { Investment } from '@/lib/db'
+=======
 import { Investment } from '@prisma/client'
+>>>>>>> origin/master
 
 interface ProfitCalculation {
   totalInvestment: number

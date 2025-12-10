@@ -1,0 +1,1477 @@
+
+> nextjs_tailwind_shadcn_ts@0.1.0 dev /home/z/my-project
+> next dev -p 3000
+
+   ▲ Next.js 15.5.7
+   - Local:        http://localhost:3000
+   - Network:      http://21.0.8.12:3000
+   - Environments: .env.development
+   - Experiments (use with caution):
+     · optimizePackageImports
+
+ ✓ Starting...
+ ✓ Ready in 2.4s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 710ms (114 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ ○ Compiling / ...
+ ✓ Compiled / in 8.7s (1698 modules)
+ GET / 200 in 9397ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 163ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 85ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 85ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK
+Method: GET
+Not an admin route or login page, proceeding
+ ○ Compiling /0gv6O9Gizwrd1FCb40H22JE8y9aIgK ...
+ ✓ Compiled /0gv6O9Gizwrd1FCb40H22JE8y9aIgK in 1123ms (1721 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/e1f0ff74bafe793d.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK 307 in 1685ms
+ GET / 200 in 68ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/e1f0ff74bafe793d.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.e1f0ff74bafe793d.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.e1f0ff74bafe793d.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.e1f0ff74bafe793d.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ ○ Compiling /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login ...
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.e1f0ff74bafe793d.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login in 836ms (1718 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/37e76d037bfea75c.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 1136ms
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 1235ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.37e76d037bfea75c.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth
+Method: POST
+API route, skipping middleware
+ ○ Compiling /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth ...
+ ✓ Compiled /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth in 1573ms (1874 modules)
+Admin Auth API: Login attempt { username: 'vtheophiluss@proton.me', hasPassword: true }
+Admin Auth API: Decoded username: vtheophiluss@proton.me
+Admin Auth API: Checking database for user: vtheophiluss@proton.me
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/a4bd7a15b295504b.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+Admin Auth API: User query result: {
+  user: {
+    id: 'user_1765293907925_5nbi7qlvt',
+    email: 'vtheophiluss@proton.me',
+    passwordhash: '$2b$12$TzIG5h1WOZtOazg3BZDGp.BdnKjhqAG8hfQYVwVb2tcnptXd2E5ca',
+    fullname: 'adsadasdsafaf',
+    avatarurl: null,
+    createdat: '2025-12-09T15:25:07.925',
+    updatedat: '2025-12-09T15:25:07.925'
+  },
+  userError: null
+}
+Admin Auth API: Checking if user is admin, userId: user_1765293907925_5nbi7qlvt
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/a4bd7a15b295504b.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+Admin Auth API: Admin query result: {
+  adminUser: {
+    id: '162198bf-54ec-4838-b10b-e01b1e3b095b',
+    userid: 'user_1765293907925_5nbi7qlvt',
+    role: 'admin',
+    createdat: '2025-12-10T15:15:28.121',
+    updatedat: '2025-12-10T15:15:28.121'
+  },
+  adminError: null
+}
+Admin Auth API: Invalid password for admin
+ POST /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth 401 in 2784ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.a4bd7a15b295504b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ Cross origin request detected from preview-chat-c8e139c3-6848-4c4f-b45d-d2fe4e38a10d.space.z.ai to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.a4bd7a15b295504b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth
+Method: POST
+API route, skipping middleware
+Admin Auth API: Login attempt { username: 'vtheophiluss@proton.me', hasPassword: true }
+Admin Auth API: Decoded username: vtheophiluss@proton.me
+Admin Auth API: Checking database for user: vtheophiluss@proton.me
+Admin Auth API: User query result: {
+  user: {
+    id: 'user_1765293907925_5nbi7qlvt',
+    email: 'vtheophiluss@proton.me',
+    passwordhash: '$2b$12$TzIG5h1WOZtOazg3BZDGp.BdnKjhqAG8hfQYVwVb2tcnptXd2E5ca',
+    fullname: 'adsadasdsafaf',
+    avatarurl: null,
+    createdat: '2025-12-09T15:25:07.925',
+    updatedat: '2025-12-09T15:25:07.925'
+  },
+  userError: null
+}
+Admin Auth API: Checking if user is admin, userId: user_1765293907925_5nbi7qlvt
+Admin Auth API: Admin query result: {
+  adminUser: {
+    id: '162198bf-54ec-4838-b10b-e01b1e3b095b',
+    userid: 'user_1765293907925_5nbi7qlvt',
+    role: 'admin',
+    createdat: '2025-12-10T15:15:28.121',
+    updatedat: '2025-12-10T15:15:28.121'
+  },
+  adminError: null
+}
+Admin Auth API: Invalid password for admin
+ POST /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth 401 in 674ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth
+Method: POST
+API route, skipping middleware
+Admin Auth API error: SyntaxError: Unexpected token 'u', "username=v"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at async POST (src/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth/route.ts:11:51)
+   9 | export async function POST(request: NextRequest) {
+  10 |   try {
+> 11 |     const { username, password, captchaAnswer } = await request.json()
+     |                                                   ^
+  12 |
+  13 |     console.log('Admin Auth API: Login attempt', { username, hasPassword: !!password })
+  14 |     
+ POST /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth 500 in 209ms
+ ✓ Compiled in 763ms (1878 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/385b5bf73bc445f9.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 223ms
+ GET / 200 in 59ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/385b5bf73bc445f9.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.385b5bf73bc445f9.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.385b5bf73bc445f9.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.385b5bf73bc445f9.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.385b5bf73bc445f9.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth
+Method: POST
+API route, skipping middleware
+Admin Auth API: Login attempt { username: 'vtheophiluss@proton.me', hasPassword: true }
+Admin Auth API: Decoded username: vtheophiluss@proton.me
+Admin Auth API: Checking database for user: vtheophiluss@proton.me
+Admin Auth API: User query result: {
+  user: {
+    id: 'user_1765293907925_5nbi7qlvt',
+    email: 'vtheophiluss@proton.me',
+    passwordhash: '$2b$12$TzIG5h1WOZtOazg3BZDGp.BdnKjhqAG8hfQYVwVb2tcnptXd2E5ca',
+    fullname: 'adsadasdsafaf',
+    avatarurl: null,
+    createdat: '2025-12-09T15:25:07.925',
+    updatedat: '2025-12-09T15:25:07.925'
+  },
+  userError: null
+}
+Admin Auth API: Checking if user is admin, userId: user_1765293907925_5nbi7qlvt
+Admin Auth API: Admin query result: {
+  adminUser: {
+    id: '162198bf-54ec-4838-b10b-e01b1e3b095b',
+    userid: 'user_1765293907925_5nbi7qlvt',
+    role: 'admin',
+    createdat: '2025-12-10T15:15:28.121',
+    updatedat: '2025-12-10T15:15:28.121'
+  },
+  adminError: null
+}
+Admin Auth API: Invalid password for admin
+ POST /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth 401 in 491ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users
+Method: GET
+API route, skipping middleware
+ ○ Compiling /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users ...
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/route.ts
+CORS: Request origin: null
+CORS: Headers: {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With, Accept',
+  'Access-Control-Allow-Credentials': 'true',
+  'Access-Control-Max-Age': '86400'
+}
+JWT Verification - Token: test-token...
+Development mode: All tokens accepted as admin
+Failed to log to database: TypeError: Cannot read properties of undefined (reading 'from')
+    at Logger.log (src/lib/logger.ts:43:15)
+    at Logger.logApiRequest (src/lib/logger.ts:111:16)
+    at async GET (src/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/route.ts:72:5)
+  41 |       // Try to log to database, but don't fail if database is not available
+  42 |       try {
+> 43 |         await supabase
+     |               ^
+  44 |           .from('system_logs')
+  45 |           .insert({
+  46 |             id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+[API_REQUEST] api_request: GET /api/users - 200 {
+  type: 'api_request',
+  level: 'info',
+  userId: undefined,
+  adminId: undefined,
+  action: 'api_request',
+  description: 'GET /api/users - 200',
+  endpoint: '/api/users',
+  method: 'GET',
+  statusCode: 200,
+  responseTime: 163,
+  ipAddress: '::ffff:127.0.0.1',
+  userAgent: 'curl/7.88.1'
+}
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users 200 in 1729ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/3a825b10a1ab2899.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/3a825b10a1ab2899.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.3a825b10a1ab2899.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.3a825b10a1ab2899.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/make-admin
+Method: POST
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/route.ts
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/route.ts
+CORS: Request origin: null
+CORS: Headers: {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With, Accept',
+  'Access-Control-Allow-Credentials': 'true',
+  'Access-Control-Max-Age': '86400'
+}
+JWT Verification - Token: test-token...
+Development mode: All tokens accepted as admin
+ POST /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/make-admin 409 in 712ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/ee22f1205f20d2ba.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.ee22f1205f20d2ba.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/ee22f1205f20d2ba.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.ee22f1205f20d2ba.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users
+Method: GET
+API route, skipping middleware
+CORS: Request origin: null
+CORS: Headers: {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With, Accept',
+  'Access-Control-Allow-Credentials': 'true',
+  'Access-Control-Max-Age': '86400'
+}
+JWT Verification - Token: test-token...
+Development mode: All tokens accepted as admin
+Failed to log to database: TypeError: Cannot read properties of undefined (reading 'from')
+    at Logger.log (src/lib/logger.ts:43:15)
+    at Logger.logApiRequest (src/lib/logger.ts:111:16)
+    at async GET (src/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/route.ts:72:5)
+  41 |       // Try to log to database, but don't fail if database is not available
+  42 |       try {
+> 43 |         await supabase
+     |               ^
+  44 |           .from('system_logs')
+  45 |           .insert({
+  46 |             id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+[API_REQUEST] api_request: GET /api/users - 200 {
+  type: 'api_request',
+  level: 'info',
+  userId: undefined,
+  adminId: undefined,
+  action: 'api_request',
+  description: 'GET /api/users - 200',
+  endpoint: '/api/users',
+  method: 'GET',
+  statusCode: 200,
+  responseTime: 154,
+  ipAddress: '::ffff:127.0.0.1',
+  userAgent: 'curl/7.88.1'
+}
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users 200 in 270ms
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/route.ts
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8b2dd7b70d4180a7.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+ GET / 200 in 152ms
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 55ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.8b2dd7b70d4180a7.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8b2dd7b70d4180a7.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.8b2dd7b70d4180a7.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.8b2dd7b70d4180a7.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.8b2dd7b70d4180a7.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 339ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth
+Method: POST
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/route.ts
+ ✓ Compiled /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth in 297ms (1081 modules)
+Admin Auth API: Login attempt { username: null, hasPassword: false }
+Admin Auth API: Decoded username: 
+Admin Auth API: Checking database for user: 
+Admin Auth API: User query result: {
+  user: null,
+  userError: {
+    code: 'PGRST116',
+    details: 'The result contains 0 rows',
+    hint: null,
+    message: 'Cannot coerce the result to a single JSON object'
+  }
+}
+Admin Auth API: User not found in users table {
+  code: 'PGRST116',
+  details: 'The result contains 0 rows',
+  hint: null,
+  message: 'Cannot coerce the result to a single JSON object'
+}
+ POST /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth 401 in 653ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+ GET / 200 in 121ms
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 60ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 374ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 1070ms (1820 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/b760bf9ef52b3e45.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/b760bf9ef52b3e45.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.b760bf9ef52b3e45.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 251ms
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 72ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.b760bf9ef52b3e45.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.b760bf9ef52b3e45.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.b760bf9ef52b3e45.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+   Reload env: .env.development
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/a545440a98e38341.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/a545440a98e38341.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.a545440a98e38341.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.a545440a98e38341.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.a545440a98e38341.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.a545440a98e38341.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 7.7s (1834 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/bfecf2bafd53a429.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 150ms
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 60ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/bfecf2bafd53a429.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.bfecf2bafd53a429.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.bfecf2bafd53a429.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.bfecf2bafd53a429.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.bfecf2bafd53a429.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+   Reload env: .env.development
+ ✓ Compiled in 552ms (1820 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/5183f13a90e98dd5.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/5183f13a90e98dd5.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.5183f13a90e98dd5.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.5183f13a90e98dd5.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 156ms
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 158ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.5183f13a90e98dd5.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.5183f13a90e98dd5.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+   Reload env: .env.development
+ ✓ Compiled in 519ms (1820 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/9df9997464f571df.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/9df9997464f571df.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 96ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.9df9997464f571df.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.9df9997464f571df.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 72ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.9df9997464f571df.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.9df9997464f571df.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon-16x16.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 373ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/signin
+Method: POST
+API route, skipping middleware
+ ○ Compiling /api/auth/signin ...
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+AuthService: Starting signin for email: vtheophiluss@proton.me
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/498b757b95ddb190.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.498b757b95ddb190.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Signin successful for: vtheophiluss@proton.me
+Failed to log to database: TypeError: Cannot read properties of undefined (reading 'from')
+    at Logger.log (src/lib/logger.ts:43:15)
+    at Logger.logUserLogin (src/lib/logger.ts:77:16)
+    at POST (src/app/api/auth/signin/route.ts:57:18)
+  41 |       // Try to log to database, but don't fail if database is not available
+  42 |       try {
+> 43 |         await supabase
+     |               ^
+  44 |           .from('system_logs')
+  45 |           .insert({
+  46 |             id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+[USER_LOGIN] user_login_attempt: User logged in successfully {
+  type: 'user_login',
+  level: 'info',
+  userId: 'user_1765293907925_5nbi7qlvt',
+  action: 'user_login_attempt',
+  description: 'User logged in successfully',
+  ipAddress: '21.0.0.1',
+  userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+  metadata: { success: true }
+}
+Failed to log to database: TypeError: Cannot read properties of undefined (reading 'from')
+    at Logger.log (src/lib/logger.ts:43:15)
+    at Logger.logApiRequest (src/lib/logger.ts:111:16)
+    at async POST (src/app/api/auth/signin/route.ts:59:5)
+  41 |       // Try to log to database, but don't fail if database is not available
+  42 |       try {
+> 43 |         await supabase
+     |               ^
+  44 |           .from('system_logs')
+  45 |           .insert({
+  46 |             id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+[API_REQUEST] api_request: POST /api/auth/signin - 200 {
+  type: 'api_request',
+  level: 'info',
+  userId: 'user_1765293907925_5nbi7qlvt',
+  adminId: undefined,
+  action: 'api_request',
+  description: 'POST /api/auth/signin - 200',
+  endpoint: '/api/auth/signin',
+  method: 'POST',
+  statusCode: 200,
+  responseTime: 1334,
+  ipAddress: '21.0.0.1',
+  userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+}
+ POST /api/auth/signin 200 in 3635ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ GET /app 200 in 4920ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/44a4de042ae94fca.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.44a4de042ae94fca.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 785ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/0b08ec5aed0db75a.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 109ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.0b08ec5aed0db75a.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 100ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 115ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 112ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 97ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 96ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 106ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+=== ADMIN ACCESS API START ===
+🔍 Verifying token for admin access...
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async POST (src/app/api/admin-access/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+❌ Invalid token for admin access
+ POST /api/admin-access 401 in 700ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/55e2ed2628777f3d.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.55e2ed2628777f3d.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 463ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification error: JWSSignatureVerificationFailed: signature verification failed
+    at async AuthService.verifyToken (src/lib/auth-service.ts:241:27)
+    at async GET (src/app/api/auth/me/route.ts:22:18)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                           ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED'
+}
+ GET /api/auth/me 401 in 131ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login
+Method: GET
+Login or Admin route, skipping middleware
+ GET /0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login 200 in 159ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 82ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 85ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /favicon.png
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ Found a change in next.config.js. Restarting the server to apply the changes...
+node:internal/modules/package_json_reader:208
+  const result = modulesBinding.getPackageScopeConfig(`${resolved}`);
+                                ^
+
+Error: Invalid package config /home/z/my-project/package.json.
+    at getPackageScopeConfig (node:internal/modules/package_json_reader:208:33)
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:116:72)
+    at defaultGetFormatWithoutErrors (node:internal/modules/esm/get_format:232:36)
+    at defaultResolve (node:internal/modules/esm/resolve:1007:13)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    at onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    at TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    at ModuleLoader.import (node:internal/modules/esm/loader:663:21) {
+  code: 'ERR_INVALID_PACKAGE_CONFIG'
+}
+
+Node.js v22.21.0
+[?25h

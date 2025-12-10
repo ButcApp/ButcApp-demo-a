@@ -1,15 +1,36 @@
 # Dependencies
 node_modules/
+<<<<<<< HEAD
+.pnpm-store/
+
+# Build outputs
+=======
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 # Next.js
+>>>>>>> origin/master
 .next/
 out/
 dist/
 build/
 
+<<<<<<< HEAD
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+=======
 # Environment variables (hepsi GitHub'a gidecek)
 # .env.development.local
 # .env.test.local
@@ -60,6 +81,7 @@ backups/
 # Lock files (keep package-lock.json but ignore others)
 yarn.lock
 pnpm-lock.yaml
+>>>>>>> origin/master
 
 # Runtime data
 pids
@@ -67,12 +89,81 @@ pids
 *.seed
 *.pid.lock
 
+<<<<<<< HEAD
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+=======
+>>>>>>> origin/master
 # Optional npm cache directory
 .npm
 
 # Optional eslint cache
 .eslintcache
 
+<<<<<<< HEAD
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Lock files (keep only pnpm-lock.yaml)
+package-lock.json
+yarn.lock
+=======
 # Microservice files
 # mini-services/
 
@@ -80,3 +171,4 @@ pids
 create-admin.js
 create-test-admin.js
 ubuntu-*.js
+>>>>>>> origin/master

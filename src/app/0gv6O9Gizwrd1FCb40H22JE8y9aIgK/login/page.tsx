@@ -33,6 +33,23 @@ export default function AdminLoginPage() {
       return
     }
 
+<<<<<<< HEAD
+    // URL encode password (özellikle & karakter içeren şifreler için)
+    const encodedPassword = encodeURIComponent(formData.password)
+    
+    console.log('=== LOGIN DEBUG START ===')
+    console.log('Submitting login form with:', { username: formData.username, password: encodedPassword, captchaValid });
+    
+    try {
+      const result = await login(formData.username, encodedPassword, captchaAnswer)
+      console.log('=== LOGIN API RESPONSE ===')
+      console.log('Login result:', result);
+      console.log('Login result success:', result.success);
+      console.log('Login result error:', result.error);
+
+      if (result.success) {
+        console.log('=== LOGIN SUCCESSFUL ===')
+=======
     console.log('Submitting login form with:', { username: formData.username, captchaValid });
     
     try {
@@ -40,6 +57,7 @@ export default function AdminLoginPage() {
       console.log('Login result:', result);
 
       if (result.success) {
+>>>>>>> origin/master
         console.log('Login successful, checking cookie...');
         
         // Cookie'nin set olup olmadığını kontrol et
@@ -52,14 +70,26 @@ export default function AdminLoginPage() {
         
         // State'in güncellenmesini bekle
         setTimeout(() => {
+<<<<<<< HEAD
+          console.log('=== REDIRECTING TO DASHBOARD ===')
+=======
+>>>>>>> origin/master
           console.log('Redirecting to dashboard...');
           router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard');
         }, 1000);
       } else {
+<<<<<<< HEAD
+        console.log('=== LOGIN FAILED ===')
+=======
+>>>>>>> origin/master
         console.log('Login failed:', result.error);
         setError(result.error || 'Giriş başarısız oldu')
       }
     } catch (error) {
+<<<<<<< HEAD
+      console.error('=== LOGIN ERROR ===')
+=======
+>>>>>>> origin/master
       console.error('Login form error:', error);
       setError('Giriş sırasında bir hata oluştu. Lütfen tekrar deneyin.')
     }
@@ -106,7 +136,11 @@ export default function AdminLoginPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <label htmlFor="username" className="text-sm font-medium text-foreground">
+<<<<<<< HEAD
+                  Kullanıcı Adı veya E-posta
+=======
                   Kullanıcı Adı
+>>>>>>> origin/master
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -119,7 +153,11 @@ export default function AdminLoginPage() {
                     required
                     value={formData.username}
                     onChange={handleInputChange}
+<<<<<<< HEAD
+                    placeholder="Kullanıcı adı veya e-posta adresi"
+=======
                     placeholder="Admin kullanıcı adı"
+>>>>>>> origin/master
                     className="pl-10 h-11"
                   />
                 </div>

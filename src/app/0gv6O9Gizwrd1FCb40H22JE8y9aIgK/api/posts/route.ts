@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdminToken } from '@/lib/jwt'
+<<<<<<< HEAD
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
+const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+=======
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
+>>>>>>> origin/master
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,6 +28,31 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
+<<<<<<< HEAD
+    // Fetch blog posts from Supabase
+    const { data: posts, error } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .eq('status', 'published')
+      .order('createdat', { ascending: false })
+
+    if (error) {
+      console.error('Supabase blog posts fetch error:', error)
+      return NextResponse.json({
+        error: 'Failed to fetch blog posts: ' + error.message
+      }, { status: 500 })
+    }
+
+    // Transform status to published boolean
+    const transformedPosts = (posts || []).map(post => ({
+      id: post.id,
+      title: post.title,
+      slug: post.slug,
+      excerpt: post.excerpt,
+      status: post.status,
+      createdAt: post.createdat,
+      updatedAt: post.updatedat,
+=======
     // Fetch blog posts from database
     const posts = await prisma.blogPost.findMany({
       select: {
@@ -39,6 +72,7 @@ export async function GET(request: NextRequest) {
     // Transform status to published boolean
     const transformedPosts = posts.map(post => ({
       ...post,
+>>>>>>> origin/master
       published: post.status === 'published'
     }))
 
